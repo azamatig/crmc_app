@@ -1,8 +1,6 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
-var COLORS = [
+var colors = [
   Color(0xFFEF7A85),
   Color(0xFFFF90B3),
   Color(0xFFFFC2E2),
@@ -119,10 +117,10 @@ class _ContractsState extends State<Contracts> {
 }
 
 class AwesomeListItem extends StatefulWidget {
-  String title;
-  String content;
-  String color;
-  String image;
+  final String title;
+  final String content;
+  final String color;
+  final String image;
 
   AwesomeListItem({this.title, this.content, this.color, this.image});
 

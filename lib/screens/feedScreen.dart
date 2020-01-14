@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:crmc_app/screens/add_new_contact.dart';
 import 'package:flutter/material.dart';
 
 var colors = [
@@ -98,7 +99,8 @@ class _MyHomePageState extends State<MyHomePage> {
           color: Colors.white,
         ),
         backgroundColor: Colors.green,
-        onPressed: () {},
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => AddNewContact())),
       ),
       body: ListView.builder(
         shrinkWrap: true,

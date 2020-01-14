@@ -26,6 +26,8 @@ class _MainScreenState extends State<MainScreen>
   @override
   void initState() {
     super.initState();
+    MyHomePage();
+    Contracts();
     _pageController = PageController();
     _loadingController = AnimationController(
       vsync: this,
@@ -50,11 +52,11 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    final menuBtn = IconButton(
+    /*   final menuBtn = IconButton(
       color: Colors.deepPurple,
       icon: const Icon(FontAwesomeIcons.bars),
       onPressed: () {},
-    );
+    );*/
     final signOutBtn = IconButton(
       icon: const Icon(FontAwesomeIcons.signOutAlt),
       color: Colors.white,
@@ -86,9 +88,10 @@ class _MainScreenState extends State<MainScreen>
           setState(() {
             _currentTab = index;
           });
+
           _pageController.animateToPage(
             index,
-            duration: Duration(milliseconds: 200),
+            duration: Duration(milliseconds: 300),
             curve: Curves.easeIn,
           );
         },
