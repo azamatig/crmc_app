@@ -77,8 +77,8 @@ class _MainScreenState extends State<MainScreen>
         children: <Widget>[
           MyHomePage(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
-          Class3(), // to be implemented
-          Class4(), // to be implemented
+          Class3(), // TO BE IMPLEMENTED
+          Class4(), // TO BE IMPLEMENTED
         ],
         onPageChanged: (int index) {
           setState(() {

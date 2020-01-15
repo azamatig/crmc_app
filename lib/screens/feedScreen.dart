@@ -131,7 +131,7 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
         Expanded(
           child: Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
+                const EdgeInsets.symmetric(vertical: 30.0, horizontal: 20.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
