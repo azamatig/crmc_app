@@ -1,6 +1,4 @@
-import 'dart:math';
-
-import 'package:crmc_app/screens/add_new_contact.dart';
+import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
 
 var colors = [
@@ -24,68 +22,68 @@ class _MyHomePageState extends State<MyHomePage> {
   var data = [
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/200?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/100?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/150?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/125?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/175?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/225?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/250?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/350?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/275?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020 ",
+      "color": "Status of client",
       "image": "https://picsum.photos/300?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
-      "color": colors[new Random().nextInt(5)],
+      "content": "01/01/2020",
+      "color": "Status of client",
       "image": "https://picsum.photos/325?random"
     }
   ];
@@ -123,7 +121,7 @@ class _MyHomePageState extends State<MyHomePage> {
 class AwesomeListItem extends StatefulWidget {
   final String title;
   final String content;
-  final Color color;
+  final String color;
   final String image;
 
   AwesomeListItem({this.title, this.content, this.color, this.image});
@@ -156,6 +154,16 @@ class _AwesomeListItemState extends State<AwesomeListItem> {
                   padding: const EdgeInsets.only(top: 16.0),
                   child: Text(
                     widget.content,
+                    style: TextStyle(
+                        color: Colors.grey.shade500,
+                        fontSize: 12.0,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: Text(
+                    widget.color,
                     style: TextStyle(
                         color: Colors.grey.shade500,
                         fontSize: 12.0,

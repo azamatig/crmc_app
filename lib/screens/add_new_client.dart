@@ -15,44 +15,10 @@ class _AddNewContactState extends State<AddNewContact> {
   TextEditingController _middleNameController = TextEditingController();
   TextEditingController _birthDateController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
-  var _sexController;
-  var _maritalStatusController;
-  Color _pickedFemale = Colors.black54;
-  Color _pickedMale = Colors.black54;
-  Color _pickedMarried = Colors.black54;
-  Color _pickedUnmarried = Colors.black54;
 
   @override
   void initState() {
     super.initState();
-  }
-
-//Sets gender to male
-  setMaleSex() {
-    setState(() {
-      _sexController = '49eb65bc-e2f1-c78e-3fc1-5ea9e1c66583';
-    });
-  }
-
-// Sets gender to female
-  setFemaleSex() {
-    setState(() {
-      _sexController = '7ae580f1-b20b-ca3f-11dc-fcd53e882cdf';
-    });
-  }
-
-// Sets marital status to married
-  setMarried() {
-    setState(() {
-      _maritalStatusController = '296a70b9-ecf9-cfd6-daed-0299f783f047';
-    });
-  }
-
-  //Sets marital status to Unmarried
-  setBachelor() {
-    setState(() {
-      _maritalStatusController = '9a89faa2-c10c-706f-afc7-6af382f2d634';
-    });
   }
 
   //Updates Users info
@@ -84,7 +50,7 @@ class _AddNewContactState extends State<AddNewContact> {
         child: ListView(
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(30.0),
+              padding: EdgeInsets.all(15.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -183,7 +149,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
-                          Icons.text_fields,
+                          Icons.place,
                           size: 30.0,
                         ),
                         labelText: 'Место Рождения',
@@ -200,7 +166,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
-                          Icons.text_fields,
+                          Icons.person_pin,
                           size: 30.0,
                         ),
                         labelText: 'Ваш пол',
@@ -217,10 +183,10 @@ class _AddNewContactState extends State<AddNewContact> {
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
-                          Icons.text_fields,
+                          Icons.phone_android,
                           size: 30.0,
                         ),
-                        labelText: 'Место Рождения',
+                        labelText: 'Мобильный телефон',
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -228,6 +194,17 @@ class _AddNewContactState extends State<AddNewContact> {
                         }
                         return null;
                       },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                      child: Text(
+                        '(managerName)',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),

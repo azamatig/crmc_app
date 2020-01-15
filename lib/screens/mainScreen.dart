@@ -1,11 +1,17 @@
 import 'package:crmc_app/screens/feedScreen.dart';
 import 'package:crmc_app/screens/fourthScreen.dart';
-import 'package:crmc_app/screens/secScreen.dart';
+import 'package:crmc_app/screens/dealsScreen.dart';
 import 'package:crmc_app/screens/thridScreen.dart';
 import 'package:crmc_app/utilities/TransitionRouteObserver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+/*
+
+Made by 'pure coincidence', and sponsored by 'i keep googling things, and somehow it works'
+
+ */
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/MainScreen';
@@ -40,6 +46,7 @@ class _MainScreenState extends State<MainScreen>
     ));
   }
 
+  //Log outs from the account, duh, obviously! *,...,*
   Future<bool> _goToLogin(BuildContext context) {
     return Navigator.of(context)
         .pushReplacementNamed('/')

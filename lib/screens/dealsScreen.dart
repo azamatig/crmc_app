@@ -21,67 +21,67 @@ class _ContractsState extends State<Contracts> {
   var data = [
     {
       "title": "Contract № and headline",
-      "content": "Description of Contract here",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/200?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/100?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 This is just a text description of the item",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/150?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/125?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/175?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/225?random"
     },
     {
       "title": "Hey Flutterers, See what I did with Flutter",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/250?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/350?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 This is just a text description of the item",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/275?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/300?random"
     },
     {
       "title": "Contract № and headline",
-      "content": "This is just a text description of the item",
+      "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/325?random"
     }
