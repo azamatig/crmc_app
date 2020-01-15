@@ -8,10 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 /*
-
 Made by 'pure coincidence', and sponsored by 'i keep googling things, and somehow it works'
-
- */
+*/
 
 class MainScreen extends StatefulWidget {
   static const routeName = '/MainScreen';
@@ -32,8 +30,6 @@ class _MainScreenState extends State<MainScreen>
   @override
   void initState() {
     super.initState();
-    MyHomePage();
-    Contracts();
     _pageController = PageController();
     _loadingController = AnimationController(
       vsync: this,
@@ -46,7 +42,7 @@ class _MainScreenState extends State<MainScreen>
     ));
   }
 
-  //Log outs from the account, duh, obviously! *,...,*
+  //Log outs from the account, duh, obviously! *,..,*
   Future<bool> _goToLogin(BuildContext context) {
     return Navigator.of(context)
         .pushReplacementNamed('/')
@@ -59,6 +55,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
+    // Bootiful menu, на всякий случай
     /*   final menuBtn = IconButton(
       color: Colors.deepPurple,
       icon: const Icon(FontAwesomeIcons.bars),
@@ -78,10 +75,10 @@ class _MainScreenState extends State<MainScreen>
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          MyHomePage(),
-          Contracts(),
-          Class3(),
-          Class4(),
+          MyHomePage(), // Первый экран с клиентами
+          Contracts(), // Второй экран с договорами
+          Class3(), // to be implemented
+          Class4(), // to be implemented
         ],
         onPageChanged: (int index) {
           setState(() {

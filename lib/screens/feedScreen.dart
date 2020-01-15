@@ -1,14 +1,6 @@
 import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
 
-var colors = [
-  Color(0xFFEF7A85),
-  Color(0xFFFF90B3),
-  Color(0xFFFFC2E2),
-  Color(0xFFB892FF),
-  Color(0xFFB892FF)
-];
-
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -21,67 +13,67 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   var data = [
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/200?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/100?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/150?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/125?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/175?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/225?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/250?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/350?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/275?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020 ",
-      "color": "Status of client",
+      "color": "Имя Фамилия Клиента",
       "image": "https://picsum.photos/300?random"
     },
     {
-      "title": "Hey Flutterers, See what I did with Flutter",
+      "title": "Имя Фамилия Клиента",
       "content": "01/01/2020",
       "color": "Status of client",
       "image": "https://picsum.photos/325?random"
