@@ -1,8 +1,15 @@
+/*
+анон: Почему говорят, что Штирлиц был на грани провала?
+Ведь у провала сидел Бендер.
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class AddNewContact extends StatefulWidget {
   AddNewContact();
+  final format = DateFormat("yyyy-MM-dd");
 
   @override
   _AddNewContactState createState() => _AddNewContactState();
@@ -15,6 +22,7 @@ class _AddNewContactState extends State<AddNewContact> {
   TextEditingController _middleNameController = TextEditingController();
   TextEditingController _birthDateController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
+  TextEditingController _toDateController = TextEditingController();
 
   @override
   void initState() {
@@ -130,23 +138,9 @@ class _AddNewContactState extends State<AddNewContact> {
                         return null;
                       },
                     ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _birthDateController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.perm_contact_calendar,
-                          size: 30.0,
-                        ),
-                        labelText: 'Дата Рождения (гггг-Мм-Дд)',
-                      ),
-                      validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно в формате yyyy-Mm-Dd';
-                        }
-                        return null;
-                      },
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: BasicDateField(),
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -225,7 +219,7 @@ class _AddNewContactState extends State<AddNewContact> {
                         child: FlatButton(
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
-                              // If the form is valid, display a updatus.
+                              // If the form is valid, do an Update, есь же.
                               //fun1
                               print('Success');
                             }
@@ -248,5 +242,29 @@ class _AddNewContactState extends State<AddNewContact> {
         ),
       ),
     );
+  }
+}
+
+class BasicDateField extends StatelessWidget {
+  final format = DateFormat("yyyy-MM-dd");
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: <Widget>[
+      Text(
+        'Дата Рождения (${format.pattern})',
+        style: TextStyle(color: Colors.black45),
+      ),
+      DateTimeField(
+        initialValue: DateTime.now(),
+        format: format,
+        onShowPicker: (context, currentValue) {
+          return showDatePicker(
+              context: context,
+              firstDate: DateTime(1900),
+              initialDate: currentValue ?? DateTime.now(),
+              lastDate: DateTime(2100));
+        },
+      ),
+    ]);
   }
 }

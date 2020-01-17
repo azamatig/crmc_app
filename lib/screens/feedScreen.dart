@@ -1,5 +1,12 @@
+/*
+Дед (лингвист) после очередной рекламы:
+- Имудон. Какое ругательство пропадает!
+ */
+
 import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
+
+import 'contact_details.dart';
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -138,19 +145,23 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (_) => AddNewContact())),
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0.0),
-        scrollDirection: Axis.vertical,
-        primary: true,
-        itemCount: data.length,
-        itemBuilder: (BuildContext content, int index) {
-          return AwesomeListItem(
-              title: data[index]["title"],
-              content: data[index]["content"],
-              color: data[index]["color"],
-              image: data[index]["image"]);
-        },
+      body: GestureDetector(
+        onTap: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ContactDetails())),
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(0.0),
+          scrollDirection: Axis.vertical,
+          primary: true,
+          itemCount: data.length,
+          itemBuilder: (BuildContext content, int index) {
+            return AwesomeListItem(
+                title: data[index]["title"],
+                content: data[index]["content"],
+                color: data[index]["color"],
+                image: data[index]["image"]);
+          },
+        ),
       ),
     );
   }

@@ -1,3 +1,8 @@
+/*
+xxx: Я как-то видел мужика, который себе в бане соорудил купе поезда.
+С полками, столиком - всё как положено. Вместо окна - большой телевизор
+@bash.im
+*/
 import 'package:crmc_app/screens/add_new_deal.dart';
 import 'package:flutter/material.dart';
 
@@ -88,7 +93,7 @@ class _ContractsState extends State<Contracts> {
       "content": "01.01.2020 Description of Contract here(Date and Sum)",
       "color": 'Manager or Client name here',
       "image": "https://picsum.photos/325?random"
-    }
+    },
   ];
 
   @override
@@ -156,6 +161,7 @@ class _ContractsState extends State<Contracts> {
   }
 }
 
+//Random comment here, yup *,..,* (rheeeee meme here)
 class AwesomeListItem extends StatefulWidget {
   final String title;
   final String content;

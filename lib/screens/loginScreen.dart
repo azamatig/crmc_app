@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
+  //Login widget from flutterLogin package
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
