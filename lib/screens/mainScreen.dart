@@ -1,7 +1,7 @@
 import 'package:crmc_app/screens/feedScreen.dart';
 import 'package:crmc_app/screens/fourthScreen.dart';
 import 'package:crmc_app/screens/dealsScreen.dart';
-import 'package:crmc_app/screens/thridScreen.dart';
+import 'package:crmc_app/screens/testi.dart';
 import 'package:crmc_app/utilities/TransitionRouteObserver.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +77,7 @@ class _MainScreenState extends State<MainScreen>
         children: <Widget>[
           MyHomePage(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
-          Class3(), // TO BE IMPLEMENTED
+          TestPage(), // TO BE IMPLEMENTED
           Class4(), // TO BE IMPLEMENTED
         ],
         onPageChanged: (int index) {

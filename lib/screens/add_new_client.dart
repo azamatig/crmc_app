@@ -56,7 +56,7 @@ class _AddNewContactState extends State<AddNewContact> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      //      initialValue: '${info.firstName}',
+                      cursorColor: Colors.deepPurple,
                       controller: _firstNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -74,6 +74,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _middleNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -91,6 +92,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -108,6 +110,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       inputFormatters: <TextInputFormatter>[
                         WhitelistingTextInputFormatter.digitsOnly,
                       ],
@@ -128,6 +131,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _birthDateController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -145,6 +149,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -162,6 +167,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -179,6 +185,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       },
                     ),
                     TextFormField(
+                      cursorColor: Colors.deepPurple,
                       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(

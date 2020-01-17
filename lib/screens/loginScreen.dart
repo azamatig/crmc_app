@@ -38,7 +38,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-        title: 'crmc',
+        title: 'CRM UCO',
         logo: 'assets/images/uco.png',
         onLogin: _authUser,
         onSignup: _authUser,

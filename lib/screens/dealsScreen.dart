@@ -1,3 +1,4 @@
+import 'package:crmc_app/screens/add_new_deal.dart';
 import 'package:flutter/material.dart';
 
 class Contracts extends StatefulWidget {
@@ -10,6 +11,17 @@ class Contracts extends StatefulWidget {
 }
 
 class _ContractsState extends State<Contracts> {
+  TextEditingController _searchController = TextEditingController();
+  String _users;
+
+  _clearSearch() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => _searchController.clear());
+    setState(() {
+      _users = null;
+    });
+  }
+
   var data = [
     {
       "title": "Contract № and headline",
@@ -82,13 +94,49 @@ class _ContractsState extends State<Contracts> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
+        elevation: 0,
+        title: TextField(
+          controller: _searchController,
+          decoration: InputDecoration(
+            fillColor: Colors.white,
+            contentPadding: EdgeInsets.symmetric(vertical: 10.0),
+            border: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(
+                const Radius.circular(20.0),
+              ),
+            ),
+            hintText: 'Поиск',
+            prefixIcon: Icon(
+              Icons.search,
+              size: 30.0,
+            ),
+            suffixIcon: IconButton(
+              icon: Icon(
+                Icons.clear,
+              ),
+              onPressed: _clearSearch,
+            ),
+            filled: true,
+          ),
+          onSubmitted: (input) {
+            if (input.isNotEmpty) {
+              setState(() {
+                //      _users = DBProvider.searchUsers(input);
+              });
+            }
+          },
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(
           Icons.add,
           color: Colors.white,
         ),
         backgroundColor: Colors.orangeAccent,
-        onPressed: () {},
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => AddNewDeal())),
       ),
       body: ListView.builder(
         shrinkWrap: true,
@@ -123,46 +171,54 @@ class AwesomeListItem extends StatefulWidget {
 class _AwesomeListItemState extends State<AwesomeListItem> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Column(
       children: <Widget>[
-        Container(width: 10.0, height: 190.0, color: Colors.deepPurple),
-        Expanded(
-          child: Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text(
-                  widget.title,
-                  style: TextStyle(
-                      color: Colors.grey.shade800,
-                      fontSize: 18.0,
-                      fontWeight: FontWeight.bold),
+        Row(
+          children: <Widget>[
+            Container(width: 10.0, height: 150.0, color: Colors.deepPurple),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 15.0, horizontal: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      widget.title,
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0),
+                      child: Text(
+                        widget.content,
+                        style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      widget.color,
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Text(
-                    widget.content,
-                    style: TextStyle(
-                        color: Colors.grey.shade500,
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  widget.color,
-                  style: TextStyle(
-                      color: Colors.grey.shade800,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold),
-                ),
-              ],
+              ),
             ),
-          ),
+          ],
+        ),
+        Divider(
+          height: 1,
+          color: Colors.black,
         ),
       ],
     );
