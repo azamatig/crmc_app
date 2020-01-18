@@ -5,7 +5,6 @@
 
 import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
-
 import 'contact_details.dart';
 
 class MyHomePage extends StatefulWidget {

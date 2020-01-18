@@ -4,6 +4,7 @@ xxx: Я как-то видел мужика, который себе в бане
 @bash.im
 */
 import 'package:crmc_app/screens/add_new_deal.dart';
+import 'package:crmc_app/screens/contact_details.dart';
 import 'package:flutter/material.dart';
 
 class Contracts extends StatefulWidget {
@@ -17,6 +18,7 @@ class Contracts extends StatefulWidget {
 
 class _ContractsState extends State<Contracts> {
   TextEditingController _searchController = TextEditingController();
+  // for future filter in search bar
   String _users;
 
   _clearSearch() {
@@ -143,19 +145,24 @@ class _ContractsState extends State<Contracts> {
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (_) => AddNewDeal())),
       ),
-      body: ListView.builder(
-        shrinkWrap: true,
-        padding: const EdgeInsets.all(0.0),
-        scrollDirection: Axis.vertical,
-        primary: true,
-        itemCount: data.length,
-        itemBuilder: (BuildContext content, int index) {
-          return AwesomeListItem(
-              title: data[index]["title"],
-              content: data[index]["content"],
-              color: data[index]["color"],
-              image: data[index]["image"]);
-        },
+      body: GestureDetector(
+        onTap: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ContactDetails())),
+        // Goes to details screen
+        child: ListView.builder(
+          shrinkWrap: true,
+          padding: const EdgeInsets.all(0.0),
+          scrollDirection: Axis.vertical,
+          primary: true,
+          itemCount: data.length,
+          itemBuilder: (BuildContext content, int index) {
+            return AwesomeListItem(
+                title: data[index]["title"],
+                content: data[index]["content"],
+                color: data[index]["color"],
+                image: data[index]["image"]);
+          },
+        ),
       ),
     );
   }

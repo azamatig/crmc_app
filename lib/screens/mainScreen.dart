@@ -22,31 +22,33 @@ class _MainScreenState extends State<MainScreen>
     with SingleTickerProviderStateMixin, TransitionRouteAware {
   final routeObserver = TransitionRouteObserver<PageRoute>();
 
-  static const headerAniInterval =
-      const Interval(.1, .3, curve: Curves.easeOut);
-  Animation<double> _headerScaleAnimation;
-  AnimationController _loadingController;
+//  static const headerAniInterval =
+  //    const Interval(.1, .3, curve: Curves.easeOut);
+  /* Animation<double> _headerScaleAnimation;
+  AnimationController _loadingController; */
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-    _loadingController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 1250),
-    );
-    _headerScaleAnimation =
+
+    // i thought iam gonna use it, but changed my mind
+    //   _loadingController = AnimationController(
+    ////   vsync: this,
+    //  duration: const Duration(milliseconds: 1250),
+    // );
+    /* _headerScaleAnimation =
         Tween<double>(begin: .6, end: 1).animate(CurvedAnimation(
       parent: _loadingController,
       curve: headerAniInterval,
-    ));
+    )); */
   }
 
-  //Log outs from the account, duh, obviously! *,..,*
+  //kinda logs out from the account, duh, obviously! *,..,*
   Future<bool> _goToLogin(BuildContext context) {
     return Navigator.of(context)
         .pushReplacementNamed('/')
-        // we dont want to pop the screen, just replace it completely
+        // we don't want to pop the screen, just replace it completely
         .then((_) => false);
   }
 
@@ -55,7 +57,7 @@ class _MainScreenState extends State<MainScreen>
 
   @override
   Widget build(BuildContext context) {
-    // Bootiful menu, на всякий случай
+    // Bootiful button, на всякий случай
     /*   final menuBtn = IconButton(
       color: Colors.deepPurple,
       icon: const Icon(FontAwesomeIcons.bars),
@@ -77,8 +79,8 @@ class _MainScreenState extends State<MainScreen>
         children: <Widget>[
           MyHomePage(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
-          TestPage(), // TO BE IMPLEMENTED
-          Class4(), // TO BE IMPLEMENTED
+          TestPage(), // For the future
+          Class4(), // in case of emergency break Class
         ],
         onPageChanged: (int index) {
           setState(() {
