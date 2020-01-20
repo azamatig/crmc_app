@@ -13,7 +13,6 @@ class _AddNewDealState extends State<AddNewDeal> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _middleNameController = TextEditingController();
   TextEditingController _birthDateController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
   String date = 'DateTime.Now';

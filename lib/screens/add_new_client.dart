@@ -20,9 +20,7 @@ class _AddNewContactState extends State<AddNewContact> {
   TextEditingController _firstNameController = TextEditingController();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _middleNameController = TextEditingController();
-  TextEditingController _birthDateController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
-  TextEditingController _toDateController = TextEditingController();
 
   @override
   void initState() {

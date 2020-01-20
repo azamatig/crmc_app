@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ContactDetails extends StatefulWidget {
   ContactDetails({Key key}) : super(key: key);
@@ -8,21 +7,9 @@ class ContactDetails extends StatefulWidget {
   _ContactDetailsState createState() => _ContactDetailsState();
 }
 
-Future<bool> _goToLogin(BuildContext context) {
-  return Navigator.of(context)
-      .pushReplacementNamed('/')
-      // we dont want to pop the screen, just replace it completely
-      .then((_) => false);
-}
-
 class _ContactDetailsState extends State<ContactDetails> {
   @override
   Widget build(BuildContext context) {
-    final signOutBtn = IconButton(
-      icon: const Icon(FontAwesomeIcons.signOutAlt),
-      color: Colors.white,
-      onPressed: () => _goToLogin(context),
-    );
     return Scaffold(
       appBar: AppBar(
         title: Text('Детали'),

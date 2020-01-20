@@ -44,7 +44,7 @@ class _MainScreenState extends State<MainScreen>
     )); */
   }
 
-  //kinda logs out from the account, duh, obviously! *,..,*
+  //kinda logs out from the account, obviously! *,..,*
   Future<bool> _goToLogin(BuildContext context) {
     return Navigator.of(context)
         .pushReplacementNamed('/')
