@@ -1,11 +1,11 @@
+import 'package:crmc_app/screens/FeedScreen.dart';
 import 'package:crmc_app/screens/fourthScreen.dart';
-import 'package:crmc_app/screens/dealsScreen.dart';
 import 'package:crmc_app/screens/testPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import 'feedScreen.dart';
+import 'dealsScreen.dart';
 
 /*
 Made by 'pure coincidence', and sponsored by 'i keep googling things, and somehow it works'
@@ -56,7 +56,7 @@ class _MainScreenState extends State<MainScreen> {
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          ClientFeedScreen(), // Первый экран с клиентами
+          ClientsScreen(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
           TestPage(), // For the future
           Class4(), // in case of emergency break Class
