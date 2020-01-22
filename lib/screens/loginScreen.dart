@@ -1,57 +1,253 @@
+import 'package:crmc_app/main.dart';
+import 'package:crmc_app/services/auth.dart';
+import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_login/flutter_login.dart';
+import 'package:flutter/rendering.dart';
 
-import 'mainScreen.dart';
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
 
-const users = const {
-  'test': '12345',
-  'hunter': 'hunter',
-};
+class _LoginScreenState extends State<LoginScreen> {
+  FocusNode myFocusNode;
 
-class LoginScreen extends StatelessWidget {
-  static const routeName = '/auth';
-  Duration get loginTime => Duration(milliseconds: 2250);
+  final formKey = GlobalKey<FormState>();
+  String _login;
+  String _password;
 
-  Future<String> _authUser(LoginData data) {
-    print('Логин: ${data.name}, Пароль: ${data.password}');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(data.name)) {
-        return 'Пользователь не существует';
-      }
-      if (users[data.name] != data.password) {
-        return 'Не правильный пароль';
-      }
-      return null;
-    });
+  @override
+  void initState() {
+    super.initState();
+    myFocusNode = FocusNode();
   }
 
-  Future<String> _recoverPassword(String name) {
-    print('Имя: $name');
-    return Future.delayed(loginTime).then((_) {
-      if (!users.containsKey(name)) {
-        return 'Пользователь не существует';
-      }
-      return null;
-    });
+  @override
+  void dispose() {
+    // Clean up the focus node when the Form is disposed
+    myFocusNode.dispose();
+    super.dispose();
   }
 
-  //Login widget from flutterLogin package
   @override
   Widget build(BuildContext context) {
-    return FlutterLogin(
-        title: 'CRM UCO',
-        logo: 'assets/images/uco.png',
-        onLogin: _authUser,
-        onSignup: _authUser,
-        onSubmitAnimationCompleted: () {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => MainScreen(),
-          ));
-        },
-        onRecoverPassword: _recoverPassword,
-        messages: LoginMessages(
-          usernameHint: 'Логин',
-          passwordHint: 'Пароль',
-        ));
+    return FutureBuilder(
+        future: sharePreferences(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.data != null &&
+              snapshot.connectionState == ConnectionState.done) {
+            return Scaffold(
+              backgroundColor: Colors.deepPurple,
+              resizeToAvoidBottomPadding: false,
+              body: Column(
+                children: <Widget>[
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.35,
+                    width: MediaQuery.of(context).size.width,
+                    child: Stack(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: MediaQuery.of(context).size.height * 0.15 -
+                                  50),
+                          height: MediaQuery.of(context).size.height * 0.33,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 80.0, 0.0, 0.0),
+                                child: Image.asset(
+                                  "assets/images/uco.png",
+                                  fit: BoxFit.cover,
+                                  height: 65,
+                                  width: 65,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    0.0, 20.0, 0.0, 0.0),
+                                child: Text(
+                                  "CRMC UCO",
+                                  style: TextStyle(
+                                      color: Colors.orange,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 40),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 290,
+                    width: 320,
+                    child: Card(
+                      semanticContainer: true,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      elevation: 25,
+                      child: Container(
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(20, 12, 20, 10),
+                          child: Form(
+                            key: formKey,
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      0.0, 10.0, 0.0, 0.0),
+                                  child: Text(
+                                    "Введите логин и пароль",
+                                    style: TextStyle(
+                                        color: Colors.black45,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                TextFormField(
+                                  onSaved: (String val) {
+                                    _login = val;
+                                  },
+                                  keyboardType: TextInputType.emailAddress,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                  textInputAction: TextInputAction.next,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.deepPurple[50],
+                                    filled: true,
+                                    prefixIcon: Icon(Icons.person_pin),
+                                    labelText: "Логин",
+                                    contentPadding: new EdgeInsets.symmetric(
+                                        vertical:
+                                            MediaQuery.of(context).size.height *
+                                                0.020,
+                                        horizontal: 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(25)),
+                                    ),
+                                  ),
+                                  onFieldSubmitted: (String value) {
+                                    FocusScope.of(context)
+                                        .requestFocus(myFocusNode);
+                                  },
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                TextFormField(
+                                  onSaved: (String val) {
+                                    _password = val;
+                                  },
+                                  focusNode: myFocusNode,
+                                  obscureText: true,
+                                  keyboardType: TextInputType.text,
+                                  style: TextStyle(
+                                      fontSize: 16, color: Colors.black),
+                                  textInputAction: TextInputAction.done,
+                                  decoration: InputDecoration(
+                                    fillColor: Colors.deepPurple[50],
+                                    filled: true,
+                                    prefixIcon: Icon(Icons.security),
+                                    labelText: "Пароль",
+                                    contentPadding: new EdgeInsets.symmetric(
+                                        vertical:
+                                            MediaQuery.of(context).size.height *
+                                                0.020,
+                                        horizontal: 15.0),
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(25)),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 25,
+                                ),
+                                Container(
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        print("loging in");
+                                        _onLogin();
+                                      },
+                                      child: Container(
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.055,
+                                        width: 125,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepPurple,
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(25))),
+                                        child: Center(
+                                          child: Text(
+                                            "ВОЙТИ",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          } else {
+            return Scaffold(body: Center(child: CircularProgressIndicator()));
+          }
+        });
+  }
+
+  void _onLogin() async {
+    final form = formKey.currentState;
+    if (form.validate()) {
+      form.save();
+      showDialog(
+          context: context,
+          builder: (BuildContext context) => waitingScreen(context));
+      var client = await Auth().authenticationRest(
+        _login,
+        _password,
+      );
+      if (client == accessError) {
+        Navigator.of(context).pop();
+        badLogin("error", "incorrectSignIn");
+        return;
+      }
+      if (client == connectionTimeCode) {
+        Navigator.of(context).pop();
+        badLogin("error", "timeOut");
+        return;
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/main', ModalRoute.withName('/'));
+      }
+    }
+  }
+
+  void badLogin(String title, String subtitle) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return errorAlertDialog(context, title, subtitle);
+        });
   }
 }

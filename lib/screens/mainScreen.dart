@@ -1,47 +1,26 @@
-import 'package:crmc_app/screens/feedScreen.dart';
 import 'package:crmc_app/screens/fourthScreen.dart';
 import 'package:crmc_app/screens/dealsScreen.dart';
-import 'package:crmc_app/screens/testi.dart';
-import 'package:crmc_app/utilities/TransitionRouteObserver.dart';
+import 'package:crmc_app/screens/testPage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import 'feedScreen.dart';
 
 /*
 Made by 'pure coincidence', and sponsored by 'i keep googling things, and somehow it works'
 */
 
 class MainScreen extends StatefulWidget {
-  static const routeName = '/MainScreen';
-
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-class _MainScreenState extends State<MainScreen>
-    with SingleTickerProviderStateMixin, TransitionRouteAware {
-  final routeObserver = TransitionRouteObserver<PageRoute>();
-
-//  static const headerAniInterval =
-  //    const Interval(.1, .3, curve: Curves.easeOut);
-  /* Animation<double> _headerScaleAnimation;
-  AnimationController _loadingController; */
-
+class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
     _pageController = PageController();
-
-    // i thought iam gonna use it, but changed my mind
-    //   _loadingController = AnimationController(
-    ////   vsync: this,
-    //  duration: const Duration(milliseconds: 1250),
-    // );
-    /* _headerScaleAnimation =
-        Tween<double>(begin: .6, end: 1).animate(CurvedAnimation(
-      parent: _loadingController,
-      curve: headerAniInterval,
-    )); */
   }
 
   //kinda logs out from the account, obviously! *,..,*
@@ -77,7 +56,7 @@ class _MainScreenState extends State<MainScreen>
       body: PageView(
         controller: _pageController,
         children: <Widget>[
-          MyHomePage(), // Первый экран с клиентами
+          ClientFeedScreen(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
           TestPage(), // For the future
           Class4(), // in case of emergency break Class

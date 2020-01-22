@@ -7,7 +7,7 @@ class AccessToken {
   oauth2.Client _client;
 
   getAccessToken(String username, String password) async {
-    final authorizationEndpoint = Uri.parse(restApiUrl + "v2/oauth/token?");
+    final authorizationEndpoint = Uri.parse(restApiUrl + "v2/oauth/token");
     final identifier = "client";
     final secret = "secret";
 

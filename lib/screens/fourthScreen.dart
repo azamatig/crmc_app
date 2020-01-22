@@ -8,8 +8,10 @@ class Class4 extends StatefulWidget {
 class _Class4State extends State<Class4> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Text('Demo Screen 4'),
+    return Center(
+      child: Container(
+        child: Text('Demo Screen 4'),
+      ),
     );
   }
 }

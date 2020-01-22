@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 String langValue;
-String restApiUrl = "http://apps.uco.kz:8089/aa/rest/";
+String restApiUrl = "http://192.168.88.101:8078/crmc/rest/";
+String clientEntity = "192.168.88.101:8078/crmc/rest/v2/entities/crmc\$Contact";
 String aToken;
 String userId;
 
@@ -37,4 +40,31 @@ Widget errorAlertDialog(var context, String title, String content) {
       )
     ],
   );
+}
+
+Widget waitingScreen(BuildContext context) {
+  return Scaffold(
+    body: Container(
+      decoration: BoxDecoration(color: Colors.deepPurple),
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width,
+      child: Center(
+          child: CircularProgressIndicator(
+        semanticsLabel: "Ожидание",
+        backgroundColor: Colors.white,
+      )),
+    ),
+  );
+}
+
+// ignore: missing_return
+Future<bool> checkConnection() async {
+  try {
+    final result = await InternetAddress.lookup('192.168.88.101:8078/crmc');
+    if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+      return true;
+    }
+  } on SocketException catch (_) {
+    return false;
+  }
 }
