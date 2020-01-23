@@ -13,7 +13,8 @@ Future<List<Contacts>> _fetchContacts() async {
   Auth provider;
   provider = Auth();
   final client = await provider.client;
-  final url = 'http://192.168.88.101:8078/crmc/rest/v2/entities/crmc\$Contact';
+  final url =
+      'http://192.168.88.101:8078/crmc/rest/v2/entities/crmc\$Contact?view=contact.edit&limit=15&returnNulls=false&dynamicAttributes=true';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
@@ -35,8 +36,13 @@ ListView _contactListView(data) {
       primary: true,
       itemCount: data.length,
       itemBuilder: (context, index) {
-        return _tile(data[index].firstName, data[index].lastName,
-            data[index].instanceName, data[index].legacyId, Icons.work);
+        return _tile(
+            data[index].firstName,
+            data[index].middleName,
+            data[index].lastName,
+            data[index].birthPlace,
+            data[index].nationalIdentifier,
+            Icons.work);
       });
 }
 
@@ -65,8 +71,8 @@ class _ShowClientDataState extends State<ShowClientData> {
   }
 }
 
-Column _tile(String firstName, String lastName, String instanceName,
-        String legacyId, IconData icon) =>
+Column _tile(String firstName, String lastName, String middleName,
+        String nationalIdentifier, String birthPlace, IconData icon) =>
     Column(
       children: <Widget>[
         Row(
@@ -80,7 +86,21 @@ Column _tile(String firstName, String lastName, String instanceName,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      firstName + " " + lastName,
+                      firstName != null ? firstName : 'fn',
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      middleName != null ? middleName : 'mn',
+                      style: TextStyle(
+                          color: Colors.grey.shade800,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      lastName != null ? lastName : 'ln',
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 18.0,
@@ -89,7 +109,7 @@ Column _tile(String firstName, String lastName, String instanceName,
                     Padding(
                       padding: const EdgeInsets.only(top: 16.0),
                       child: Text(
-                        instanceName,
+                        birthPlace != null ? birthPlace : 'Не указано',
                         style: TextStyle(
                             color: Colors.grey.shade500,
                             fontSize: 12.0,
@@ -100,7 +120,9 @@ Column _tile(String firstName, String lastName, String instanceName,
                       height: 10,
                     ),
                     Text(
-                      legacyId,
+                      nationalIdentifier != null
+                          ? nationalIdentifier
+                          : 'Не указан',
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16.0,

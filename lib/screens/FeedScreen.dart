@@ -21,7 +21,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
             Icons.add,
             color: Colors.white,
           ),
-          backgroundColor: Colors.orangeAccent,
+          backgroundColor: Colors.green,
           onPressed: () => Navigator.push(
               context, MaterialPageRoute(builder: (_) => AddNewDeal())),
         ),
