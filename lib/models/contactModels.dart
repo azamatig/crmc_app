@@ -14,93 +14,279 @@ class Contacts {
   String entityName;
   String instanceName;
   String id;
-  String lastName;
-  dynamic annualIncome;
-  dynamic educationType;
-  dynamic experience;
-  dynamic birthPlace;
-  dynamic activityKind;
-  dynamic segment;
-  Currency currency;
-  dynamic resident;
-  dynamic upperMiddleName;
-  dynamic nickName;
-  dynamic sex;
-  dynamic dateOfBirth;
-  dynamic childCount;
-  String upperFirstName;
-  String firstName;
-  List<dynamic> bazisClubCards;
-  dynamic nationality;
-  String upperLastName;
-  String legacyId;
-  dynamic campaign;
-  dynamic middleName;
-  dynamic nationalIdentifier;
-  dynamic party;
-  dynamic maritalStatus;
+  String upperName;
+  List<Address> addresses;
+  List<ContactInfo> contactInfo;
+  ClientStatus clientStatus;
+  String partyType;
+  String nationalIdentifier;
+  Responsible responsible;
 
   Contacts({
     this.entityName,
     this.instanceName,
     this.id,
-    this.lastName,
-    this.annualIncome,
-    this.educationType,
-    this.experience,
-    this.birthPlace,
-    this.activityKind,
-    this.segment,
-    this.currency,
-    this.resident,
-    this.upperMiddleName,
-    this.nickName,
-    this.sex,
-    this.dateOfBirth,
-    this.childCount,
-    this.upperFirstName,
-    this.firstName,
-    this.bazisClubCards,
-    this.nationality,
-    this.upperLastName,
-    this.legacyId,
-    this.campaign,
-    this.middleName,
+    this.upperName,
+    this.addresses,
+    this.contactInfo,
+    this.clientStatus,
+    this.partyType,
     this.nationalIdentifier,
-    this.party,
-    this.maritalStatus,
+    this.responsible,
   });
 
-  factory Contacts.fromJson(Map<String, dynamic> json) => Contacts(
+  factory Contacts.fromJson(Map<String, dynamic> json) {
+    var list = json['contactInfo'] as List;
+    List<ContactInfo> dataList =
+        list.map((i) => ContactInfo.fromJson(i)).toList();
+    return Contacts(
+      entityName: json["_entityName"],
+      instanceName: json["_instanceName"],
+      id: json["id"],
+      upperName: json["upperName"],
+      addresses:
+          List<Address>.from(json["addresses"].map((x) => Address.fromJson(x))),
+      contactInfo: dataList,
+      clientStatus: ClientStatus.fromJson(json["clientStatus"]),
+      partyType: json["partyType"],
+      nationalIdentifier: json["nationalIdentifier"],
+      responsible: Responsible.fromJson(json["responsible"]),
+    );
+  }
+  Map<String, dynamic> toJson() => {
+        "_entityName": entityName,
+        "_instanceName": instanceName,
+        "id": id,
+        "upperName": upperName,
+        "addresses": List<dynamic>.from(addresses.map((x) => x.toJson())),
+        "contactInfo": List<dynamic>.from(contactInfo.map((x) => x.toJson())),
+        "clientStatus": clientStatus.toJson(),
+        "partyType": partyType,
+        "nationalIdentifier": nationalIdentifier,
+        "responsible": responsible.toJson(),
+      };
+}
+
+class Address {
+  String entityName;
+  String instanceName;
+  String id;
+  String legacyAddress;
+  String streetAddressLang1;
+  String streetAddressLang2;
+  String streetAddress;
+  String legacyId;
+
+  Address({
+    this.entityName,
+    this.instanceName,
+    this.id,
+    this.legacyAddress,
+    this.streetAddressLang1,
+    this.streetAddressLang2,
+    this.streetAddress,
+    this.legacyId,
+  });
+
+  factory Address.fromJson(Map<String, dynamic> json) => Address(
+        entityName: json["_entityName"],
+        instanceName: json["_instanceName"],
+        id: json["id"],
+        legacyAddress: json["legacyAddress"],
+        streetAddressLang1: json["streetAddressLang1"],
+        streetAddressLang2: json["streetAddressLang2"],
+        streetAddress: json["streetAddress"],
+        legacyId: json["legacyID"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_entityName": entityName,
+        "_instanceName": instanceName,
+        "id": id,
+        "legacyAddress": legacyAddress,
+        "streetAddressLang1": streetAddressLang1,
+        "streetAddressLang2": streetAddressLang2,
+        "streetAddress": streetAddress,
+        "legacyID": legacyId,
+      };
+}
+
+class ClientStatus {
+  String entityName;
+  String id;
+  String languageValue;
+
+  ClientStatus({
+    this.entityName,
+    this.id,
+    this.languageValue,
+  });
+
+  factory ClientStatus.fromJson(Map<String, dynamic> json) => ClientStatus(
+        entityName: json["_entityName"],
+        id: json["id"],
+        languageValue: json["languageValue"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_entityName": entityName,
+        "id": id,
+        "languageValue": languageValue,
+      };
+}
+
+class ContactInfo {
+  String entityName;
+  String instanceName;
+  String id;
+  bool active;
+  String valueUnformatted;
+  bool doNotDisturb;
+  String legacyId;
+  String value;
+  Type type;
+
+  ContactInfo({
+    this.entityName,
+    this.instanceName,
+    this.id,
+    this.active,
+    this.valueUnformatted,
+    this.doNotDisturb,
+    this.legacyId,
+    this.value,
+    this.type,
+  });
+
+  factory ContactInfo.fromJson(Map<String, dynamic> json) => ContactInfo(
+        entityName: json["_entityName"],
+        instanceName: json["_instanceName"],
+        id: json["id"],
+        active: json["active"],
+        valueUnformatted: json["valueUnformatted"],
+        doNotDisturb: json["doNotDisturb"],
+        legacyId: json["legacyID"],
+        value: json["value"],
+        type: json["type"] == null ? null : Type.fromJson(json["type"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_entityName": entityName,
+        "_instanceName": instanceName,
+        "id": id,
+        "active": active,
+        "valueUnformatted": valueUnformatted,
+        "doNotDisturb": doNotDisturb,
+        "legacyID": legacyId,
+        "value": value,
+        "type": type == null ? null : type.toJson(),
+      };
+}
+
+class Type {
+  String entityName;
+  String instanceName;
+  String id;
+  String code;
+  String languageValue;
+  int order;
+  bool isSystemRecord;
+  String langValue3;
+  bool active;
+  String langValue2;
+  String langValue1;
+
+  Type({
+    this.entityName,
+    this.instanceName,
+    this.id,
+    this.code,
+    this.languageValue,
+    this.order,
+    this.isSystemRecord,
+    this.langValue3,
+    this.active,
+    this.langValue2,
+    this.langValue1,
+  });
+
+  factory Type.fromJson(Map<String, dynamic> json) => Type(
+        entityName: json["_entityName"],
+        instanceName: json["_instanceName"],
+        id: json["id"],
+        code: json["code"],
+        languageValue: json["languageValue"],
+        order: json["order"],
+        isSystemRecord: json["isSystemRecord"],
+        langValue3: json["langValue3"],
+        active: json["active"],
+        langValue2: json["langValue2"],
+        langValue1: json["langValue1"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_entityName": entityName,
+        "_instanceName": instanceName,
+        "id": id,
+        "code": code,
+        "languageValue": languageValue,
+        "order": order,
+        "isSystemRecord": isSystemRecord,
+        "langValue3": langValue3,
+        "active": active,
+        "langValue2": langValue2,
+        "langValue1": langValue1,
+      };
+}
+
+class Responsible {
+  String entityName;
+  String instanceName;
+  String id;
+  String lastName;
+  String email;
+  String innerNumber;
+  String updatedBy;
+  String fullName;
+  String firstName;
+  String mobilePhone;
+  String name;
+  String middleName;
+  String position;
+  String shortName;
+
+  Responsible({
+    this.entityName,
+    this.instanceName,
+    this.id,
+    this.lastName,
+    this.email,
+    this.innerNumber,
+    this.updatedBy,
+    this.fullName,
+    this.firstName,
+    this.mobilePhone,
+    this.name,
+    this.middleName,
+    this.position,
+    this.shortName,
+  });
+
+  factory Responsible.fromJson(Map<String, dynamic> json) => Responsible(
         entityName: json["_entityName"],
         instanceName: json["_instanceName"],
         id: json["id"],
         lastName: json["lastName"],
-        annualIncome: json["annualIncome"],
-        educationType: json["educationType"],
-        experience: json["experience"],
-        birthPlace: json["birthPlace"],
-        activityKind: json["activityKind"],
-        segment: json["segment"],
-        currency: Currency.fromJson(json["currency"]),
-        resident: json["resident"],
-        upperMiddleName: json["upperMiddleName"],
-        nickName: json["nickName"],
-        sex: json["sex"],
-        dateOfBirth: json["dateOfBirth"],
-        childCount: json["childCount"],
-        upperFirstName: json["upperFirstName"],
+        email: json["email"],
+        innerNumber: json["innerNumber"],
+        updatedBy: json["updatedBy"],
+        fullName: json["fullName"],
         firstName: json["firstName"],
-        bazisClubCards:
-            List<dynamic>.from(json["bazisClubCards"].map((x) => x)),
-        nationality: json["nationality"],
-        upperLastName: json["upperLastName"],
-        legacyId: json["legacyID"],
-        campaign: json["campaign"],
+        mobilePhone: json["mobilePhone"],
+        name: json["name"],
         middleName: json["middleName"],
-        nationalIdentifier: json["nationalIdentifier"],
-        party: json["party"],
-        maritalStatus: json["maritalStatus"],
+        position: json["position"],
+        shortName: json["shortName"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -108,125 +294,15 @@ class Contacts {
         "_instanceName": instanceName,
         "id": id,
         "lastName": lastName,
-        "annualIncome": annualIncome,
-        "educationType": educationType,
-        "experience": experience,
-        "birthPlace": birthPlace,
-        "activityKind": activityKind,
-        "segment": segment,
-        "currency": currency.toJson(),
-        "resident": resident,
-        "upperMiddleName": upperMiddleName,
-        "nickName": nickName,
-        "sex": sex,
-        "dateOfBirth": dateOfBirth,
-        "childCount": childCount,
-        "upperFirstName": upperFirstName,
+        "email": email,
+        "innerNumber": innerNumber,
+        "updatedBy": updatedBy,
+        "fullName": fullName,
         "firstName": firstName,
-        "bazisClubCards": List<dynamic>.from(bazisClubCards.map((x) => x)),
-        "nationality": nationality,
-        "upperLastName": upperLastName,
-        "legacyID": legacyId,
-        "campaign": campaign,
+        "mobilePhone": mobilePhone,
+        "name": name,
         "middleName": middleName,
-        "nationalIdentifier": nationalIdentifier,
-        "party": party,
-        "maritalStatus": maritalStatus,
-      };
-}
-
-class Currency {
-  String entityName;
-  String instanceName;
-  String id;
-  dynamic description4;
-  dynamic description5;
-  String code;
-  dynamic endDate;
-  String description2;
-  String description3;
-  String description1;
-  String languageValue;
-  int order;
-  bool isSystemRecord;
-  dynamic langValue5;
-  dynamic langValue4;
-  String langValue3;
-  bool active;
-  String langValue2;
-  dynamic legacyId;
-  String langValue1;
-  dynamic startDate;
-
-  Currency({
-    this.entityName,
-    this.instanceName,
-    this.id,
-    this.description4,
-    this.description5,
-    this.code,
-    this.endDate,
-    this.description2,
-    this.description3,
-    this.description1,
-    this.languageValue,
-    this.order,
-    this.isSystemRecord,
-    this.langValue5,
-    this.langValue4,
-    this.langValue3,
-    this.active,
-    this.langValue2,
-    this.legacyId,
-    this.langValue1,
-    this.startDate,
-  });
-
-  factory Currency.fromJson(Map<String, dynamic> json) => Currency(
-        entityName: json["_entityName"],
-        instanceName: json["_instanceName"],
-        id: json["id"],
-        description4: json["description4"],
-        description5: json["description5"],
-        code: json["code"],
-        endDate: json["endDate"],
-        description2: json["description2"],
-        description3: json["description3"],
-        description1: json["description1"],
-        languageValue: json["languageValue"],
-        order: json["order"],
-        isSystemRecord: json["isSystemRecord"],
-        langValue5: json["langValue5"],
-        langValue4: json["langValue4"],
-        langValue3: json["langValue3"],
-        active: json["active"],
-        langValue2: json["langValue2"],
-        legacyId: json["legacyID"],
-        langValue1: json["langValue1"],
-        startDate: json["startDate"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "_entityName": entityName,
-        "_instanceName": instanceName,
-        "id": id,
-        "description4": description4,
-        "description5": description5,
-        "code": code,
-        "endDate": endDate,
-        "description2": description2,
-        "description3": description3,
-        "description1": description1,
-        "languageValue": languageValue,
-        "order": order,
-        "isSystemRecord": isSystemRecord,
-        "langValue5": langValue5,
-        "langValue4": langValue4,
-        "langValue3": langValue3,
-        "active": active,
-        "langValue2": langValue2,
-        "legacyID": legacyId,
-        "langValue1": langValue1,
-        "startDate": startDate,
+        "position": position,
+        "shortName": shortName,
       };
 }

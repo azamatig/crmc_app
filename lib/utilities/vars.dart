@@ -1,13 +1,12 @@
 import 'dart:io';
 
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 String langValue;
-String restApiUrl = "http://192.168.88.101:8078/crmc/rest/";
-String clientEntity = "192.168.88.101:8078/crmc/rest/v2/entities/crmc\$Contact";
+String restApiUrl = "http://192.168.88.100:8078/crmc/rest/";
+String clientEntity = "192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contact";
 String contractEntity =
-    "192.168.88.101:8078/crmc/rest/v2/entities/crmc\$Contract";
+    "192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contract";
 String aToken;
 String userId;
 
@@ -72,63 +71,7 @@ Future<bool> checkConnection() async {
   }
 }
 
-class Card1 extends StatelessWidget {
-  final TextEditingController _lastNameController = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return ExpandableNotifier(
-        child: Padding(
-      padding: const EdgeInsets.all(10),
-      child: Card(
-        child: Column(
-          children: <Widget>[
-            ScrollOnExpand(
-              scrollOnExpand: true,
-              scrollOnCollapse: false,
-              child: ExpandablePanel(
-                tapHeaderToExpand: true,
-                tapBodyToCollapse: true,
-                theme: ExpandableThemeData(
-                    headerAlignment: ExpandablePanelHeaderAlignment.center),
-                header: Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text(
-                      "Тип договора",
-                      style: Theme.of(context).textTheme.body2,
-                    )),
-                expanded: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    for (var _ in Iterable.generate(1))
-                      TextFormField(
-                        controller: _lastNameController,
-                        style: TextStyle(fontSize: 18.0),
-                        decoration: InputDecoration(
-                          icon: Icon(
-                            Icons.text_fields,
-                            size: 30.0,
-                          ),
-                          labelText: 'item 1',
-                        ),
-                      ),
-                  ],
-                ),
-                builder: (_, collapsed, expanded) {
-                  return Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10, bottom: 10),
-                    child: Expandable(
-                      collapsed: collapsed,
-                      expanded: expanded,
-                      theme: ExpandableThemeData(crossFadePoint: 0),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    ));
-  }
-}
+const BorderRadiusGeometry BORDER_RADIUS =
+    BorderRadius.all(Radius.circular(8.0));
+const EdgeInsets SMALL_INSESTS = EdgeInsets.all(8.0);
+const EdgeInsets DEFAULT_INSESTS = EdgeInsets.all(16.0);

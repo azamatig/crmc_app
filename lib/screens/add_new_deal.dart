@@ -1,4 +1,3 @@
-import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -73,7 +72,6 @@ class _AddNewDealState extends State<AddNewDeal> {
                         return null;
                       },
                     ),
-                    Card1(),
                     TextFormField(
                       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),

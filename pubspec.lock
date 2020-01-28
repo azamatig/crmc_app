@@ -77,14 +77,14 @@ packages:
       name: expandable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.2"
+    version: "4.1.2"
   ff_navigation_bar:
     dependency: "direct main"
     description:
       name: ff_navigation_bar
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "0.1.4"
   flushbar:
     dependency: transitive
     description:
@@ -110,7 +110,14 @@ packages:
       name: flutter_login
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.10+1"
+    version: "1.0.14"
+  flutter_pagewise:
+    dependency: "direct main"
+    description:
+      name: flutter_pagewise
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.2.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -170,6 +177,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4"
   oauth2:
     dependency: "direct main"
     description:
@@ -218,7 +232,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.2.0"
+    version: "4.0.2"
   quiver:
     dependency: transitive
     description:
@@ -226,13 +240,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.5"
+  search_page:
+    dependency: "direct main"
+    description:
+      name: search_page
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   shared_preferences:
     dependency: "direct main"
     description:
       name: shared_preferences
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.6"
+    version: "0.5.6+1"
   shared_preferences_macos:
     dependency: transitive
     description:
