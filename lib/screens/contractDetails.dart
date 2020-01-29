@@ -1,3 +1,4 @@
+import 'package:crmc_app/screens/editors/edit_contract_screen.dart';
 import 'package:flutter/material.dart';
 
 class ContractDetailsScreen extends StatefulWidget {
@@ -11,11 +12,40 @@ class ContractDetailsScreen extends StatefulWidget {
       this.shortName, this.code, this.name);
 
   @override
-  _ContractDetailsScreenState createState() => _ContractDetailsScreenState();
+  _ContractDetailsScreenState createState() => _ContractDetailsScreenState(
+      this.mainContract,
+      this.amountAndCurrency,
+      this.shortName,
+      this.code,
+      this.name);
 }
 
 class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
-  Widget _details() {
+  final String mainContract;
+  final String amountAndCurrency;
+  final String shortName;
+  final String code;
+  final String name;
+
+  _ContractDetailsScreenState(this.mainContract, this.amountAndCurrency,
+      this.shortName, this.code, this.name);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            'Информация',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      body: _details(mainContract, amountAndCurrency, shortName, code, name),
+    );
+  }
+
+  Widget _details(mainContract, amountAndCurrency, shortName, code, name) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -52,7 +82,15 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
                             icon: Icon(
                               Icons.edit,
                             ),
-                            onPressed: () {},
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => EditContractScreen(
+                                        mainContract,
+                                        amountAndCurrency,
+                                        shortName,
+                                        code,
+                                        name))),
                           ),
                         ],
                       ),
@@ -245,21 +283,6 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Информация',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-      body: _details(),
     );
   }
 }

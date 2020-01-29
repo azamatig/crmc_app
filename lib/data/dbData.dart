@@ -26,6 +26,8 @@ class DBProvider {
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute(crmDB);
+      await db.execute(contacts);
+      await db.execute(contracts);
       await db.rawInsert(
           "INSERT INTO CRMDB(id,login,password,userId) VALUES (1,'null', 'null','null')");
     });

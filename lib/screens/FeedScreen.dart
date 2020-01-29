@@ -4,7 +4,7 @@ xxx: Я как-то видел мужика, который себе в бане
 @bash.im
 */
 import 'package:crmc_app/data/clientData.dart';
-import 'package:crmc_app/screens/add_new_deal.dart';
+import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
 
 class ClientsScreen extends StatefulWidget {
@@ -17,13 +17,14 @@ class _ClientsScreenState extends State<ClientsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+          heroTag: 'tag1',
           child: Icon(
             Icons.add,
             color: Colors.white,
           ),
           backgroundColor: Colors.green,
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddNewDeal())),
+              context, MaterialPageRoute(builder: (_) => AddNewContact())),
         ),
         body: ShowClientData());
   }

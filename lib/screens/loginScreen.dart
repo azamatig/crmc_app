@@ -56,7 +56,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: <Widget>[
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
-                                    0.0, 80.0, 0.0, 0.0),
+                                    0.0, 60.0, 0.0, 0.0),
                                 child: Image.asset(
                                   "assets/images/uco.png",
                                   fit: BoxFit.cover,
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(
-                                    0.0, 20.0, 0.0, 0.0),
+                                    0.0, 10.0, 0.0, 0.0),
                                 child: Text(
                                   "CRMC UCO",
                                   style: TextStyle(

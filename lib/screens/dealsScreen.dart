@@ -17,6 +17,7 @@ class _ContractsState extends State<Contracts> {
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+          heroTag: 'tag2',
           child: Icon(
             Icons.add,
             color: Colors.white,

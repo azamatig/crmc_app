@@ -1,7 +1,9 @@
 import 'package:crmc_app/screens/loginScreen.dart';
 import 'package:crmc_app/screens/mainScreen.dart';
+import 'package:crmc_app/services/common.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:pedantic/pedantic.dart' show unawaited;
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -11,6 +13,7 @@ void main() async {
 Future<bool> sharePreferences() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
   langValue = preferences.getString("langValue");
+  unawaited(truncateDB());
   if (langValue == null) {
     await preferences.setString("langValue", "ru");
   }
@@ -63,7 +66,17 @@ class MyApp extends StatelessWidget {
             overline: TextStyle(fontFamily: 'NotoSans'),
           ),
         ),
-        home: LoginScreen(),
+        home: FutureBuilder<Object>(
+            future: sharePreferences(),
+            builder: (BuildContext context, AsyncSnapshot snapshot) {
+              if (snapshot.data != null &&
+                  snapshot.connectionState == ConnectionState.done) {
+                return LoginScreen();
+              } else {
+                return Scaffold(
+                    body: Center(child: CircularProgressIndicator()));
+              }
+            }),
         routes: <String, WidgetBuilder>{
           '/login': (BuildContext context) => LoginScreen(),
           '/main': (BuildContext context) => MainScreen(),

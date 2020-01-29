@@ -1,3 +1,4 @@
+import 'package:crmc_app/screens/editors/edit_contact_screen.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatefulWidget {
@@ -8,15 +9,49 @@ class DetailsScreen extends StatefulWidget {
   final String fullName;
   final String value;
 
-  DetailsScreen(this.value, this.languageValue, this.partyType, this.upperName,
-      this.nationalIdentifier, this.fullName);
+  DetailsScreen(this.upperName, this.partyType, this.nationalIdentifier,
+      this.languageValue, this.fullName, this.value);
 
   @override
-  _DetailsScreenState createState() => _DetailsScreenState();
+  _DetailsScreenState createState() => _DetailsScreenState(
+      this.upperName,
+      this.partyType,
+      this.nationalIdentifier,
+      this.languageValue,
+      this.fullName,
+      this.value);
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  Widget _details() {
+  final String upperName;
+  final String partyType;
+  final String nationalIdentifier;
+  final String languageValue;
+  final String fullName;
+  final String value;
+
+  _DetailsScreenState(this.upperName, this.partyType, this.nationalIdentifier,
+      this.languageValue, this.fullName, this.value);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        title: Center(
+          child: Text(
+            'Информация',
+            style: TextStyle(color: Colors.white),
+          ),
+        ),
+      ),
+      body: _details(upperName, partyType, nationalIdentifier, languageValue,
+          fullName, value),
+    );
+  }
+
+  Widget _details(upperName, partyType, nationalIdentifier, languageValue,
+      fullName, value) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -53,7 +88,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             icon: Icon(
                               Icons.edit,
                             ),
-                            onPressed: () {},
+                            onPressed: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => EditContactScreen(
+                                        upperName,
+                                        partyType,
+                                        nationalIdentifier,
+                                        languageValue,
+                                        fullName,
+                                        value))),
                           ),
                         ],
                       ),
@@ -246,21 +290,6 @@ class _DetailsScreenState extends State<DetailsScreen> {
           ),
         ],
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Center(
-          child: Text(
-            'Информация',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-      body: _details(),
     );
   }
 }

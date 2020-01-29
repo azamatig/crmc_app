@@ -15,7 +15,7 @@ Future<List<Contracts>> _fetchContracts() async {
   provider = Auth();
   final client = await provider.client;
   final url =
-      'http://192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contract?returnNulls=false&dynamicAttributes=true&view=contract.edit&limit=5';
+      'http://192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contract?returnNulls=false&dynamicAttributes=true&view=contract.edit&limit=30';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
@@ -31,10 +31,7 @@ Future<List<Contracts>> _fetchContracts() async {
 
 ListView _contractListView(data) {
   return ListView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.all(0.0),
-      scrollDirection: Axis.vertical,
-      primary: true,
+      itemExtent: 232,
       itemCount: data.length,
       itemBuilder: (context, index) {
         return _tileContract(
@@ -48,7 +45,11 @@ ListView _contractListView(data) {
       });
 }
 
-class _ShowContractDataState extends State<ShowContractData> {
+class _ShowContractDataState extends State<ShowContractData>
+    with AutomaticKeepAliveClientMixin<ShowContractData> {
+  @override
+  bool get wantKeepAlive => true;
+
   Future<List<Contracts>> _future;
   @override
   void initState() {
@@ -57,6 +58,7 @@ class _ShowContractDataState extends State<ShowContractData> {
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return FutureBuilder<List<Contracts>>(
       future: _future,

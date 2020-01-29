@@ -11,12 +11,13 @@ class ShowClientData extends StatefulWidget {
   _ShowClientDataState createState() => _ShowClientDataState();
 }
 
+//List fetcher
 Future<List<Contacts>> _fetchContacts() async {
   Auth provider;
   provider = Auth();
   final client = await provider.client;
   final url = restApiUrl +
-      'v2/entities/crm\$Party?returnNulls=false&dynamicAttributes=false&view=party.edit&limit=7';
+      'v2/entities/crm\$Party?returnNulls=false&dynamicAttributes=false&view=party.edit&limit=10';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
@@ -28,9 +29,11 @@ Future<List<Contacts>> _fetchContacts() async {
   }
 }
 
+//ListView of things
 ListView _contactListView(data) {
   return ListView.builder(
-      itemCount: data.length,
+      itemExtent: 227.0,
+      itemCount: 5,
       itemBuilder: (context, index) {
         return _tile(
             data[index].upperName,
@@ -44,15 +47,23 @@ ListView _contactListView(data) {
       });
 }
 
-class _ShowClientDataState extends State<ShowClientData> {
+class _ShowClientDataState extends State<ShowClientData>
+    with AutomaticKeepAliveClientMixin<ShowClientData> {
   Future<List<Contacts>> _future;
+
+  @override
+  bool get wantKeepAlive => true;
+
   @override
   void initState() {
-    _future = _fetchContacts();
+    setState(() {
+      _future = _fetchContacts();
+    });
     super.initState();
   }
 
   @override
+  // ignore: must_call_super
   Widget build(BuildContext context) {
     return FutureBuilder<List<Contacts>>(
       future: _future,
@@ -69,6 +80,7 @@ class _ShowClientDataState extends State<ShowClientData> {
   }
 }
 
+//ListTile when fetching data
 Column _tile(
         String upperName,
         String partyType,
@@ -134,7 +146,7 @@ Column _tile(
                       languageValue != null ? languageValue : '-',
                       style: TextStyle(
                           color: Colors.grey.shade800,
-                          fontSize: 18.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -155,7 +167,7 @@ Column _tile(
                             : 'ИИН: Не указано',
                         style: TextStyle(
                             color: Colors.grey.shade800,
-                            fontSize: 12.0,
+                            fontSize: 14.0,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -173,7 +185,7 @@ Column _tile(
                       value != null ? value : '-',
                       style: TextStyle(
                           color: Colors.grey.shade800,
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.bold),
                     ),
                     SizedBox(
@@ -190,7 +202,7 @@ Column _tile(
                       fullName != null ? fullName : '-',
                       style: TextStyle(
                           color: Colors.grey.shade800,
-                          fontSize: 16.0,
+                          fontSize: 14.0,
                           fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -201,8 +213,8 @@ Column _tile(
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => DetailsScreen(value, languageValue,
-                          partyType, upperName, nationalIdentifier, fullName))),
+                      builder: (_) => DetailsScreen(upperName, partyType,
+                          nationalIdentifier, languageValue, fullName, value))),
               icon: Icon(Icons.arrow_forward_ios),
               color: Colors.black45,
             )

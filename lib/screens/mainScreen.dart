@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:crmc_app/screens/FeedScreen.dart';
 import 'package:crmc_app/screens/fourthDemoScreen.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
@@ -18,9 +20,20 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-  void initState() {
-    super.initState();
-    _pageController = PageController();
+  void dispose() {
+    super.dispose();
+  }
+
+  PageController pageController = PageController(initialPage: 0);
+  StreamController<int> indexController = StreamController<int>.broadcast();
+  int _currentTab = 0;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _onTap(int index) {
+    setState(() {
+      _currentTab = index;
+      pageController.jumpToPage(index);
+    });
   }
 
   //kinda logs out from the account, obviously! *,..,*
@@ -30,9 +43,6 @@ class _MainScreenState extends State<MainScreen> {
         // we don't want to pop the screen, just replace it completely
         .then((_) => false);
   }
-
-  int _currentTab = 0;
-  PageController _pageController;
 
   @override
   Widget build(BuildContext context) {
@@ -54,32 +64,19 @@ class _MainScreenState extends State<MainScreen> {
         title: Text('CRM - Construction'),
       ),
       body: PageView(
-        controller: _pageController,
+        physics: NeverScrollableScrollPhysics(),
+        onPageChanged: (index) => indexController.add(index),
+        controller: pageController,
         children: <Widget>[
           ClientsScreen(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
           TestPage(), // For the future
           Class4(), // in case of emergency break Class
         ],
-        onPageChanged: (int index) {
-          setState(() {
-            _currentTab = index;
-          });
-        },
       ),
       bottomNavigationBar: CupertinoTabBar(
         currentIndex: _currentTab,
-        onTap: (int index) {
-          setState(() {
-            _currentTab = index;
-          });
-
-          _pageController.animateToPage(
-            index,
-            duration: Duration(milliseconds: 300),
-            curve: Curves.easeIn,
-          );
-        },
+        onTap: _onTap,
         activeColor: Colors.black,
         items: [
           BottomNavigationBarItem(
