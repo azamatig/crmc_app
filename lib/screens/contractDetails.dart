@@ -69,7 +69,7 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Информация о Клиенте',
+                              'Информация о Договоре',
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
                                 fontSize: 20,

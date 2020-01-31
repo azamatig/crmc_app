@@ -35,9 +35,6 @@ dependencies:
   sqflite: ^1.2.0
   path_provider: ^1.5.1
   http: ^0.12.0+4
-  flutter_pagewise: ^1.2.3
-  search_page: ^1.0.0
-  lazy_load_scrollview: 1.0.1
 
 
 

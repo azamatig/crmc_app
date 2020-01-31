@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:crmc_app/models/contactModels.dart';
+import 'package:crmc_app/models/PartyModel.dart';
 import 'package:crmc_app/screens/contactDetails.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
@@ -12,18 +12,19 @@ class ShowClientData extends StatefulWidget {
 }
 
 //List fetcher
-Future<List<Contacts>> _fetchContacts() async {
+Future<List<PartyEntity>> _fetchContacts() async {
   Auth provider;
   provider = Auth();
   final client = await provider.client;
-  final url = restApiUrl +
-      'v2/entities/crm\$Party?returnNulls=false&dynamicAttributes=false&view=party.edit&limit=10';
+  final url = restApiUrl + 'v2/entities/crm\$Party?view=party.browse&limit=50';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
-    return jsonResponse.map((contacts) => Contacts.fromJson(contacts)).toList();
+    return jsonResponse
+        .map((partyEntity) => PartyEntity.fromJson(partyEntity))
+        .toList();
   } else {
     throw Exception('Failed to load Clients from REST API');
   }
@@ -33,15 +34,15 @@ Future<List<Contacts>> _fetchContacts() async {
 ListView _contactListView(data) {
   return ListView.builder(
       itemExtent: 227.0,
-      itemCount: 5,
+      itemCount: data.length,
       itemBuilder: (context, index) {
         return _tile(
-            data[index].upperName,
-            data[index].partyType,
+            data[index].name,
+            data[index].resident,
             data[index].nationalIdentifier,
+            data[index].responsible.shortName,
             data[index].clientStatus.languageValue,
-            data[index].responsible.fullName,
-            data[index].contactInfo[0].value,
+            data[index].id,
             Icons.work,
             context);
       });
@@ -49,7 +50,7 @@ ListView _contactListView(data) {
 
 class _ShowClientDataState extends State<ShowClientData>
     with AutomaticKeepAliveClientMixin<ShowClientData> {
-  Future<List<Contacts>> _future;
+  Future<List<PartyEntity>> _future;
 
   @override
   bool get wantKeepAlive => true;
@@ -65,11 +66,11 @@ class _ShowClientDataState extends State<ShowClientData>
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Contacts>>(
+    return FutureBuilder<List<PartyEntity>>(
       future: _future,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          List<Contacts> data = snapshot.data;
+          List<PartyEntity> data = snapshot.data;
           return _contactListView(data);
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
@@ -80,14 +81,14 @@ class _ShowClientDataState extends State<ShowClientData>
   }
 }
 
-//ListTile when fetching data
+//ListTile after successful fetching data
 Column _tile(
-        String upperName,
-        String partyType,
+        String name,
+        bool resident,
         String nationalIdentifier,
+        String shortName,
         String languageValue,
-        String fullName,
-        String value,
+        String id,
         IconData icon,
         context) =>
     Column(
@@ -123,7 +124,7 @@ Column _tile(
                       child: Row(
                         children: <Widget>[
                           Text(
-                            upperName != null ? upperName : '-',
+                            name != null ? name : '-',
                             style: TextStyle(
                                 color: Colors.grey.shade800,
                                 fontSize: 14.0,
@@ -175,14 +176,14 @@ Column _tile(
                       height: 6,
                     ),
                     Text(
-                      'Моб.телефон',
+                      'Резидентство',
                       style: TextStyle(
                           color: Colors.grey.shade500,
                           fontSize: 12.0,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      value != null ? value : '-',
+                      resident != false ? 'Резидент' : '-',
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 14.0,
@@ -199,7 +200,7 @@ Column _tile(
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      fullName != null ? fullName : '-',
+                      shortName != null ? shortName : '-',
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 14.0,
@@ -210,11 +211,8 @@ Column _tile(
               ),
             ),
             IconButton(
-              onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (_) => DetailsScreen(upperName, partyType,
-                          nationalIdentifier, languageValue, fullName, value))),
+              onPressed: () => Navigator.push(context,
+                  MaterialPageRoute(builder: (_) => DetailsScreen(id))),
               icon: Icon(Icons.arrow_forward_ios),
               color: Colors.black45,
             )

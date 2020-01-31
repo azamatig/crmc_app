@@ -4,305 +4,246 @@
 
 import 'dart:convert';
 
-List<Contacts> contactsFromJson(String str) =>
-    List<Contacts>.from(json.decode(str).map((x) => Contacts.fromJson(x)));
+Contacts contactsFromJson(String str) => Contacts.fromMap(json.decode(str));
 
-String contactsToJson(List<Contacts> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String contactsToJson(Contacts data) => json.encode(data.toMap());
 
 class Contacts {
   String entityName;
   String instanceName;
   String id;
-  String upperName;
+  ResidenceCountry residenceCountry;
   List<Address> addresses;
+  Responsible responsible;
+  String upperName;
   List<ContactInfo> contactInfo;
   ClientStatus clientStatus;
-  String partyType;
-  String nationalIdentifier;
-  Responsible responsible;
+  String upperMiddleName;
+  List<ContactIdentityDocument> contactIdentityDocuments;
 
   Contacts({
     this.entityName,
     this.instanceName,
     this.id,
-    this.upperName,
+    this.residenceCountry,
     this.addresses,
+    this.responsible,
+    this.upperName,
     this.contactInfo,
     this.clientStatus,
-    this.partyType,
-    this.nationalIdentifier,
-    this.responsible,
+    this.upperMiddleName,
+    this.contactIdentityDocuments,
   });
 
-  factory Contacts.fromJson(Map<String, dynamic> json) {
-    var list = json['contactInfo'] as List;
-    List<ContactInfo> dataList =
-        list.map((i) => ContactInfo.fromJson(i)).toList();
-    return Contacts(
-      entityName: json["_entityName"],
-      instanceName: json["_instanceName"],
-      id: json["id"],
-      upperName: json["upperName"],
-      addresses:
-          List<Address>.from(json["addresses"].map((x) => Address.fromJson(x))),
-      contactInfo: dataList,
-      clientStatus: ClientStatus.fromJson(json["clientStatus"]),
-      partyType: json["partyType"],
-      nationalIdentifier: json["nationalIdentifier"],
-      responsible: Responsible.fromJson(json["responsible"]),
-    );
-  }
-  Map<String, dynamic> toJson() => {
+  factory Contacts.fromMap(Map<String, dynamic> json) => Contacts(
+        entityName: json["_entityName"],
+        instanceName: json["_instanceName"],
+        id: json["id"],
+        residenceCountry: ResidenceCountry.fromMap(json["residenceCountry"]),
+        addresses: List<Address>.from(
+            json["addresses"].map((x) => Address.fromMap(x))),
+        responsible: Responsible.fromMap(json["responsible"]),
+        upperName: json["upperName"],
+        contactInfo: List<ContactInfo>.from(
+            json["contactInfo"].map((x) => ContactInfo.fromMap(x))),
+        clientStatus: ClientStatus.fromMap(json["clientStatus"]),
+        upperMiddleName: json["upperMiddleName"],
+        contactIdentityDocuments: List<ContactIdentityDocument>.from(
+            json["contactIdentityDocuments"]
+                .map((x) => ContactIdentityDocument.fromMap(x))),
+      );
+
+  Map<String, dynamic> toMap() => {
         "_entityName": entityName,
         "_instanceName": instanceName,
         "id": id,
+        "residenceCountry": residenceCountry.toMap(),
+        "addresses": List<dynamic>.from(addresses.map((x) => x.toMap())),
+        "responsible": responsible.toMap(),
         "upperName": upperName,
-        "addresses": List<dynamic>.from(addresses.map((x) => x.toJson())),
-        "contactInfo": List<dynamic>.from(contactInfo.map((x) => x.toJson())),
-        "clientStatus": clientStatus.toJson(),
-        "partyType": partyType,
-        "nationalIdentifier": nationalIdentifier,
-        "responsible": responsible.toJson(),
+        "contactInfo": List<dynamic>.from(contactInfo.map((x) => x.toMap())),
+        "clientStatus": clientStatus.toMap(),
+        "upperMiddleName": upperMiddleName,
+        "contactIdentityDocuments":
+            List<dynamic>.from(contactIdentityDocuments.map((x) => x.toMap())),
       };
 }
 
 class Address {
-  String entityName;
-  String instanceName;
-  String id;
   String legacyAddress;
-  String streetAddressLang1;
-  String streetAddressLang2;
-  String streetAddress;
-  String legacyId;
+  List<Party> parties;
+  String fullAddress;
 
   Address({
-    this.entityName,
-    this.instanceName,
-    this.id,
     this.legacyAddress,
-    this.streetAddressLang1,
-    this.streetAddressLang2,
-    this.streetAddress,
-    this.legacyId,
+    this.parties,
+    this.fullAddress,
   });
 
-  factory Address.fromJson(Map<String, dynamic> json) => Address(
-        entityName: json["_entityName"],
-        instanceName: json["_instanceName"],
-        id: json["id"],
+  factory Address.fromMap(Map<String, dynamic> json) => Address(
         legacyAddress: json["legacyAddress"],
-        streetAddressLang1: json["streetAddressLang1"],
-        streetAddressLang2: json["streetAddressLang2"],
-        streetAddress: json["streetAddress"],
-        legacyId: json["legacyID"],
+        parties: List<Party>.from(json["parties"].map((x) => Party.fromMap(x))),
+        fullAddress: json["fullAddress"],
       );
 
-  Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toMap() => {
+        "legacyAddress": legacyAddress,
+        "parties": List<dynamic>.from(parties.map((x) => x.toMap())),
+        "fullAddress": fullAddress,
+      };
+}
+
+class Party {
+  String entityName;
+  String instanceName;
+
+  Party({
+    this.entityName,
+    this.instanceName,
+  });
+
+  factory Party.fromMap(Map<String, dynamic> json) => Party(
+        entityName: json["_entityName"],
+        instanceName: json["_instanceName"],
+      );
+
+  Map<String, dynamic> toMap() => {
         "_entityName": entityName,
         "_instanceName": instanceName,
-        "id": id,
-        "legacyAddress": legacyAddress,
-        "streetAddressLang1": streetAddressLang1,
-        "streetAddressLang2": streetAddressLang2,
-        "streetAddress": streetAddress,
-        "legacyID": legacyId,
       };
 }
 
 class ClientStatus {
-  String entityName;
-  String id;
-  String languageValue;
+  String langValue;
 
   ClientStatus({
-    this.entityName,
-    this.id,
-    this.languageValue,
+    this.langValue,
   });
 
-  factory ClientStatus.fromJson(Map<String, dynamic> json) => ClientStatus(
-        entityName: json["_entityName"],
-        id: json["id"],
-        languageValue: json["languageValue"],
+  factory ClientStatus.fromMap(Map<String, dynamic> json) => ClientStatus(
+        langValue: json["langValue"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "_entityName": entityName,
-        "id": id,
-        "languageValue": languageValue,
+  Map<String, dynamic> toMap() => {
+        "langValue": langValue,
       };
 }
 
-class ContactInfo {
-  String entityName;
-  String instanceName;
-  String id;
-  bool active;
-  String valueUnformatted;
-  bool doNotDisturb;
-  String legacyId;
-  String value;
-  Type type;
+class ContactIdentityDocument {
+  String number;
+  Contact contact;
 
-  ContactInfo({
-    this.entityName,
-    this.instanceName,
-    this.id,
-    this.active,
-    this.valueUnformatted,
-    this.doNotDisturb,
-    this.legacyId,
-    this.value,
-    this.type,
+  ContactIdentityDocument({
+    this.number,
+    this.contact,
   });
 
-  factory ContactInfo.fromJson(Map<String, dynamic> json) => ContactInfo(
-        entityName: json["_entityName"],
-        instanceName: json["_instanceName"],
-        id: json["id"],
-        active: json["active"],
-        valueUnformatted: json["valueUnformatted"],
-        doNotDisturb: json["doNotDisturb"],
-        legacyId: json["legacyID"],
-        value: json["value"],
-        type: json["type"] == null ? null : Type.fromJson(json["type"]),
+  factory ContactIdentityDocument.fromMap(Map<String, dynamic> json) =>
+      ContactIdentityDocument(
+        number: json["number"],
+        contact: Contact.fromMap(json["contact"]),
       );
 
-  Map<String, dynamic> toJson() => {
-        "_entityName": entityName,
-        "_instanceName": instanceName,
-        "id": id,
-        "active": active,
-        "valueUnformatted": valueUnformatted,
-        "doNotDisturb": doNotDisturb,
-        "legacyID": legacyId,
-        "value": value,
-        "type": type == null ? null : type.toJson(),
+  Map<String, dynamic> toMap() => {
+        "number": number,
+        "contact": contact.toMap(),
       };
 }
 
-class Type {
-  String entityName;
-  String instanceName;
-  String id;
-  String code;
-  String languageValue;
-  int order;
-  bool isSystemRecord;
-  String langValue3;
-  bool active;
-  String langValue2;
+class Contact {
+  bool resident;
+  Sex sex;
+  DateTime dateOfBirth;
+  String nationalIdentifier;
+
+  Contact({
+    this.resident,
+    this.sex,
+    this.dateOfBirth,
+    this.nationalIdentifier,
+  });
+
+  factory Contact.fromMap(Map<String, dynamic> json) => Contact(
+        resident: json["resident"],
+        sex: Sex.fromMap(json["sex"]),
+        dateOfBirth: DateTime.parse(json["dateOfBirth"]),
+        nationalIdentifier: json["nationalIdentifier"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "resident": resident,
+        "sex": sex.toMap(),
+        "dateOfBirth":
+            "${dateOfBirth.year.toString().padLeft(4, '0')}-${dateOfBirth.month.toString().padLeft(2, '0')}-${dateOfBirth.day.toString().padLeft(2, '0')}",
+        "nationalIdentifier": nationalIdentifier,
+      };
+}
+
+class Sex {
   String langValue1;
 
-  Type({
-    this.entityName,
-    this.instanceName,
-    this.id,
-    this.code,
-    this.languageValue,
-    this.order,
-    this.isSystemRecord,
-    this.langValue3,
-    this.active,
-    this.langValue2,
+  Sex({
     this.langValue1,
   });
 
-  factory Type.fromJson(Map<String, dynamic> json) => Type(
-        entityName: json["_entityName"],
-        instanceName: json["_instanceName"],
-        id: json["id"],
-        code: json["code"],
-        languageValue: json["languageValue"],
-        order: json["order"],
-        isSystemRecord: json["isSystemRecord"],
-        langValue3: json["langValue3"],
-        active: json["active"],
-        langValue2: json["langValue2"],
+  factory Sex.fromMap(Map<String, dynamic> json) => Sex(
         langValue1: json["langValue1"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "_entityName": entityName,
-        "_instanceName": instanceName,
-        "id": id,
-        "code": code,
-        "languageValue": languageValue,
-        "order": order,
-        "isSystemRecord": isSystemRecord,
-        "langValue3": langValue3,
-        "active": active,
-        "langValue2": langValue2,
+  Map<String, dynamic> toMap() => {
         "langValue1": langValue1,
       };
 }
 
-class Responsible {
-  String entityName;
-  String instanceName;
-  String id;
-  String lastName;
-  String email;
-  String innerNumber;
-  String updatedBy;
-  String fullName;
-  String firstName;
-  String mobilePhone;
-  String name;
-  String middleName;
-  String position;
-  String shortName;
+class ContactInfo {
+  String value;
 
-  Responsible({
-    this.entityName,
-    this.instanceName,
-    this.id,
-    this.lastName,
-    this.email,
-    this.innerNumber,
-    this.updatedBy,
-    this.fullName,
-    this.firstName,
-    this.mobilePhone,
-    this.name,
-    this.middleName,
-    this.position,
-    this.shortName,
+  ContactInfo({
+    this.value,
   });
 
-  factory Responsible.fromJson(Map<String, dynamic> json) => Responsible(
-        entityName: json["_entityName"],
-        instanceName: json["_instanceName"],
-        id: json["id"],
-        lastName: json["lastName"],
-        email: json["email"],
-        innerNumber: json["innerNumber"],
-        updatedBy: json["updatedBy"],
-        fullName: json["fullName"],
-        firstName: json["firstName"],
-        mobilePhone: json["mobilePhone"],
-        name: json["name"],
-        middleName: json["middleName"],
-        position: json["position"],
-        shortName: json["shortName"],
+  factory ContactInfo.fromMap(Map<String, dynamic> json) => ContactInfo(
+        value: json["value"],
       );
 
-  Map<String, dynamic> toJson() => {
-        "_entityName": entityName,
-        "_instanceName": instanceName,
-        "id": id,
-        "lastName": lastName,
-        "email": email,
-        "innerNumber": innerNumber,
-        "updatedBy": updatedBy,
+  Map<String, dynamic> toMap() => {
+        "value": value,
+      };
+}
+
+class ResidenceCountry {
+  String languageValue;
+
+  ResidenceCountry({
+    this.languageValue,
+  });
+
+  factory ResidenceCountry.fromMap(Map<String, dynamic> json) =>
+      ResidenceCountry(
+        languageValue: json["languageValue"],
+      );
+
+  Map<String, dynamic> toMap() => {
+        "languageValue": languageValue,
+      };
+}
+
+class Responsible {
+  String fullName;
+  String mobilePhone;
+
+  Responsible({
+    this.fullName,
+    this.mobilePhone,
+  });
+
+  factory Responsible.fromMap(Map<String, dynamic> json) => Responsible(
+        fullName: json["fullName"],
+        mobilePhone: json["mobilePhone"],
+      );
+
+  Map<String, dynamic> toMap() => {
         "fullName": fullName,
-        "firstName": firstName,
         "mobilePhone": mobilePhone,
-        "name": name,
-        "middleName": middleName,
-        "position": position,
-        "shortName": shortName,
       };
 }

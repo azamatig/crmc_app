@@ -22,7 +22,7 @@ Future<List<Contracts>> _fetchContracts() async {
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
     return jsonResponse
-        .map((contracts) => new Contracts.fromJson(contracts))
+        .map((contracts) => Contracts.fromJson(contracts))
         .toList();
   } else {
     throw Exception('Failed to load Contracts from REST API');

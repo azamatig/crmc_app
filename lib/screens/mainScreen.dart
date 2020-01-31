@@ -1,13 +1,13 @@
 import 'dart:async';
 
-import 'package:crmc_app/screens/FeedScreen.dart';
+import 'package:crmc_app/data/ContractData.dart';
+import 'package:crmc_app/data/clientData.dart';
 import 'package:crmc_app/screens/fourthDemoScreen.dart';
+import 'package:crmc_app/screens/search/search_screen.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import 'dealsScreen.dart';
 
 /*
 Made by 'pure coincidence', and sponsored by 'i keep googling things, and somehow it works'
@@ -68,9 +68,9 @@ class _MainScreenState extends State<MainScreen> {
         onPageChanged: (index) => indexController.add(index),
         controller: pageController,
         children: <Widget>[
-          ClientsScreen(), // Первый экран с клиентами
-          Contracts(), // Второй экран с договорами
-          TestPage(), // For the future
+          ShowClientData(), // Первый экран с клиентами
+          ShowContractData(), // Второй экран с договорами
+          SearchScreen(), // For the future
           Class4(), // in case of emergency break Class
         ],
       ),

@@ -4,15 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class EditContactScreen extends StatefulWidget {
-  EditContactScreen(this.upperName, this.partyType, this.nationalIdentifier,
-      this.languageValue, this.fullName, this.value);
+  EditContactScreen();
   final format = DateFormat("yyyy-MM-dd");
-  final String upperName;
-  final String partyType;
-  final String nationalIdentifier;
-  final String languageValue;
-  final String fullName;
-  final String value;
 
   @override
   _EditContactScreenState createState() => _EditContactScreenState();
@@ -22,7 +15,6 @@ class _EditContactScreenState extends State<EditContactScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _middleNameController = TextEditingController();
-
 
   @override
   void initState() {
@@ -64,7 +56,6 @@ class _EditContactScreenState extends State<EditContactScreen> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      initialValue: widget.upperName,
                       cursorColor: Colors.deepPurple,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -118,7 +109,6 @@ class _EditContactScreenState extends State<EditContactScreen> {
                       },
                     ),
                     TextFormField(
-                      initialValue: widget.nationalIdentifier,
                       cursorColor: Colors.deepPurple,
                       inputFormatters: <TextInputFormatter>[
                         WhitelistingTextInputFormatter.digitsOnly,
@@ -176,7 +166,6 @@ class _EditContactScreenState extends State<EditContactScreen> {
                       },
                     ),
                     TextFormField(
-                      initialValue: widget.value,
                       cursorColor: Colors.deepPurple,
                       //  controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),

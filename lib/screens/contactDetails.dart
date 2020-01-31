@@ -1,57 +1,90 @@
+import 'package:crmc_app/models/contactModels.dart';
 import 'package:crmc_app/screens/editors/edit_contact_screen.dart';
+import 'package:crmc_app/services/auth.dart';
+import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 
 class DetailsScreen extends StatefulWidget {
-  final String upperName;
-  final String partyType;
-  final String nationalIdentifier;
-  final String languageValue;
-  final String fullName;
-  final String value;
-
-  DetailsScreen(this.upperName, this.partyType, this.nationalIdentifier,
-      this.languageValue, this.fullName, this.value);
+  DetailsScreen(this.id);
+  final String id;
 
   @override
-  _DetailsScreenState createState() => _DetailsScreenState(
-      this.upperName,
-      this.partyType,
-      this.nationalIdentifier,
-      this.languageValue,
-      this.fullName,
-      this.value);
+  _DetailsScreenState createState() => _DetailsScreenState(this.id);
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-  final String upperName;
-  final String partyType;
-  final String nationalIdentifier;
-  final String languageValue;
-  final String fullName;
-  final String value;
+  final String id;
+  _DetailsScreenState(this.id);
 
-  _DetailsScreenState(this.upperName, this.partyType, this.nationalIdentifier,
-      this.languageValue, this.fullName, this.value);
+  Future<Contacts> _fetchContacts() async {
+    Auth provider;
+    provider = Auth();
+    final client = await provider.client;
+    var myId = widget.id;
+    final url = restApiUrl + 'v2/entities/crm\$Party/$myId?view=party.edit';
+    var response = await client.get(url, headers: {
+      'Content-Type': 'application/json',
+    });
+    if (response.statusCode == 200) {
+      final contacts = contactsFromJson(response.body);
+      return contacts;
+    } else {
+      throw Exception('Failed to load Client from REST API');
+    }
+  }
 
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: true,
-        title: Center(
-          child: Text(
-            'Информация',
-            style: TextStyle(color: Colors.white),
-          ),
-        ),
-      ),
-      body: _details(upperName, partyType, nationalIdentifier, languageValue,
-          fullName, value),
+    return FutureBuilder<Contacts>(
+      future: _fetchContacts(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          Contacts data = snapshot.data;
+          return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: true,
+                title: Text('Информация по клиенту'),
+              ),
+              body: _contactListView(data));
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        return Scaffold(
+            backgroundColor: Colors.deepPurple,
+            body: Center(child: CircularProgressIndicator()));
+      },
     );
   }
 
-  Widget _details(upperName, partyType, nationalIdentifier, languageValue,
-      fullName, value) {
+  Container _contactListView(data) {
+    return Container(
+        child: _details(
+            data.upperName,
+            data.contactIdentityDocuments[0].contact.dateOfBirth,
+            data.contactIdentityDocuments[0].contact.nationalIdentifier,
+            data.contactInfo[0].value,
+            data.addresses[0].fullAddress,
+            data.responsible.fullName,
+            data.clientStatus.langValue,
+            data.contactIdentityDocuments[0].contact.sex.langValue1,
+            data.contactIdentityDocuments[0].contact.resident,
+            data.responsible.mobilePhone,
+            data.residenceCountry.languageValue,
+            context));
+  }
+
+  Widget _details(
+      String upperName,
+      DateTime dateOfBirth,
+      String nationalIdentifier,
+      String value,
+      String fullAddress,
+      String fullName,
+      String langValue,
+      String langValue1,
+      bool resident,
+      String mobilePhone,
+      String languageValue,
+      context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -75,10 +108,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           Container(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              'Информация о Клиенте',
+                              'Контакты',
                               style: TextStyle(
                                 fontWeight: FontWeight.w700,
-                                fontSize: 20,
+                                fontSize: 17,
                               ),
                               maxLines: 2,
                               textAlign: TextAlign.left,
@@ -91,13 +124,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => EditContactScreen(
-                                        upperName,
-                                        partyType,
-                                        nationalIdentifier,
-                                        languageValue,
-                                        fullName,
-                                        value))),
+                                    builder: (_) => EditContactScreen())),
                           ),
                         ],
                       ),
@@ -127,7 +154,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.upperName,
+                          upperName,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -153,7 +180,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.value,
+                          value,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -162,7 +189,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      SizedBox(height: 40),
+                      SizedBox(height: 17),
+                      Divider(
+                        height: 2,
+                        color: Colors.deepPurple,
+                      ),
+                      SizedBox(height: 17),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -192,7 +224,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.upperName,
+                          upperName,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -218,7 +250,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.languageValue,
+                          langValue,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -244,7 +276,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.nationalIdentifier,
+                          nationalIdentifier,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -253,14 +285,15 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           textAlign: TextAlign.left,
                         ),
                       ),
-                      SizedBox(height: 20),
+                      SizedBox(height: 10),
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          'Менеджер',
+                          'Дата Рождения',
                           style: TextStyle(
+                            color: Colors.blueGrey[300],
                             fontWeight: FontWeight.bold,
-                            fontSize: 17,
+                            fontSize: 13,
                           ),
                           maxLines: 1,
                           textAlign: TextAlign.left,
@@ -269,19 +302,186 @@ class _DetailsScreenState extends State<DetailsScreen> {
                       Row(
                           // Вторая часть листа
                           children: <Widget>[
-                            SizedBox(height: 40),
+                            SizedBox(height: 20),
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                widget.fullName,
+                                dateOfBirth.toString(),
                                 style: TextStyle(
-                                  fontWeight: FontWeight.normal,
-                                  fontSize: 15,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
                                 ),
                                 textAlign: TextAlign.left,
                               ),
                             ),
                           ]),
+                      SizedBox(height: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Страна',
+                          style: TextStyle(
+                            color: Colors.blueGrey[300],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Row(
+                          // Вторая часть листа
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              child: Expanded(
+                                child: Text(
+                                  languageValue,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                      SizedBox(height: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Адрес проживания',
+                          style: TextStyle(
+                            color: Colors.blueGrey[300],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Row(
+                          // Вторая часть листа
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              child: Expanded(
+                                child: Text(
+                                  fullAddress,
+                                  overflow: TextOverflow.ellipsis,
+                                  maxLines: 3,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 17,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ]),
+                      SizedBox(height: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Пол',
+                          style: TextStyle(
+                            color: Colors.blueGrey[300],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Row(
+                          // Вторая часть листа
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                langValue1,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ]),
+                      SizedBox(height: 10),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Резидентство',
+                          style: TextStyle(
+                            color: Colors.blueGrey[300],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Row(
+                          // Вторая часть листа
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                resident == true ? 'Резидент' : 'Не резидент',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ]),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Менеджер',
+                          style: TextStyle(
+                            color: Colors.blueGrey[300],
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13,
+                          ),
+                          maxLines: 1,
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
+                      Row(
+                          // Вторая часть листа
+                          children: <Widget>[
+                            SizedBox(height: 20),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                fullName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 17,
+                                ),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ]),
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          mobilePhone,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 17,
+                          ),
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
                     ],
                   ),
                 ),
