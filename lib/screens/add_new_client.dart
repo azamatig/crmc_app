@@ -2,14 +2,17 @@
 анон: Почему говорят, что Штирлиц был на грани провала?
 Ведь у провала сидел Бендер.
  */
+import 'package:crmc_app/models/PartyModel.dart';
+import 'package:crmc_app/services/createNewContactRest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class AddNewContact extends StatefulWidget {
-  AddNewContact();
+  AddNewContact(this.party);
   final format = DateFormat("yyyy-MM-dd");
+  final PartyEntity party;
 
   @override
   _AddNewContactState createState() => _AddNewContactState();
@@ -28,16 +31,16 @@ class _AddNewContactState extends State<AddNewContact> {
   }
 
   //Updates Users info
-  /* updaterUser(UserTest info) async {
-    info.firstName = _firstNameController.text;
-    info.lastName = _lastNameController.text;
-    info.middleName = _middleNameController.text;
-    info.sex = _sexController;
-    info.maritalStatus = _maritalStatusController;
-    info.nationalIdentifier = _iinController.text;
-    var res = await UserInfoRest().sendNewRequest(info);
+  updaterUser(PartyEntity party) async {
+    party.name = _firstNameController.text;
+    party.entityName = _lastNameController.text;
+    //   party.middleName = _middleNameController.text;
+    //   party.sex = _sexController;
+    //   party.maritalStatus = _maritalStatusController;
+    party.nationalIdentifier = _iinController.text;
+    var res = await NewContactRest().sendNewRequest(party);
     return res;
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,10 +139,6 @@ class _AddNewContactState extends State<AddNewContact> {
                         return null;
                       },
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BasicDateField(),
-                    ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
                       controller: _lastNameController,
@@ -150,24 +149,6 @@ class _AddNewContactState extends State<AddNewContact> {
                           size: 30.0,
                         ),
                         labelText: 'Место Рождения',
-                      ),
-                      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.person_pin,
-                          size: 30.0,
-                        ),
-                        labelText: 'Ваш пол',
                       ),
                       validator: (value) {
                         if (value.isEmpty) {
@@ -194,6 +175,58 @@ class _AddNewContactState extends State<AddNewContact> {
                         return null;
                       },
                     ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: BasicDateField(),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Icon(
+                          Icons.person_pin,
+                          size: 30,
+                        ),
+                        Text(
+                          'Пол',
+                          style: TextStyle(fontSize: 18.0),
+                        ),
+                        SizedBox(
+                          width: 40,
+                        ),
+                        DropdownButton<Sex>(
+                          itemHeight: 75,
+                          hint: Text("Пол"),
+                          value: selectedUser,
+                          onChanged: (Sex value) {
+                            setState(() {
+                              selectedUser = value;
+                            });
+                          },
+                          items: sex.map((Sex user) {
+                            return DropdownMenuItem<Sex>(
+                              value: user,
+                              child: Row(
+                                children: <Widget>[
+                                  user.icon,
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    user.name,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                       child: Text(
@@ -218,7 +251,7 @@ class _AddNewContactState extends State<AddNewContact> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               // If the form is valid, do an Update, есь же.
-                              //fun1
+                              updaterUser(widget.party); //fun1
                               print('Success');
                             }
                           },
@@ -266,3 +299,25 @@ class BasicDateField extends StatelessWidget {
     ]);
   }
 }
+
+class Sex {
+  const Sex(this.name, this.icon);
+  final String name;
+  final Icon icon;
+}
+
+Sex selectedUser;
+List<Sex> sex = <Sex>[
+  const Sex(
+      'Мужской',
+      Icon(
+        Icons.android,
+        color: const Color(0xFF167F67),
+      )),
+  const Sex(
+      'Женский',
+      Icon(
+        Icons.perm_identity,
+        color: const Color(0xFF167F67),
+      )),
+];

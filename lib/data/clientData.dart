@@ -16,14 +16,15 @@ Future<List<PartyEntity>> _fetchContacts() async {
   Auth provider;
   provider = Auth();
   final client = await provider.client;
-  final url = restApiUrl + 'v2/entities/crm\$Party?view=party.browse&limit=50';
+  final url = restApiUrl +
+      'v2/entities/crm\$Party?view=party.browse&returnNulls=false&limit=50&dynamicAttributes=true';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
     return jsonResponse
-        .map((partyEntity) => PartyEntity.fromJson(partyEntity))
+        .map((partyEntity) => PartyEntity.fromMap(partyEntity))
         .toList();
   } else {
     throw Exception('Failed to load Clients from REST API');

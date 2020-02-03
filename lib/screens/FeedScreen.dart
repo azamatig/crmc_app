@@ -24,7 +24,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
           ),
           backgroundColor: Colors.green,
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddNewContact())),
+              context, MaterialPageRoute(builder: (_) => AddNewContact(null))),
         ),
         body: ShowClientData());
   }

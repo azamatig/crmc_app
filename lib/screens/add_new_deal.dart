@@ -41,7 +41,7 @@ class _AddNewDealState extends State<AddNewDeal> {
         elevation: 0,
         backgroundColor: Colors.deepPurple,
         title: Text(
-          'Контракты',
+          'Новый контракт',
           style: TextStyle(color: Colors.white),
         ),
       ),
