@@ -4,6 +4,7 @@ import 'package:crmc_app/models/PartyModel.dart';
 import 'package:crmc_app/screens/contactDetails.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../services/auth.dart';
 
 class ShowClientData extends StatefulWidget {
@@ -52,6 +53,7 @@ ListView _contactListView(data) {
 class _ShowClientDataState extends State<ShowClientData>
     with AutomaticKeepAliveClientMixin<ShowClientData> {
   Future<List<PartyEntity>> _future;
+  final format = DateFormat("yyyy-MM-dd");
 
   @override
   bool get wantKeepAlive => true;

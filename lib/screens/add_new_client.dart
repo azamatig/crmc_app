@@ -191,15 +191,18 @@ class _AddNewContactState extends State<AddNewContact> {
                           Icons.person_pin,
                           size: 30,
                         ),
+                        SizedBox(
+                          width: 18,
+                        ),
                         Text(
                           'Пол',
                           style: TextStyle(fontSize: 18.0),
                         ),
                         SizedBox(
-                          width: 40,
+                          width: 45,
                         ),
                         DropdownButton<Sex>(
-                          itemHeight: 75,
+                          itemHeight: 60,
                           hint: Text("Пол"),
                           value: selectedUser,
                           onChanged: (Sex value) {
@@ -230,13 +233,40 @@ class _AddNewContactState extends State<AddNewContact> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
                       child: Text(
-                        '(managerName)',
+                        'Менеджер (Ответственный)',
                         style: TextStyle(
                           color: Colors.black54,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
+                    ),
+                    DropdownButton<Managers>(
+                      itemHeight: 75,
+                      hint: Text("Менеджер"),
+                      value: selectedManager,
+                      onChanged: (Managers shmalue) {
+                        setState(() {
+                          selectedManager = shmalue;
+                        });
+                      },
+                      items: managers.map((Managers manager) {
+                        return DropdownMenuItem<Managers>(
+                          value: manager,
+                          child: Row(
+                            children: <Widget>[
+                              manager.icon,
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                manager.name,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),
@@ -316,6 +346,46 @@ List<Sex> sex = <Sex>[
       )),
   const Sex(
       'Женский',
+      Icon(
+        Icons.perm_identity,
+        color: const Color(0xFF167F67),
+      )),
+];
+
+class Managers {
+  const Managers(this.name, this.icon);
+  final String name;
+  final Icon icon;
+}
+
+Managers selectedManager;
+List<Managers> managers = <Managers>[
+  const Managers(
+      'Алена Бедарева',
+      Icon(
+        Icons.android,
+        color: const Color(0xFF167F67),
+      )),
+  const Managers(
+      'Пак Елена',
+      Icon(
+        Icons.perm_identity,
+        color: const Color(0xFF167F67),
+      )),
+  const Managers(
+      'Азамат Мухамеджанов',
+      Icon(
+        Icons.perm_identity,
+        color: const Color(0xFF167F67),
+      )),
+  const Managers(
+      'Сауле Садыкова',
+      Icon(
+        Icons.perm_identity,
+        color: const Color(0xFF167F67),
+      )),
+  const Managers(
+      'Асель Авкешова',
       Icon(
         Icons.perm_identity,
         color: const Color(0xFF167F67),
