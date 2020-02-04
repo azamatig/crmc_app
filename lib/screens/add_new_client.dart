@@ -2,7 +2,6 @@
 анон: Почему говорят, что Штирлиц был на грани провала?
 Ведь у провала сидел Бендер.
  */
-import 'package:crmc_app/models/PartyModel.dart';
 import 'package:crmc_app/services/createNewContactRest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
 class AddNewContact extends StatefulWidget {
-  AddNewContact(this.party);
-  final format = DateFormat("yyyy-MM-dd");
-  final PartyEntity party;
-
+  AddNewContact();
   @override
   _AddNewContactState createState() => _AddNewContactState();
 }
@@ -25,25 +21,24 @@ class _AddNewContactState extends State<AddNewContact> {
   TextEditingController _middleNameController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
 
+  _AddNewContactState();
+
   @override
   void initState() {
     super.initState();
   }
 
-  //Updates Users info
-  updaterUser(PartyEntity party) async {
-    party.name = _firstNameController.text;
-    party.entityName = _lastNameController.text;
-    //   party.middleName = _middleNameController.text;
-    //   party.sex = _sexController;
-    //   party.maritalStatus = _maritalStatusController;
-    party.nationalIdentifier = _iinController.text;
-    var res = await NewContactRest().sendNewRequest(party);
+  updaterUser() async {
+    String upperName = _firstNameController.text;
+    String nationalIdentifier = _iinController.text;
+    var res =
+        await NewContactRest().sendNewRequest(upperName, nationalIdentifier);
     return res;
   }
 
   @override
   Widget build(BuildContext context) {
+    //Updates Users info
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -75,12 +70,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'Имя',
                       ),
-                      validator: (input) {
+                      /*                  validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -93,12 +88,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'Отчество',
                       ),
-                      validator: (input) {
+                      /*     validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -111,12 +106,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'Фамилия',
                       ),
-                      validator: (value) {
+                      /*       validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -132,12 +127,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'ИИН(только цифры)',
                       ),
-                      validator: (input) {
+                      /*              validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -150,12 +145,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'Место Рождения',
                       ),
-                      validator: (value) {
+                      /*             validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
@@ -168,12 +163,12 @@ class _AddNewContactState extends State<AddNewContact> {
                         ),
                         labelText: 'Мобильный телефон',
                       ),
-                      validator: (value) {
+                      /*          validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     SizedBox(
                       height: 10,
@@ -274,14 +269,14 @@ class _AddNewContactState extends State<AddNewContact> {
                       width: 250.0,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.deepPurple,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0))),
                         child: FlatButton(
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               // If the form is valid, do an Update, есь же.
-                              updaterUser(widget.party); //fun1
+                              updaterUser(); //fun1
                               print('Success');
                             }
                           },
@@ -341,14 +336,14 @@ List<Sex> sex = <Sex>[
   const Sex(
       'Мужской',
       Icon(
-        Icons.android,
-        color: const Color(0xFF167F67),
+        Icons.perm_identity,
+        color: Colors.deepPurple,
       )),
   const Sex(
       'Женский',
       Icon(
         Icons.perm_identity,
-        color: const Color(0xFF167F67),
+        color: Colors.deepPurple,
       )),
 ];
 
@@ -363,31 +358,31 @@ List<Managers> managers = <Managers>[
   const Managers(
       'Алена Бедарева',
       Icon(
-        Icons.android,
-        color: const Color(0xFF167F67),
+        Icons.perm_identity,
+        color: Colors.deepPurple,
       )),
   const Managers(
       'Пак Елена',
       Icon(
         Icons.perm_identity,
-        color: const Color(0xFF167F67),
+        color: Colors.deepPurple,
       )),
   const Managers(
       'Азамат Мухамеджанов',
       Icon(
         Icons.perm_identity,
-        color: const Color(0xFF167F67),
+        color: Colors.deepPurple,
       )),
   const Managers(
       'Сауле Садыкова',
       Icon(
         Icons.perm_identity,
-        color: const Color(0xFF167F67),
+        color: Colors.deepPurple,
       )),
   const Managers(
       'Асель Авкешова',
       Icon(
         Icons.perm_identity,
-        color: const Color(0xFF167F67),
+        color: Colors.deepPurple,
       )),
 ];

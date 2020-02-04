@@ -6,11 +6,11 @@ List tables = ["CONTACTS", "CONTRACTS"];
 
 Future<void> truncateDB() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  var isCleaned = await preferences.getBool('cleanedToday') ?? false;
+  var isCleaned = preferences.getBool('cleanedToday') ?? false;
   if (isCleaned) {
     return;
   }
-  var day = await preferences.getInt('cleanseDay') ?? 1;
+  var day = preferences.getInt('cleanseDay') ?? 1;
   var today = int.parse(DateFormat('dd').format(DateTime.now()));
   if (today == day) {
     await clear();

@@ -8,11 +8,15 @@ import 'package:crmc_app/screens/add_new_client.dart';
 import 'package:flutter/material.dart';
 
 class ClientsScreen extends StatefulWidget {
+  const ClientsScreen({
+    Key key,
+  }) : super(key: key);
   @override
   _ClientsScreenState createState() => _ClientsScreenState();
 }
 
 class _ClientsScreenState extends State<ClientsScreen> {
+  _ClientsScreenState();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +28,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
           ),
           backgroundColor: Colors.green,
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddNewContact(null))),
+              context, MaterialPageRoute(builder: (_) => AddNewContact())),
         ),
         body: ShowClientData());
   }

@@ -1,9 +1,6 @@
 import 'dart:async';
 
-import 'package:crmc_app/data/ContractData.dart';
-import 'package:crmc_app/data/clientData.dart';
 import 'package:crmc_app/screens/FeedScreen.dart';
-import 'package:crmc_app/screens/fourthDemoScreen.dart';
 import 'package:crmc_app/screens/search/search_screen.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
           ClientsScreen(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
           TestPage(), // For the future
-          Class4(), // in case of emergency break Class
+          Example1(), // in case of emergency break Class
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

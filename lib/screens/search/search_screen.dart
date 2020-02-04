@@ -1,147 +1,141 @@
+import 'package:crmc_app/models/PartyModel.dart';
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatefulWidget {
-  //`createState()` will create the mutable state for this widget at
-  //a given location in the tree.
+class Example1 extends StatefulWidget {
+  Example1();
+
+  final String title = "Filtering List";
+  final String exampleUrl =
+      "https://github.com/Ephenodrom/FlutterAdvancedExamples/tree/master/lib/examples/filterList";
+
   @override
-  _SearchScreenState createState() => _SearchScreenState();
+  _Example1State createState() => _Example1State();
 }
 
-//Our Home state, the logic and internal state for a StatefulWidget.
-class _SearchScreenState extends State<SearchScreen> {
-  //A controller for an editable text field.
-  //Whenever the user modifies a text field with an associated
-  //TextEditingController, the text field updates value and the
-  //controller notifies its listeners.
-  var _searchview = TextEditingController();
+class _Example1State extends State<Example1> {
+  List<PartyEntity> initialList = [];
+  List<PartyEntity> currentList = [];
 
-  bool _firstSearch = true;
-  String _query = "";
+  //filter
+  bool residentEvil = false;
+  String carType = "all";
 
-  List<String> _nebulae;
-  List<String> _filterList;
+  final controller = new TextEditingController();
 
   @override
-  void initState() {
+  initState() {
     super.initState();
-    _nebulae = List<String>();
-    _nebulae = [
-      "Orion",
-      "Boomerang",
-      "Cat's Eye",
-      "Pelican",
-      "Ghost Head",
-      "Witch Head",
-      "Snake",
-      "Ant",
-      "Bernad 68",
-      "Flame",
-      "Eagle",
-      "Horse Head",
-      "Elephant's Trunk",
-      "Butterfly"
-    ];
-    _nebulae.sort();
+    controller.addListener(onChange);
+    filterCars();
   }
 
-  _HomeState() {
-    //Register a closure to be called when the object changes.
-    _searchview.addListener(() {
-      if (_searchview.text.isEmpty) {
-        //Notify the framework that the internal state of this object has changed.
-        setState(() {
-          _firstSearch = true;
-          _query = "";
-        });
-      } else {
-        setState(() {
-          _firstSearch = false;
-          _query = _searchview.text;
-        });
-      }
-    });
-  }
-
-//Build our Home widget
   @override
   Widget build(BuildContext context) {
+    filterCars();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("SearchView ListView"),
-      ),
-      body: Container(
-        margin: EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-        child: Column(
-          children: <Widget>[
-            _createSearchView(),
-            _firstSearch ? _createListView() : _performSearch()
-          ],
+        body: Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Column(children: [
+        Text(
+          "фильтры",
+          style: Theme.of(context).textTheme.headline,
         ),
-      ),
-    );
-  }
-
-  //Create a SearchView
-  Widget _createSearchView() {
-    return Container(
-      decoration: BoxDecoration(border: Border.all(width: 1.0)),
-      child: TextField(
-        controller: _searchview,
-        decoration: InputDecoration(
-          hintText: "Search",
-          hintStyle: TextStyle(color: Colors.grey[300]),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: TextField(controller: controller),
         ),
-        textAlign: TextAlign.center,
-      ),
-    );
+        SwitchListTile(
+            title: Text('Резидент'),
+            value: residentEvil,
+            onChanged: (changed) {
+              setState(() => residentEvil = changed);
+            }),
+        ListTile(
+            leading: Text("Тип юзера(Placeholder)"),
+            trailing: DropdownButton(
+              elevation: 16,
+              onChanged: (item) {
+                setState(() {
+                  carType = item;
+                });
+              },
+              hint: Text(carType),
+              items: [
+                DropdownMenuItem<String>(child: new Text("All"), value: "All"),
+                DropdownMenuItem<String>(child: new Text("Gas"), value: "Gas"),
+                DropdownMenuItem<String>(
+                    child: new Text("Diesel"), value: "Diesel"),
+                DropdownMenuItem<String>(
+                    child: new Text("Electric"), value: "Electric")
+              ],
+            )),
+        Expanded(
+          child: ListView.builder(
+              itemCount: currentList.length,
+              itemBuilder: (BuildContext context, int index) {
+                PartyEntity current = currentList.elementAt(index);
+                return Card(
+                  elevation: 4,
+                  child: ListTile(
+                    title: Text(current.name),
+                    subtitle: Text(current.clientStatus.languageValue),
+                    trailing: Text(current.nationalIdentifier),
+                    leading: Text(current.active.toString()),
+                  ),
+                );
+              }),
+        ),
+      ]),
+    ));
   }
 
-  //Create a ListView widget
-  Widget _createListView() {
-    return Flexible(
-      child: ListView.builder(
-          itemCount: _nebulae.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              color: Colors.white,
-              elevation: 5.0,
-              child: Container(
-                margin: EdgeInsets.all(15.0),
-                child: Text("${_nebulae[index]}"),
-              ),
-            );
-          }),
-    );
+  onChange() {
+    setState(() {});
   }
 
-  //Perform actual search
-  Widget _performSearch() {
-    _filterList = List<String>();
-    for (int i = 0; i < _nebulae.length; i++) {
-      var item = _nebulae[i];
+  filterCars() {
+    // Prepare lists
+    List<PartyEntity> tmp = [];
+    currentList.clear();
 
-      if (item.toLowerCase().contains(_query.toLowerCase())) {
-        _filterList.add(item);
+    String name = controller.text;
+    if (name.isEmpty) {
+      tmp.addAll(initialList);
+    } else {
+      for (PartyEntity c in initialList) {
+        if (c.name.toLowerCase().startsWith(name.toLowerCase())) {
+          tmp.add(c);
+        }
       }
     }
-    return _createFilteredListView();
-  }
+    currentList = tmp;
 
-  //Create the Filtered ListView
-  Widget _createFilteredListView() {
-    return Flexible(
-      child: ListView.builder(
-          itemCount: _filterList.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Card(
-              color: Colors.white,
-              elevation: 5.0,
-              child: Container(
-                margin: EdgeInsets.all(15.0),
-                child: Text("${_filterList[index]}"),
-              ),
-            );
-          }),
-    );
+    if (residentEvil) {
+      tmp = [];
+      for (PartyEntity c in currentList) {
+        if (c.resident == residentEvil) {
+          tmp.add(c);
+        }
+      }
+      currentList = tmp;
+    }
+
+    print("filter cars for max price " + name);
+    tmp = [];
+    for (PartyEntity c in currentList) {
+      if (c.nationalIdentifier == name) {
+        tmp.add(c);
+      }
+    }
+    currentList = tmp;
+    if (carType.toLowerCase() != "all") {
+      tmp = [];
+      for (PartyEntity c in currentList) {
+        if (c.name == carType.toLowerCase()) {
+          tmp.add(c);
+        }
+      }
+      currentList = tmp;
+    }
   }
 }
