@@ -1,4 +1,4 @@
-import 'package:crmc_app/data/CrmDB.dart';
+import 'package:crmc_app/data/crmDB.dart';
 import 'package:pedantic/pedantic.dart' show unawaited;
 
 import 'dbData.dart';

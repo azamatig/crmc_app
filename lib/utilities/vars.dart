@@ -4,9 +4,6 @@ import 'package:flutter/material.dart';
 
 String langValue;
 String restApiUrl = "http://192.168.88.100:8078/crmc/rest/";
-String clientEntity = "192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contact";
-String contractEntity =
-    "192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contract";
 String aToken;
 String userId;
 

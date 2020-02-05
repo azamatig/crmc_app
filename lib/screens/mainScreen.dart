@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:crmc_app/screens/FeedScreen.dart';
-import 'package:crmc_app/screens/search/search_screen.dart';
+import 'package:crmc_app/screens/clientsScreen.dart';
+import 'package:crmc_app/screens/fourthDemoScreen.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,12 +46,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Bootiful button, на всякий случай
-    /*   final menuBtn = IconButton(
-      color: Colors.deepPurple,
-      icon: const Icon(FontAwesomeIcons.bars),
-      onPressed: () {},
-    );*/
     final signOutBtn = IconButton(
       icon: const Icon(FontAwesomeIcons.signOutAlt),
       color: Colors.white,
@@ -71,7 +65,7 @@ class _MainScreenState extends State<MainScreen> {
           ClientsScreen(), // Первый экран с клиентами
           Contracts(), // Второй экран с договорами
           TestPage(), // For the future
-          Example1(), // in case of emergency break Class
+          Class4(), // in case of emergency break Class
         ],
       ),
       bottomNavigationBar: CupertinoTabBar(

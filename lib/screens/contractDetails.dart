@@ -2,33 +2,36 @@ import 'package:crmc_app/screens/editors/edit_contract_screen.dart';
 import 'package:flutter/material.dart';
 
 class ContractDetailsScreen extends StatefulWidget {
-  final String mainContract;
+  final String number;
   final String amountAndCurrency;
   final String shortName;
   final String code;
   final String name;
+  final String currency;
 
-  ContractDetailsScreen(this.mainContract, this.amountAndCurrency,
-      this.shortName, this.code, this.name);
+  ContractDetailsScreen(this.number, this.amountAndCurrency, this.shortName,
+      this.code, this.name, this.currency);
 
   @override
   _ContractDetailsScreenState createState() => _ContractDetailsScreenState(
-      this.mainContract,
+      this.number,
       this.amountAndCurrency,
       this.shortName,
       this.code,
-      this.name);
+      this.name,
+      this.currency);
 }
 
 class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
-  final String mainContract;
+  final String number;
   final String amountAndCurrency;
   final String shortName;
   final String code;
   final String name;
+  final String currency;
 
-  _ContractDetailsScreenState(this.mainContract, this.amountAndCurrency,
-      this.shortName, this.code, this.name);
+  _ContractDetailsScreenState(this.number, this.amountAndCurrency,
+      this.shortName, this.code, this.name, this.currency);
 
   @override
   Widget build(BuildContext context) {
@@ -41,11 +44,12 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
           ),
         ),
       ),
-      body: _details(mainContract, amountAndCurrency, shortName, code, name),
+      body:
+          _details(number, amountAndCurrency, shortName, code, name, currency),
     );
   }
 
-  Widget _details(mainContract, amountAndCurrency, shortName, code, name) {
+  Widget _details(number, amountAndCurrency, shortName, code, name, currency) {
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -86,7 +90,7 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => EditContractScreen(
-                                        mainContract,
+                                        number,
                                         amountAndCurrency,
                                         shortName,
                                         code,
@@ -211,7 +215,7 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.mainContract,
+                          widget.number,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,
@@ -237,7 +241,7 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
                       Container(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          widget.amountAndCurrency,
+                          widget.amountAndCurrency + " " + widget.currency,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 17,

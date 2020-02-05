@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:crmc_app/models/PartyModel.dart';
+import 'package:crmc_app/models/partyModel.dart';
 import 'package:crmc_app/screens/contactDetails.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:search_page/search_page.dart';
 import '../services/auth.dart';
 
 class ShowClientData extends StatefulWidget {
@@ -12,51 +12,89 @@ class ShowClientData extends StatefulWidget {
   _ShowClientDataState createState() => _ShowClientDataState();
 }
 
-//List fetcher
-Future<List<PartyEntity>> _fetchContacts() async {
-  Auth provider;
-  provider = Auth();
-  final client = await provider.client;
-  final url = restApiUrl +
-      'v2/entities/crm\$Party?view=party.browse&returnNulls=false&limit=50&dynamicAttributes=true';
-  var response = await client.get(url, headers: {
-    'Content-Type': 'application/json',
-  });
-  if (response.statusCode == 200) {
-    List jsonResponse = json.decode(response.body);
-    return jsonResponse
-        .map((partyEntity) => PartyEntity.fromMap(partyEntity))
-        .toList();
-  } else {
-    throw Exception('Failed to load Clients from REST API');
-  }
-}
-
-//ListView of things
-ListView _contactListView(data) {
-  return ListView.builder(
-      itemExtent: 227.0,
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return _tile(
-            data[index].name,
-            data[index].resident,
-            data[index].nationalIdentifier,
-            data[index].responsible.shortName,
-            data[index].clientStatus.languageValue,
-            data[index].id,
-            Icons.work,
-            context);
-      });
-}
-
 class _ShowClientDataState extends State<ShowClientData>
     with AutomaticKeepAliveClientMixin<ShowClientData> {
   Future<List<PartyEntity>> _future;
-  final format = DateFormat("yyyy-MM-dd");
-
+//Keeps list in alive instead of rebuilding it every time
   @override
   bool get wantKeepAlive => true;
+
+  //List fetcher
+  Future<List<PartyEntity>> _fetchContacts() async {
+    Auth provider;
+    provider = Auth();
+    final client = await provider.client;
+    final url =
+        restApiUrl + 'v2/entities/crm\$Party?view=party.browse&limit=50';
+    var response = await client.get(url, headers: {
+      'Content-Type': 'application/json',
+    });
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((partyEntity) => PartyEntity.fromMap(partyEntity))
+          .toList();
+    } else {
+      throw Exception('Failed to load Clients from REST API');
+    }
+  }
+
+//ListView of Clients and Search Page as well
+  Scaffold _contactListView(data) {
+    return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.fromLTRB(200.0, 0.0, 0.0, 0.0),
+        child: FloatingActionButton(
+          heroTag: 'Tag3',
+          foregroundColor: Colors.white,
+          backgroundColor: Colors.deepPurpleAccent,
+          onPressed: () => showSearch(
+              context: context,
+              delegate: SearchPage<PartyEntity>(
+                  searchLabel: 'Поиск клиентов',
+                  suggestion: Center(
+                    child: Text('Поиск клиентов по ФИО, ИИН'),
+                  ),
+                  failure: Center(
+                    child: Text('Ничего не найдено 😐'),
+                  ),
+                  builder: (data) => ListTile(
+                      title: Text('ФИО: ' + data.name),
+                      subtitle: Text('ИИН: ' + data.nationalIdentifier),
+                      trailing: IconButton(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => DetailsScreen(data.id))),
+                        icon: Icon(Icons.arrow_forward_ios),
+                        color: Colors.black45,
+                      )),
+                  filter: (party) => [
+                        party.name,
+                        party.nationalIdentifier,
+                        party.responsible.shortName,
+                      ],
+                  items: data)),
+          child: Icon(Icons.search),
+        ),
+      ),
+      body: ListView.builder(
+          itemExtent: 227.0,
+          itemCount: data.length,
+          itemBuilder: (context, index) {
+            return _tile(
+                data[index].name,
+                data[index].resident,
+                data[index].nationalIdentifier,
+                data[index].responsible.shortName,
+                data[index].clientStatus.languageValue,
+                data[index].id,
+                Icons.work,
+                context);
+          }),
+    );
+  }
 
   @override
   void initState() {

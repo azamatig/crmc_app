@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:crmc_app/models/ContractsModel.dart';
+import 'package:crmc_app/models/contractsModel.dart';
 import 'package:crmc_app/screens/contractDetails.dart';
+import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:search_page/search_page.dart';
 import '../services/auth.dart';
 
 class ShowContractData extends StatefulWidget {
@@ -10,49 +12,104 @@ class ShowContractData extends StatefulWidget {
   _ShowContractDataState createState() => _ShowContractDataState();
 }
 
+//Future will get list of contracts from contract.browse view
 Future<List<Contracts>> _fetchContracts() async {
   Auth provider;
   provider = Auth();
   final client = await provider.client;
   final url =
-      'http://192.168.88.100:8078/crmc/rest/v2/entities/crmc\$Contract?returnNulls=false&dynamicAttributes=true&view=contract.edit&limit=30';
+      restApiUrl + 'v2/entities/crmc\$Contract?limit=100&view=contract.browse';
   var response = await client.get(url, headers: {
     'Content-Type': 'application/json',
   });
   if (response.statusCode == 200) {
     List jsonResponse = json.decode(response.body);
     return jsonResponse
-        .map((contracts) => Contracts.fromJson(contracts))
+        .map((contracts) => Contracts.fromMap(contracts))
         .toList();
   } else {
     throw Exception('Failed to load Contracts from REST API');
   }
 }
 
-ListView _contractListView(data) {
-  return ListView.builder(
-      itemExtent: 232,
-      itemCount: data.length,
-      itemBuilder: (context, index) {
-        return _tileContract(
-            data[index].mainContract,
-            data[index].amountAndCurrency,
-            data[index].party.responsible.shortName,
-            data[index].type.code,
-            data[index].party.name,
-            Icons.work,
-            context);
-      });
+Scaffold _contractListView(data, context) {
+  return Scaffold(
+    floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    floatingActionButton: Padding(
+      padding: const EdgeInsets.fromLTRB(200.0, 0.0, 0.0, 0.0),
+      child: FloatingActionButton(
+        heroTag: 'Tag4',
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.deepPurpleAccent,
+        onPressed: () => showSearch(
+            //Search widget for contracts, gets results from ListView
+            context: context,
+            delegate: SearchPage<Contracts>(
+                searchLabel: 'Поиск контрактов',
+                suggestion: Center(
+                  child: Text('Поиск контрактов по ФИО, ИИН'),
+                ),
+                failure: Center(
+                  child: Text('Ничего не найдено 😐'),
+                ),
+                builder: (data) => ListTile(
+                    title: Text(
+                      'Договор: ' + data.number,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: Text('ФИО: ' + data.party.name),
+                    trailing: IconButton(
+                      onPressed: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) => ContractDetailsScreen(
+                                  data.number,
+                                  data.amount.toString(),
+                                  data.responsible.fullName,
+                                  data.type.code,
+                                  data.party.name,
+                                  data.currency.languageValue))),
+                      icon: Icon(Icons.arrow_forward_ios),
+                      color: Colors.black45,
+                    )),
+                filter: (party) => [
+                      party.number,
+                      party.party.name,
+                      party.responsible.fullName,
+                    ],
+                items: data)),
+        child: Icon(Icons.search),
+      ),
+    ),
+    body: ListView.builder(
+        itemExtent: 232,
+        itemCount: data.length,
+        itemBuilder: (context, index) {
+          return _tileContract(
+              data[index].number,
+              data[index].amount.toString(),
+              data[index].responsible.fullName,
+              data[index].type.code,
+              data[index].party.name,
+              data[index].currency.languageValue,
+              data[index].startDate,
+              Icons.work,
+              context);
+        }),
+  );
 }
 
 class _ShowContractDataState extends State<ShowContractData>
     with AutomaticKeepAliveClientMixin<ShowContractData> {
   @override
+  //Keeps alive list of contracts, until user jumps into another tab
   bool get wantKeepAlive => true;
 
   Future<List<Contracts>> _future;
   @override
   void initState() {
+    //cache Future
     _future = _fetchContracts();
     super.initState();
   }
@@ -65,7 +122,7 @@ class _ShowContractDataState extends State<ShowContractData>
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Contracts> data = snapshot.data;
-          return _contractListView(data);
+          return _contractListView(data, context);
         } else if (snapshot.hasError) {
           return Text("${snapshot.error}");
         }
@@ -75,8 +132,18 @@ class _ShowContractDataState extends State<ShowContractData>
   }
 }
 
-Column _tileContract(String mainContract, String amountAndCurrency,
-        String shortName, String code, String name, IconData icon, context) =>
+// _contractListView returns this _tile in body of Scaffold
+// Scaffold needed for search page
+Column _tileContract(
+        String number,
+        String amount,
+        String shortName,
+        String code,
+        String name,
+        String languageValue,
+        DateTime startDate,
+        IconData icon,
+        context) =>
     Column(
       children: <Widget>[
         Row(
@@ -109,7 +176,7 @@ Column _tileContract(String mainContract, String amountAndCurrency,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      mainContract,
+                      number + " / " + startDate.toString(),
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16.0,
@@ -143,7 +210,7 @@ Column _tileContract(String mainContract, String amountAndCurrency,
                           fontWeight: FontWeight.bold),
                     ),
                     Text(
-                      amountAndCurrency,
+                      amount.toString() + " " + languageValue,
                       style: TextStyle(
                           color: Colors.grey.shade800,
                           fontSize: 16.0,
@@ -191,8 +258,8 @@ Column _tileContract(String mainContract, String amountAndCurrency,
               onPressed: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (_) => ContractDetailsScreen(mainContract,
-                          amountAndCurrency, shortName, code, name))),
+                      builder: (_) => ContractDetailsScreen(number, amount,
+                          shortName, code, name, languageValue))),
               icon: Icon(Icons.arrow_forward_ios),
               color: Colors.black45,
             )

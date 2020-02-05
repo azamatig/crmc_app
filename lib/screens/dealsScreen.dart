@@ -3,7 +3,7 @@ xxx: Я как-то видел мужика, который себе в бане
 С полками, столиком - всё как положено. Вместо окна - большой телевизор
 @bash.im
 */
-import 'package:crmc_app/data/ContractData.dart';
+import 'package:crmc_app/data/contractData.dart';
 import 'package:crmc_app/screens/add_new_deal.dart';
 import 'package:flutter/material.dart';
 
