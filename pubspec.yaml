@@ -36,6 +36,7 @@ dependencies:
   path_provider: ^1.5.1
   http: ^0.12.0+4
   search_page: ^1.0.0
+  flushbar: ^1.9.1
 
 
 

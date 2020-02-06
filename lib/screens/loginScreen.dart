@@ -1,6 +1,7 @@
 import 'package:crmc_app/main.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -24,7 +25,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   void dispose() {
-    // Clean up the focus node when the Form is disposed
     myFocusNode.dispose();
     super.dispose();
   }
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     filled: true,
                                     prefixIcon: Icon(Icons.person_pin),
                                     labelText: "Логин",
-                                    contentPadding: new EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                         vertical:
                                             MediaQuery.of(context).size.height *
                                                 0.020,
@@ -158,7 +158,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     filled: true,
                                     prefixIcon: Icon(Icons.security),
                                     labelText: "Пароль",
-                                    contentPadding: new EdgeInsets.symmetric(
+                                    contentPadding: EdgeInsets.symmetric(
                                         vertical:
                                             MediaQuery.of(context).size.height *
                                                 0.020,
@@ -184,9 +184,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 0.055,
                                         width: 125,
                                         decoration: BoxDecoration(
-                                            color: Colors.deepPurple,
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(25))),
+                                          color: Colors.deepPurple,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(25),
+                                          ),
+                                        ),
                                         child: Center(
                                           child: Text(
                                             "ВОЙТИ",
@@ -229,12 +231,41 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       if (client == accessError) {
         Navigator.of(context).pop();
-        badLogin("error", "incorrectSignIn");
+        //Pops up error top bar and discards it after duration time
+        Flushbar(
+          title: "Ошибка авторизации",
+          message:
+              "Не правильный пароль или логин, пожалуйста проверьте введенные данные",
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 3),
+          flushbarPosition: FlushbarPosition.TOP,
+          boxShadows: [
+            BoxShadow(
+              color: Colors.red[800],
+              offset: Offset(0.0, 2.0),
+              blurRadius: 3.0,
+            )
+          ],
+        )..show(context);
         return;
       }
       if (client == connectionTimeCode) {
         Navigator.of(context).pop();
-        badLogin("error", "timeOut");
+        Flushbar(
+          title: "Превышено время ожидания",
+          message:
+              "Превышено время ожидания ответа от сервера, пожалуйста попробуйте позднее",
+          backgroundColor: Colors.orangeAccent,
+          flushbarPosition: FlushbarPosition.TOP,
+          duration: Duration(seconds: 3),
+          boxShadows: [
+            BoxShadow(
+              color: Colors.yellow[800],
+              offset: Offset(0.0, 2.0),
+              blurRadius: 3.0,
+            )
+          ],
+        )..show(context);
         return;
       } else {
         Navigator.pushNamedAndRemoveUntil(

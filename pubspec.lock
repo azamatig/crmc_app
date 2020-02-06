@@ -86,7 +86,7 @@ packages:
     source: hosted
     version: "0.1.4"
   flushbar:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: flushbar
       url: "https://pub.dartlang.org"

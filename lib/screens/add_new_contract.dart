@@ -21,15 +21,15 @@ class _AddNewDealState extends State<AddNewDeal> {
     super.initState();
   }
 
-  //Updates Users info
-  /* updaterUser(UserTest info) async {
-    info.firstName = _firstNameController.text;
-    info.lastName = _lastNameController.text;
-    info.middleName = _middleNameController.text;
-    info.sex = _sexController;
-    info.maritalStatus = _maritalStatusController;
-    info.nationalIdentifier = _iinController.text;
-    var res = await UserInfoRest().sendNewRequest(info);
+  //Creates new Contract
+  /* createContract(Contracts contract) async {
+    contract.firstName = _firstNameController.text;
+    contract.lastName = _lastNameController.text;
+    contract.middleName = _middleNameController.text;
+    contract.sex = _sexController;
+    contract.maritalStatus = _maritalStatusController;
+    contract.nationalIdentifier = _iinController.text;
+    var res = await ContractRest().sendNewRequest(contract);
     return res;
   }*/
 

@@ -28,7 +28,7 @@ class _AddNewContactState extends State<AddNewContact> {
     super.initState();
   }
 
-  updaterUser() async {
+  createContact() async {
     String upperName = _firstNameController.text;
     String nationalIdentifier = _iinController.text;
     var res =
@@ -38,7 +38,7 @@ class _AddNewContactState extends State<AddNewContact> {
 
   @override
   Widget build(BuildContext context) {
-    //Updates Users info
+    //Creates Contact
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -276,7 +276,8 @@ class _AddNewContactState extends State<AddNewContact> {
                           onPressed: () async {
                             if (_formKey.currentState.validate()) {
                               // If the form is valid, do an Update, есь же.
-                              updaterUser(); //fun1
+                              createContact();
+                              Navigator.pop(context); //fun1
                               print('Success');
                             }
                           },

@@ -4,7 +4,7 @@ xxx: Я как-то видел мужика, который себе в бане
 @bash.im
 */
 import 'package:crmc_app/data/contractData.dart';
-import 'package:crmc_app/screens/add_new_deal.dart';
+import 'package:crmc_app/screens/add_new_contract.dart';
 import 'package:flutter/material.dart';
 
 class Contracts extends StatefulWidget {

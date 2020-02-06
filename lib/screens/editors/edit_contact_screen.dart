@@ -21,15 +21,15 @@ class _EditContactScreenState extends State<EditContactScreen> {
     super.initState();
   }
 
-  //Updates Users info
-  /* updaterUser(UserTest info) async {
-    info.firstName = _firstNameController.text;
-    info.lastName = _lastNameController.text;
-    info.middleName = _middleNameController.text;
-    info.sex = _sexController;
-    info.maritalStatus = _maritalStatusController;
-    info.nationalIdentifier = _iinController.text;
-    var res = await UserInfoRest().sendNewRequest(info);
+  //Creates Contact info
+  /* createContact(PartyEntity party) async {
+    party.firstName = _firstNameController.text;
+    party.lastName = _lastNameController.text;
+    party.middleName = _middleNameController.text;
+    party.sex = _sexController;
+    party.maritalStatus = _maritalStatusController;
+    party.nationalIdentifier = _iinController.text;
+    var res = await ...;
     return res;
   }*/
 
