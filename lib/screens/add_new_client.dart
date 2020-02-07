@@ -5,6 +5,7 @@
 import 'package:crmc_app/services/createNewContactRest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 
@@ -337,13 +338,13 @@ List<Sex> sex = <Sex>[
   const Sex(
       'Мужской',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.mars,
         color: Colors.deepPurple,
       )),
   const Sex(
       'Женский',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.venus,
         color: Colors.deepPurple,
       )),
 ];
@@ -359,31 +360,31 @@ List<Managers> managers = <Managers>[
   const Managers(
       'Алена Бедарева',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.female,
         color: Colors.deepPurple,
       )),
   const Managers(
       'Пак Елена',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.female,
         color: Colors.deepPurple,
       )),
   const Managers(
       'Азамат Мухамеджанов',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.male,
         color: Colors.deepPurple,
       )),
   const Managers(
       'Сауле Садыкова',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.female,
         color: Colors.deepPurple,
       )),
   const Managers(
       'Асель Авкешова',
       Icon(
-        Icons.perm_identity,
+        FontAwesomeIcons.female,
         color: Colors.deepPurple,
       )),
 ];

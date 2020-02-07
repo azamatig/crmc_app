@@ -13,7 +13,7 @@ class TestPageState extends State<TestPage> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Center(child: Text('CRMC')),
+          title: Text('CRMC'),
         ),
         body: Center(
           child: Container(

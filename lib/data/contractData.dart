@@ -5,6 +5,7 @@ import 'package:crmc_app/screens/add_new_contract.dart';
 import 'package:crmc_app/screens/contractDetails.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:search_page/search_page.dart';
 import '../services/auth.dart';
 
@@ -38,7 +39,7 @@ Scaffold _contractListView(data, context) {
     appBar: AppBar(
       automaticallyImplyLeading: false,
       title: Padding(
-        padding: const EdgeInsets.fromLTRB(95.0, 0.0, 0.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 237.0, 0.0),
         child: Center(child: Text('CRMC')),
       ),
       actions: <Widget>[
@@ -276,7 +277,7 @@ Card _tileContract(
                     MaterialPageRoute(
                         builder: (_) => ContractDetailsScreen(number, amount,
                             shortName, code, name, languageValue))),
-                icon: Icon(Icons.arrow_forward_ios),
+                icon: Icon(FontAwesomeIcons.angleRight),
                 color: Colors.black45,
               )
             ],

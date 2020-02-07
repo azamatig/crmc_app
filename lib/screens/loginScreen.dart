@@ -2,6 +2,7 @@ import 'package:crmc_app/main.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -175,7 +176,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Container(
                                   child: GestureDetector(
                                       onTap: () {
-                                        print("loging in");
+                                        print("Login pressed");
                                         _onLogin();
                                       },
                                       child: Container(

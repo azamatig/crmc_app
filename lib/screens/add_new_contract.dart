@@ -1,3 +1,5 @@
+import 'package:crmc_app/models/contractsModel.dart';
+import 'package:crmc_app/services/createContractRest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -10,10 +12,11 @@ class AddNewDeal extends StatefulWidget {
 
 class _AddNewDealState extends State<AddNewDeal> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _birthDateController = TextEditingController();
-  TextEditingController _iinController = TextEditingController();
+  TextEditingController _numberController = TextEditingController();
+  TextEditingController _amountController = TextEditingController();
+  TextEditingController _apartmentController = TextEditingController();
+  TextEditingController _responsibleController = TextEditingController();
+  TextEditingController _dateController = TextEditingController();
   String date = 'DateTime.Now';
 
   @override
@@ -22,16 +25,17 @@ class _AddNewDealState extends State<AddNewDeal> {
   }
 
   //Creates new Contract
-  /* createContract(Contracts contract) async {
-    contract.firstName = _firstNameController.text;
-    contract.lastName = _lastNameController.text;
-    contract.middleName = _middleNameController.text;
-    contract.sex = _sexController;
-    contract.maritalStatus = _maritalStatusController;
-    contract.nationalIdentifier = _iinController.text;
-    var res = await ContractRest().sendNewRequest(contract);
+  createContract(Contracts contract) async {
+    contract.number = _numberController.text;
+    contract.amount = _amountController as double;
+    contract.apartment.code = _apartmentController.text;
+    contract.responsible.fullName = _responsibleController.text;
+    contract.startDate = _dateController as DateTime;
+    // contract.nationalIdentifier = _iinController.text;
+    var res = await NewContractRest()
+        .createNewContract(contract.number, contract.amount);
     return res;
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +60,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                 child: Column(
                   children: <Widget>[
                     TextFormField(
-                      controller: _firstNameController,
+                      controller: _numberController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -73,7 +77,8 @@ class _AddNewDealState extends State<AddNewDeal> {
                       },
                     ),
                     TextFormField(
-                      controller: _lastNameController,
+                      controller: _amountController,
+                      keyboardType: TextInputType.number,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -93,7 +98,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       inputFormatters: <TextInputFormatter>[
                         WhitelistingTextInputFormatter.digitsOnly,
                       ],
-                      controller: _iinController,
+                      controller: _apartmentController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -110,7 +115,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       },
                     ),
                     TextFormField(
-                      controller: _birthDateController,
+                      controller: _responsibleController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -121,7 +126,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ),
                     ),
                     TextFormField(
-                      controller: _lastNameController,
+                      controller: _dateController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -138,7 +143,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       },
                     ),
                     TextFormField(
-                      controller: _lastNameController,
+                      //     controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -155,7 +160,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       },
                     ),
                     TextFormField(
-                      controller: _lastNameController,
+                      //       controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -172,7 +177,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       },
                     ),
                     TextFormField(
-                      controller: _lastNameController,
+                      //        controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(

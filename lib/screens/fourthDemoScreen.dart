@@ -25,7 +25,7 @@ class _Class4State extends State<Class4> {
     return Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
-          title: Center(child: Text('CRMC')),
+          title: Text('CRMC'),
         ),
         body: Center(
           child: Column(
