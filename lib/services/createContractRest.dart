@@ -16,9 +16,8 @@ class NewContractRest {
     Auth provider;
     provider = Auth();
     final client = await provider.client;
-    var url = restApiUrl + 'v2/entities/crm\$Party?view=party.edit';
+    var url = restApiUrl + 'v2/entities/crm\Contract?view=contract.edit';
     var body = """
-   
     {
         "_entityName": "crmc\$Contract",
         "endDate": "2020-03-31",
@@ -119,9 +118,8 @@ class NewContractRest {
             "fullName": "Тошматова  Юлия  Халилджановна",
             "shortName": "Юлия  Тошматова"
         }
-
     }
-        """;
+    """;
     var response = await client
         .post(url, body: body, headers: {'Content-Type': 'application/json'});
     BaseResult result = BaseResult.fromJson(response.body);
@@ -141,7 +139,7 @@ class NewContractRest {
           .map((apartments) => Apartments.fromMap(apartments))
           .toList();
     } else {
-      throw Exception('Someting happened');
+      throw Exception('Something happened');
     }
   }
 }

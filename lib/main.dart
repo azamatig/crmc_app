@@ -1,9 +1,6 @@
 import 'package:crmc_app/screens/loginScreen.dart';
 import 'package:crmc_app/screens/mainScreen.dart';
-import 'package:crmc_app/services/common.dart';
-import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
-import 'package:pedantic/pedantic.dart' show unawaited;
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -12,12 +9,8 @@ void main() async {
 
 Future<bool> sharePreferences() async {
   SharedPreferences preferences = await SharedPreferences.getInstance();
-  langValue = preferences.getString("langValue");
-  unawaited(truncateDB());
-  if (langValue == null) {
-    await preferences.setString("langValue", "ru");
-  }
-  var res = (preferences.getBool("firstSingIn") ?? false);
+  preferences?.setBool("isLoggedIn", true);
+  var res = (preferences.getBool("isLoggedIn") ?? false);
   return res;
 }
 

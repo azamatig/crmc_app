@@ -1,7 +1,14 @@
+import 'dart:convert';
+
 import 'package:crmc_app/models/contractsModel.dart';
+import 'package:crmc_app/models/standAloneComplexModel.dart';
+import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/services/createContractRest.dart';
+import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
+bool isExpanded = false;
 
 class AddNewDeal extends StatefulWidget {
   AddNewDeal();
@@ -17,11 +24,31 @@ class _AddNewDealState extends State<AddNewDeal> {
   TextEditingController _apartmentController = TextEditingController();
   TextEditingController _responsibleController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  String date = 'DateTime.Now';
+  var _fetchBuildings;
 
   @override
   void initState() {
+    // _fetchBuildings = _fetchComplex();
     super.initState();
+  }
+
+  Future<List<ComplexModel>> _fetchComplex() async {
+    Auth provider;
+    provider = Auth();
+    final client = await provider.client;
+    final url =
+        restApiUrl + 'v2/entities/crmc\$Complex?view=complex.edit&limit=1';
+    var response = await client.get(url, headers: {
+      'Content-Type': 'application/json',
+    });
+    if (response.statusCode == 200) {
+      List jsonResponse = json.decode(response.body);
+      return jsonResponse
+          .map((complex) => ComplexModel.fromMap(complex))
+          .toList();
+    } else {
+      throw Exception('Failed to load Complex from REST API');
+    }
   }
 
   //Creates new Contract

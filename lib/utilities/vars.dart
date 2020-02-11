@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 String langValue;
-String restApiUrl = "http://192.168.88.100:8078/crmc/rest/";
+String restApiUrl = "http://apps.uco.kz:8087/crmc/rest/";
 String aToken;
 String userId;
 
@@ -59,7 +59,8 @@ Widget waitingScreen(BuildContext context) {
 // ignore: missing_return
 Future<bool> checkConnection() async {
   try {
-    final result = await InternetAddress.lookup('192.168.88.101:8078/crmc');
+    final result =
+        await InternetAddress.lookup('http://apps.uco.kz:8087/crmc/');
     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
       return true;
     }

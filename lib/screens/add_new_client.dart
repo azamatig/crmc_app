@@ -121,6 +121,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       ],
                       controller: _iinController,
                       style: TextStyle(fontSize: 18.0),
+                      keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.card_membership,
