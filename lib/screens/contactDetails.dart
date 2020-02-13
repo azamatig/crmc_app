@@ -124,7 +124,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             onPressed: () => Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => EditContactScreen())),
+                                    builder: (_) => EditContactScreen(id))),
                           ),
                         ],
                       ),

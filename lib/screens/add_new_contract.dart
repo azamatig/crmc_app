@@ -1,14 +1,11 @@
 import 'dart:convert';
 
-import 'package:crmc_app/models/contractsModel.dart';
 import 'package:crmc_app/models/standAloneComplexModel.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/services/createContractRest.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-bool isExpanded = false;
 
 class AddNewDeal extends StatefulWidget {
   AddNewDeal();
@@ -19,49 +16,90 @@ class AddNewDeal extends StatefulWidget {
 
 class _AddNewDealState extends State<AddNewDeal> {
   final _formKey = GlobalKey<FormState>();
+  var _fetchBuildings;
   TextEditingController _numberController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
   TextEditingController _apartmentController = TextEditingController();
   TextEditingController _responsibleController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  var _fetchBuildings;
+  ComplexModel _selectedDistrictValue;
 
   @override
   void initState() {
-    // _fetchBuildings = _fetchComplex();
+    _fetchBuildings = _fetchComplex();
     super.initState();
   }
 
+  /// Sort of gets the list of some shit and smears all over your face
   Future<List<ComplexModel>> _fetchComplex() async {
     Auth provider;
     provider = Auth();
     final client = await provider.client;
-    final url =
-        restApiUrl + 'v2/entities/crmc\$Complex?view=complex.edit&limit=1';
+    final url = restApiUrl +
+        'v2/entities/crmc\$Complex?view=complex.edit&returnNulls=false&limit=1';
     var response = await client.get(url, headers: {
       'Content-Type': 'application/json',
     });
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
       return jsonResponse
-          .map((complex) => ComplexModel.fromMap(complex))
+          .map((complex) => ComplexModel.fromJson(complex))
           .toList();
     } else {
       throw Exception('Failed to load Complex from REST API');
     }
   }
 
-  //Creates new Contract
-  createContract(Contracts contract) async {
-    contract.number = _numberController.text;
-    contract.amount = _amountController as double;
-    contract.apartment.code = _apartmentController.text;
-    contract.responsible.fullName = _responsibleController.text;
-    contract.startDate = _dateController as DateTime;
+  //Creates new Contract, sort of...
+  createContract() async {
+    String number = _numberController.text;
+    double amount = _amountController as double;
+    //   contract.apartment.code = _apartmentController.text;
+    //   contract.responsible.fullName = _responsibleController.text;
+    //   contract.startDate = _dateController as DateTime;
     // contract.nationalIdentifier = _iinController.text;
-    var res = await NewContractRest()
-        .createNewContract(contract.number, contract.amount);
+    var res = await NewContractRest().createNewContract(number, amount);
     return res;
+  }
+
+  // I HATE dropdowns!!!
+  Widget getDistrictDropdown() {
+    return Center(
+      child: FutureBuilder<List<ComplexModel>>(
+        future: _fetchBuildings,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return CircularProgressIndicator();
+          List<ComplexModel> data = snapshot.data;
+          return DropdownButton<ComplexModel>(
+            itemHeight: 75,
+            hint: Text("Менеджер"),
+            value: _selectedDistrictValue,
+            onChanged: (ComplexModel value) {
+              setState(() {
+                _selectedDistrictValue = value;
+              });
+            },
+            items: data.map((ComplexModel complex) {
+              return DropdownMenuItem<ComplexModel>(
+                value: complex,
+                child: Row(
+                  children: <Widget>[
+                    Text(complex.blocks[0].houseNumber),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      complex.name,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                  ],
+                ),
+              );
+            }).toList(),
+          );
+        },
+      ),
+    );
   }
 
   @override
@@ -86,6 +124,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
+                    getDistrictDropdown(), //Yeah, but why?
                     TextFormField(
                       controller: _numberController,
                       style: TextStyle(fontSize: 18.0),
@@ -96,12 +135,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: '№ Недвижиости',
                       ),
-                      validator: (input) {
+                      /*       validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       controller: _amountController,
@@ -114,12 +153,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Сумма договора',
                       ),
-                      validator: (value) {
+                      /*      validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       inputFormatters: <TextInputFormatter>[
@@ -134,12 +173,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Клиент',
                       ),
-                      validator: (input) {
+                      /*    validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       controller: _responsibleController,
@@ -162,12 +201,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Клиент',
                       ),
-                      validator: (value) {
+                      /*       validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       //     controller: _lastNameController,
@@ -179,12 +218,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Тип покупателя',
                       ),
-                      validator: (value) {
+                      /*       validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       //       controller: _lastNameController,
@@ -196,12 +235,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Условия оплаты',
                       ),
-                      validator: (value) {
+                      /*       validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     TextFormField(
                       //        controller: _lastNameController,
@@ -213,12 +252,12 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Подписант',
                       ),
-                      validator: (value) {
+                      /*         validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),
@@ -233,7 +272,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               // If the form is valid, display a updatus.
-                              //fun1
+                              createContract(); //fun1
                               print('Success');
                             }
                           },

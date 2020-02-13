@@ -2,6 +2,7 @@ import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:crmc_app/data/clientData.dart';
 import 'package:crmc_app/data/contractData.dart';
 import 'package:crmc_app/screens/fourthDemoScreen.dart';
+import 'package:crmc_app/screens/hidden_menu_page.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -44,6 +45,15 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.pinkAccent,
+        child: Icon(
+          FontAwesomeIcons.hamburger,
+          color: Colors.white,
+        ),
+        onPressed: () => Navigator.push(
+            context, MaterialPageRoute(builder: (_) => HiddenMenuPage())),
+      ),
       body: PageView(
         onPageChanged: (index) {
           setState(() => _currentTab = index);

@@ -25,7 +25,7 @@ class NewContractRest {
             "_entityName": "crm\$DicContractType",
             "id": "338e1a33-7aea-50cd-3721-00e854bef830"
         },
-        "number": "12345000",
+        "number": $number,
         "apartmentCode": "1А",
         "paymentTerms": {
             "_entityName": "crmc\$DicPaymentTermsCrmc",
@@ -66,7 +66,7 @@ class NewContractRest {
             "code": "KZT",
             "langValue1": "KZT"
         },
-        "amount": 14187264.00,
+        "amount": $amount,
         "apartment": {
             "_entityName": "crmc\$Apartment",
             "id": "af4e46a2-58dc-ec28-2041-7351ed5e8e39",

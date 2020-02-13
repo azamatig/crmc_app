@@ -1,20 +1,31 @@
+import 'package:crmc_app/models/partyModel.dart';
+import 'package:crmc_app/services/editContactRest.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 
 class EditContactScreen extends StatefulWidget {
-  EditContactScreen();
+  EditContactScreen(this.id);
   final format = DateFormat("yyyy-MM-dd");
+  final String id;
 
   @override
-  _EditContactScreenState createState() => _EditContactScreenState();
+  _EditContactScreenState createState() => _EditContactScreenState(this.id);
 }
 
 class _EditContactScreenState extends State<EditContactScreen> {
+  final String id;
+  _EditContactScreenState(this.id);
+  PartyEntity partyEntity;
+
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _middleNameController = TextEditingController();
+ // TextEditingController _nameController = TextEditingController();
+  TextEditingController _nationalIdentifierController = TextEditingController();
+ // TextEditingController _clientController = TextEditingController();
+ // TextEditingController _responsibleController = TextEditingController();
+ // TextEditingController _idController = TextEditingController();
+ // bool _residentController;
 
   @override
   void initState() {
@@ -22,16 +33,15 @@ class _EditContactScreenState extends State<EditContactScreen> {
   }
 
   //Creates Contact info
-  /* createContact(PartyEntity party) async {
-    party.firstName = _firstNameController.text;
-    party.lastName = _lastNameController.text;
-    party.middleName = _middleNameController.text;
-    party.sex = _sexController;
-    party.maritalStatus = _maritalStatusController;
-    party.nationalIdentifier = _iinController.text;
-    var res = await ...;
+  updateContact() async {
+    // party.name = _nameController.text;
+    String nationalIdentifier = _nationalIdentifierController.text;
+    // party.resident = _residentController;
+    // party.clientStatus.languageValue = _clientController.text;
+    // party.responsible.fullName = _responsibleController.text;
+    var res = await EditContactRest(id).editContact(nationalIdentifier);
     return res;
-  }*/
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +65,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
+                    /*      TextFormField(
                       cursorColor: Colors.deepPurple,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
@@ -65,16 +75,16 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'ФИО Клиента',
                       ),
-                      validator: (input) {
+                        validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
                       },
-                    ),
-                    TextFormField(
+                    ),*/
+                    /*     TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _middleNameController,
+                      // controller: _nameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -83,16 +93,16 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'Отчество',
                       ),
-                      validator: (input) {
+                      /*    validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
-                    ),
-                    TextFormField(
+                      },*/
+                    ),*/
+                    /*    TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      controller: _clientController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -101,14 +111,15 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'Фамилия',
                       ),
-                      validator: (value) {
+                      /*     validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
-                    ),
+                      },*/
+                    ),*/
                     TextFormField(
+                      controller: _nationalIdentifierController,
                       cursorColor: Colors.deepPurple,
                       inputFormatters: <TextInputFormatter>[
                         WhitelistingTextInputFormatter.digitsOnly,
@@ -122,16 +133,16 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'ИИН(только цифры)',
                       ),
-                      validator: (input) {
+                      /*    validator: (input) {
                         if (input.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
+                      },*/
                     ),
-                    TextFormField(
+                    /*      TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      controller: _clientController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -140,16 +151,16 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'Место Рождения',
                       ),
-                      validator: (value) {
+                      /*      validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
-                    ),
-                    TextFormField(
+                      },*/
+                    ),*/
+                    /*       TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      controller: _responsibleController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -158,14 +169,14 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'Ваш пол',
                       ),
-                      validator: (value) {
+                      /*  validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
-                    ),
-                    TextFormField(
+                      },*/
+                    ),*/
+                    /*   TextFormField(
                       cursorColor: Colors.deepPurple,
                       //  controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
@@ -176,17 +187,17 @@ class _EditContactScreenState extends State<EditContactScreen> {
                         ),
                         labelText: 'Мобильный телефон',
                       ),
-                      validator: (value) {
+                      /*     validator: (value) {
                         if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
-                      },
-                    ),
-                    Padding(
+                      },*/
+                    ),*/
+                    /*  Padding(
                       padding: const EdgeInsets.fromLTRB(15.0, 25.0, 0.0, 0.0),
                       child: BasicDateField(),
-                    ),
+                    ),*/
                     Container(
                       margin: EdgeInsets.all(40.0),
                       height: 50.0,
@@ -200,7 +211,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               // If the form is valid, do an Update, есь же.
-                              //fun1
+                              updateContact(); //fun1
                               print('Success');
                             }
                           },
