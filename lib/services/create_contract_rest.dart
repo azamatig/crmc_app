@@ -1,7 +1,4 @@
-import 'dart:convert';
-
-import 'package:crmc_app/data/apartmentModel.dart';
-import 'package:crmc_app/models/baseResult.dart';
+import 'package:crmc_app/models/base_result.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';
 
@@ -124,22 +121,5 @@ class NewContractRest {
         .post(url, body: body, headers: {'Content-Type': 'application/json'});
     BaseResult result = BaseResult.fromJson(response.body);
     return result;
-  }
-
-  getApartmentInfo() async {
-    Auth provider;
-    provider = Auth();
-    final client = await provider.client;
-    var url = restApiUrl + 'v2/entities/crmc\$Apartment';
-    var response =
-        await client.get(url, headers: {'Content-Type': 'application/json'});
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse
-          .map((apartments) => Apartments.fromMap(apartments))
-          .toList();
-    } else {
-      throw Exception('Something happened');
-    }
   }
 }

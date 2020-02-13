@@ -1,6 +1,6 @@
-import 'package:crmc_app/models/dbCrmModel.dart';
+import 'package:crmc_app/models/db_crm_model.dart';
 
-import 'dbData.dart';
+import 'db_data.dart';
 
 class CrmDB {
   CrmDB() {

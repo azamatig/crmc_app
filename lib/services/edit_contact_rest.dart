@@ -1,4 +1,4 @@
-import 'package:crmc_app/models/baseResult.dart';
+import 'package:crmc_app/models/base_result.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';
 

@@ -1,5 +1,5 @@
-import 'package:crmc_app/models/partyModel.dart';
-import 'package:crmc_app/services/editContactRest.dart';
+import 'package:crmc_app/models/party_model.dart';
+import 'package:crmc_app/services/edit_contact_rest.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -20,12 +20,12 @@ class _EditContactScreenState extends State<EditContactScreen> {
   PartyEntity partyEntity;
 
   final _formKey = GlobalKey<FormState>();
- // TextEditingController _nameController = TextEditingController();
+  // TextEditingController _nameController = TextEditingController();
   TextEditingController _nationalIdentifierController = TextEditingController();
- // TextEditingController _clientController = TextEditingController();
- // TextEditingController _responsibleController = TextEditingController();
- // TextEditingController _idController = TextEditingController();
- // bool _residentController;
+  // TextEditingController _clientController = TextEditingController();
+  // TextEditingController _responsibleController = TextEditingController();
+  // TextEditingController _idController = TextEditingController();
+  // bool _residentController;
 
   @override
   void initState() {

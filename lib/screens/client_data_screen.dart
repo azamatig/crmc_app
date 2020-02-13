@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:crmc_app/models/partyModel.dart';
+import 'package:crmc_app/models/party_model.dart';
 import 'package:crmc_app/screens/add_new_client.dart';
-import 'package:crmc_app/screens/contactDetails.dart';
+import 'package:crmc_app/screens/contact_details.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';

@@ -1,7 +1,7 @@
-import 'package:crmc_app/data/crmDB.dart';
+import 'package:crmc_app/data/crm_db.dart';
 import 'package:pedantic/pedantic.dart' show unawaited;
 
-import 'dbData.dart';
+import 'db_data.dart';
 
 class UtilsDB {
   UtilsDB() {

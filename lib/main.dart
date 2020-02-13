@@ -1,5 +1,5 @@
-import 'package:crmc_app/screens/loginScreen.dart';
-import 'package:crmc_app/screens/mainScreen.dart';
+import 'package:crmc_app/screens/login_screen.dart';
+import 'package:crmc_app/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

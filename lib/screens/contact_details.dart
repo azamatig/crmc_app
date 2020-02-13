@@ -1,4 +1,4 @@
-import 'package:crmc_app/models/contactModels.dart';
+import 'package:crmc_app/models/contact_model.dart';
 import 'package:crmc_app/screens/editors/edit_contact_screen.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';

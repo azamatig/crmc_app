@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:crmc_app/models/standAloneComplexModel.dart';
+import 'package:crmc_app/models/complex_model.dart';
 import 'package:crmc_app/services/auth.dart';
-import 'package:crmc_app/services/createContractRest.dart';
+import 'package:crmc_app/services/create_contract_rest.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

@@ -2,7 +2,7 @@
 анон: Почему говорят, что Штирлиц был на грани провала?
 Ведь у провала сидел Бендер.
  */
-import 'package:crmc_app/services/createNewContactRest.dart';
+import 'package:crmc_app/services/create_contact_rest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
