@@ -48,7 +48,7 @@ class _MainScreenState extends State<MainScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.pinkAccent,
         child: Icon(
-          FontAwesomeIcons.hamburger,
+          FontAwesomeIcons.listUl,
           color: Colors.white,
         ),
         onPressed: () => Navigator.push(

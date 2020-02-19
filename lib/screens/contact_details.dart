@@ -3,6 +3,7 @@ import 'package:crmc_app/screens/editors/edit_contact_screen.dart';
 import 'package:crmc_app/services/auth.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class DetailsScreen extends StatefulWidget {
   DetailsScreen(this.id);
@@ -21,7 +22,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
     provider = Auth();
     final client = await provider.client;
     var myId = widget.id;
-    final url = restApiUrl + 'v2/entities/crm\$Party/$myId?view=party.edit';
+    final url = restApiUrl +
+        'v2/entities/crm\$Party/$myId?view=party.edit&returnNulls=false&limit=1';
     var response = await client.get(url, headers: {
       'Content-Type': 'application/json',
     });
@@ -85,6 +87,8 @@ class _DetailsScreenState extends State<DetailsScreen> {
       String mobilePhone,
       String languageValue,
       context) {
+    var now = dateOfBirth;
+    var formatter = new DateFormat('yyyy-MM-dd');
     return Container(
       width: MediaQuery.of(context).size.width,
       child: Column(
@@ -306,7 +310,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                             Container(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                dateOfBirth.toString(),
+                                formatter.format(now).toString(),
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 17,

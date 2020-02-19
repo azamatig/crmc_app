@@ -6,7 +6,6 @@ String langValue;
 String restApiUrl = "http://apps.uco.kz:8087/crmc/rest/";
 String aToken;
 String userId;
-
 String connectionTimeCode = "CONNECTION_TIME_OUT";
 String accessError = "ACCESS_ERROR";
 

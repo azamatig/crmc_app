@@ -6,6 +6,7 @@ import 'package:crmc_app/screens/contract_details.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 import 'package:search_page/search_page.dart';
 import '../services/auth.dart';
 
@@ -14,6 +15,7 @@ class ShowContractData extends StatefulWidget {
   _ShowContractDataState createState() => _ShowContractDataState();
 }
 
+var formatter = new DateFormat('yyyy-MM-dd');
 //Future will get list of contracts from contract.browse view
 Future<List<Contracts>> _fetchContracts() async {
   Auth provider;
@@ -149,6 +151,7 @@ class _ShowContractDataState extends State<ShowContractData>
 
 // _contractListView returns this _tile in body of Scaffold
 // Scaffold needed for search page
+
 Card _tileContract(
         String number,
         String amount,
@@ -193,7 +196,7 @@ Card _tileContract(
                             fontWeight: FontWeight.bold),
                       ),
                       Text(
-                        number + " / " + startDate.toString(),
+                        number + " / " + formatter.format(startDate),
                         style: TextStyle(
                             color: Colors.grey.shade800,
                             fontSize: 14.0,

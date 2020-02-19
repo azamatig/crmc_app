@@ -1,11 +1,10 @@
-import 'dart:convert';
-
-import 'package:crmc_app/models/complex_model.dart';
-import 'package:crmc_app/services/auth.dart';
+import 'package:crmc_app/screens/block_list.dart';
+import 'package:crmc_app/screens/client_form_add_list.dart';
 import 'package:crmc_app/services/create_contract_rest.dart';
-import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
 class AddNewDeal extends StatefulWidget {
   AddNewDeal();
@@ -16,90 +15,23 @@ class AddNewDeal extends StatefulWidget {
 
 class _AddNewDealState extends State<AddNewDeal> {
   final _formKey = GlobalKey<FormState>();
-  var _fetchBuildings;
   TextEditingController _numberController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
-  TextEditingController _apartmentController = TextEditingController();
-  TextEditingController _responsibleController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-  ComplexModel _selectedDistrictValue;
+  var now = new DateTime.now();
+  var formatter = new DateFormat('yyyy-MM-dd');
 
   @override
   void initState() {
-    _fetchBuildings = _fetchComplex();
     super.initState();
-  }
-
-  /// Sort of gets the list of some shit and smears all over your face
-  Future<List<ComplexModel>> _fetchComplex() async {
-    Auth provider;
-    provider = Auth();
-    final client = await provider.client;
-    final url = restApiUrl +
-        'v2/entities/crmc\$Complex?view=complex.edit&returnNulls=false&limit=1';
-    var response = await client.get(url, headers: {
-      'Content-Type': 'application/json',
-    });
-    if (response.statusCode == 200) {
-      List jsonResponse = json.decode(response.body);
-      return jsonResponse
-          .map((complex) => ComplexModel.fromJson(complex))
-          .toList();
-    } else {
-      throw Exception('Failed to load Complex from REST API');
-    }
   }
 
   //Creates new Contract, sort of...
   createContract() async {
     String number = _numberController.text;
     double amount = _amountController as double;
-    //   contract.apartment.code = _apartmentController.text;
-    //   contract.responsible.fullName = _responsibleController.text;
-    //   contract.startDate = _dateController as DateTime;
-    // contract.nationalIdentifier = _iinController.text;
     var res = await NewContractRest().createNewContract(number, amount);
     return res;
-  }
-
-  // I HATE dropdowns!!!
-  Widget getDistrictDropdown() {
-    return Center(
-      child: FutureBuilder<List<ComplexModel>>(
-        future: _fetchBuildings,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) return CircularProgressIndicator();
-          List<ComplexModel> data = snapshot.data;
-          return DropdownButton<ComplexModel>(
-            itemHeight: 75,
-            hint: Text("Менеджер"),
-            value: _selectedDistrictValue,
-            onChanged: (ComplexModel value) {
-              setState(() {
-                _selectedDistrictValue = value;
-              });
-            },
-            items: data.map((ComplexModel complex) {
-              return DropdownMenuItem<ComplexModel>(
-                value: complex,
-                child: Row(
-                  children: <Widget>[
-                    Text(complex.blocks[0].houseNumber),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      complex.name,
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ],
-                ),
-              );
-            }).toList(),
-          );
-        },
-      ),
-    );
   }
 
   @override
@@ -124,10 +56,15 @@ class _AddNewDealState extends State<AddNewDeal> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    getDistrictDropdown(), //Yeah, but why?
+                    Center(child: Text('Пожалуйста, заполните все поля')),
+                    SizedBox(
+                      height: 10,
+                    ),
                     TextFormField(
                       controller: _numberController,
                       style: TextStyle(fontSize: 18.0),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ComplexList())),
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.text_fields,
@@ -135,12 +72,6 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: '№ Недвижиости',
                       ),
-                      /*       validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
                     ),
                     TextFormField(
                       controller: _amountController,
@@ -153,35 +84,10 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Сумма договора',
                       ),
-                      /*      validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
                     ),
                     TextFormField(
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly,
-                      ],
-                      controller: _apartmentController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.card_membership,
-                          size: 30.0,
-                        ),
-                        labelText: 'Клиент',
-                      ),
-                      /*    validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      controller: _responsibleController,
+                      initialValue: formatter.format(now),
+                      //  controller: _responsibleController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -194,6 +100,8 @@ class _AddNewDealState extends State<AddNewDeal> {
                     TextFormField(
                       controller: _dateController,
                       style: TextStyle(fontSize: 18.0),
+                      onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (_) => ClientFormData())),
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.place,
@@ -201,63 +109,102 @@ class _AddNewDealState extends State<AddNewDeal> {
                         ),
                         labelText: 'Клиент',
                       ),
-                      /*       validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
                     ),
-                    TextFormField(
-                      //     controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.person_pin,
-                          size: 30.0,
-                        ),
-                        labelText: 'Тип покупателя',
-                      ),
-                      /*       validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
+                    SizedBox(
+                      height: 5,
                     ),
-                    TextFormField(
-                      //       controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.phone_android,
-                          size: 30.0,
-                        ),
-                        labelText: 'Условия оплаты',
-                      ),
-                      /*       validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
+                    Center(child: Text('Тип клиента')),
+                    DropdownButton<ClientType>(
+                      itemHeight: 75,
+                      hint: Text("Тип клиента"),
+                      value: selectedType,
+                      onChanged: (ClientType value) {
+                        setState(() {
+                          selectedType = value;
+                        });
+                      },
+                      items: type.map((ClientType clientType) {
+                        return DropdownMenuItem<ClientType>(
+                          value: clientType,
+                          child: Row(
+                            children: <Widget>[
+                              clientType.icon,
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                clientType.type,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
-                    TextFormField(
-                      //        controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.phone_android,
-                          size: 30.0,
-                        ),
-                        labelText: 'Подписант',
-                      ),
-                      /*         validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Center(child: Text('Условия оплаты')),
+                    DropdownButton<Payments>(
+                      itemHeight: 75,
+                      hint: Text("Условия оплаты"),
+                      value: selectedPayment,
+                      onChanged: (Payments shmalue) {
+                        setState(() {
+                          selectedPayment = shmalue;
+                        });
+                      },
+                      items: payment.map((Payments payment) {
+                        return DropdownMenuItem<Payments>(
+                          value: payment,
+                          child: Row(
+                            children: <Widget>[
+                              payment.icon,
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                payment.condition,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
+                    ),
+                    SizedBox(
+                      height: 2,
+                    ),
+                    Center(child: Text('Подписант')),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    DropdownButton<Managers>(
+                      itemHeight: 75,
+                      hint: Text("Подписант"),
+                      value: selectedManager,
+                      onChanged: (Managers shmalue) {
+                        setState(() {
+                          selectedManager = shmalue;
+                        });
+                      },
+                      items: managers.map((Managers manager) {
+                        return DropdownMenuItem<Managers>(
+                          value: manager,
+                          child: Row(
+                            children: <Widget>[
+                              manager.icon,
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                manager.name,
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          ),
+                        );
+                      }).toList(),
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),
@@ -296,3 +243,83 @@ class _AddNewDealState extends State<AddNewDeal> {
     );
   }
 }
+
+class Managers {
+  const Managers(this.name, this.icon);
+  final String name;
+  final Icon icon;
+}
+
+Managers selectedManager;
+List<Managers> managers = <Managers>[
+  const Managers(
+      'Алена Бедарева',
+      Icon(
+        FontAwesomeIcons.female,
+      )),
+  const Managers(
+      'Пак Елена',
+      Icon(
+        FontAwesomeIcons.female,
+      )),
+  const Managers(
+      'Азамат Мухамеджанов',
+      Icon(
+        FontAwesomeIcons.male,
+      )),
+  const Managers(
+      'Сауле Садыкова',
+      Icon(
+        FontAwesomeIcons.female,
+      )),
+  const Managers(
+      'Асель Авкешова',
+      Icon(
+        FontAwesomeIcons.female,
+      )),
+];
+
+class Payments {
+  const Payments(this.condition, this.icon);
+  final String condition;
+  final Icon icon;
+}
+
+Payments selectedPayment;
+List<Payments> payment = <Payments>[
+  const Payments(
+      '100%',
+      Icon(
+        FontAwesomeIcons.paypal,
+      )),
+  const Payments(
+      'Рассрочка',
+      Icon(
+        FontAwesomeIcons.paypal,
+      )),
+  const Payments(
+      '100% или рассрочка',
+      Icon(
+        FontAwesomeIcons.paypal,
+      )),
+];
+
+class ClientType {
+  const ClientType(this.type, this.icon);
+  final String type;
+  final Icon icon;
+}
+
+ClientType selectedType;
+List<ClientType> type = <ClientType>[
+  const ClientType(
+      'Физ.лицо',
+      Icon(
+        FontAwesomeIcons.male,
+      )),
+  const ClientType(
+      'Юр.лицо',
+      Icon(
+        FontAwesomeIcons.male,
+      )),
+];

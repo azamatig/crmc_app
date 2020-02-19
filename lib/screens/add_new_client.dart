@@ -17,9 +17,8 @@ class AddNewContact extends StatefulWidget {
 
 class _AddNewContactState extends State<AddNewContact> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _middleNameController = TextEditingController();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _phoneController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
 
   _AddNewContactState();
@@ -30,10 +29,11 @@ class _AddNewContactState extends State<AddNewContact> {
   }
 
   createContact() async {
-    String upperName = _firstNameController.text;
+    String upperName = _nameController.text;
     String nationalIdentifier = _iinController.text;
-    var res =
-        await NewContactRest().sendNewRequest(upperName, nationalIdentifier);
+    String value = _phoneController.text;
+    var res = await NewContactRest()
+        .sendNewRequest(upperName, nationalIdentifier, value);
     return res;
   }
 
@@ -62,53 +62,17 @@ class _AddNewContactState extends State<AddNewContact> {
                   children: <Widget>[
                     TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _firstNameController,
+                      controller: _nameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
                           Icons.text_fields,
                           size: 30.0,
                         ),
-                        labelText: 'Имя',
+                        labelText: 'ФИО',
                       ),
                       /*                  validator: (input) {
                         if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _middleNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.text_fields,
-                          size: 30.0,
-                        ),
-                        labelText: 'Отчество',
-                      ),
-                      /*     validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.text_fields,
-                          size: 30.0,
-                        ),
-                        labelText: 'Фамилия',
-                      ),
-                      /*       validator: (value) {
-                        if (value.isEmpty) {
                           return 'Обязательно для заполнения';
                         }
                         return null;
@@ -138,7 +102,7 @@ class _AddNewContactState extends State<AddNewContact> {
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      // controller: _lastNameController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -156,7 +120,7 @@ class _AddNewContactState extends State<AddNewContact> {
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      controller: _phoneController,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(

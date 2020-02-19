@@ -13,7 +13,7 @@ class NewContractRest {
     Auth provider;
     provider = Auth();
     final client = await provider.client;
-    var url = restApiUrl + 'v2/entities/crm\Contract?view=contract.edit';
+    var url = restApiUrl + 'v2/entities/crm\$Contract?view=contract.edit';
     var body = """
     {
         "_entityName": "crmc\$Contract",
@@ -22,7 +22,7 @@ class NewContractRest {
             "_entityName": "crm\$DicContractType",
             "id": "338e1a33-7aea-50cd-3721-00e854bef830"
         },
-        "number": $number,
+        "number": "$number",
         "apartmentCode": "1А",
         "paymentTerms": {
             "_entityName": "crmc\$DicPaymentTermsCrmc",
