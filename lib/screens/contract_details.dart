@@ -55,17 +55,12 @@ class _ContractDetailsScreenState extends State<ContractDetailsScreen> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ListView(
+            child: Column(
               children: <Widget>[
                 SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.only(left: 20),
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    primary: false,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+                  child: Column(
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

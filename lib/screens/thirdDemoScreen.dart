@@ -11,14 +11,15 @@ class TestPageState extends State<TestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          title: Text('CRMC'),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        title: Text('CRMC'),
+      ),
+      body: Center(
+        child: Container(
+          child: Text('Placeholder Screen'),
         ),
-        body: Center(
-          child: Container(
-            child: Text('Demo Screen 3'),
-          ),
-        ));
+      ),
+    );
   }
 }

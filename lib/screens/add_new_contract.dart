@@ -7,19 +7,25 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class AddNewDeal extends StatefulWidget {
-  AddNewDeal();
+  AddNewDeal(this.id);
+  final String id;
 
   @override
-  _AddNewDealState createState() => _AddNewDealState();
+  _AddNewDealState createState() => _AddNewDealState(this.id);
 }
 
 class _AddNewDealState extends State<AddNewDeal> {
+  final String id;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _numberController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
   TextEditingController _dateController = TextEditingController();
   var now = new DateTime.now();
   var formatter = new DateFormat('yyyy-MM-dd');
+
+  String myId;
+
+  _AddNewDealState(this.id);
 
   @override
   void initState() {
@@ -60,151 +66,267 @@ class _AddNewDealState extends State<AddNewDeal> {
                     SizedBox(
                       height: 10,
                     ),
-                    TextFormField(
-                      controller: _numberController,
-                      style: TextStyle(fontSize: 18.0),
-                      onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ComplexList())),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.text_fields,
-                          size: 30.0,
-                        ),
-                        labelText: '№ Недвижиости',
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
                       ),
-                    ),
-                    TextFormField(
-                      controller: _amountController,
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.text_fields,
-                          size: 30.0,
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
+                        child: TextFormField(
+                          initialValue: '${widget.id}' != null
+                              ? '${widget.id}'
+                              : 'Выбрать недвижимость',
+                          style: TextStyle(fontSize: 18.0),
+                          onTap: () => Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => ComplexList())),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.text_fields,
+                              size: 30.0,
+                            ),
+                            labelText: '№ Недвижиости',
+                          ),
                         ),
-                        labelText: 'Сумма договора',
-                      ),
-                    ),
-                    TextFormField(
-                      initialValue: formatter.format(now),
-                      //  controller: _responsibleController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.perm_contact_calendar,
-                          size: 30.0,
-                        ),
-                        labelText: 'Дата',
-                      ),
-                    ),
-                    TextFormField(
-                      controller: _dateController,
-                      style: TextStyle(fontSize: 18.0),
-                      onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (_) => ClientFormData())),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.place,
-                          size: 30.0,
-                        ),
-                        labelText: 'Клиент',
                       ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Center(child: Text('Тип клиента')),
-                    DropdownButton<ClientType>(
-                      itemHeight: 75,
-                      hint: Text("Тип клиента"),
-                      value: selectedType,
-                      onChanged: (ClientType value) {
-                        setState(() {
-                          selectedType = value;
-                        });
-                      },
-                      items: type.map((ClientType clientType) {
-                        return DropdownMenuItem<ClientType>(
-                          value: clientType,
-                          child: Row(
-                            children: <Widget>[
-                              clientType.icon,
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                clientType.type,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
+                        child: TextFormField(
+                          controller: _amountController,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.text_fields,
+                              size: 30.0,
+                            ),
+                            labelText: 'Сумма договора',
                           ),
-                        );
-                      }).toList(),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 5,
                     ),
-                    Center(child: Text('Условия оплаты')),
-                    DropdownButton<Payments>(
-                      itemHeight: 75,
-                      hint: Text("Условия оплаты"),
-                      value: selectedPayment,
-                      onChanged: (Payments shmalue) {
-                        setState(() {
-                          selectedPayment = shmalue;
-                        });
-                      },
-                      items: payment.map((Payments payment) {
-                        return DropdownMenuItem<Payments>(
-                          value: payment,
-                          child: Row(
-                            children: <Widget>[
-                              payment.icon,
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                payment.condition,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
+                        child: TextFormField(
+                          initialValue: formatter.format(now),
+                          //  controller: _responsibleController,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.perm_contact_calendar,
+                              size: 30.0,
+                            ),
+                            labelText: 'Дата',
                           ),
-                        );
-                      }).toList(),
+                        ),
+                      ),
                     ),
                     SizedBox(
-                      height: 2,
+                      height: 5,
                     ),
-                    Center(child: Text('Подписант')),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
+                        child: TextFormField(
+                          controller: _dateController,
+                          style: TextStyle(fontSize: 18.0),
+                          onTap: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => ClientFormData())),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.place,
+                              size: 30.0,
+                            ),
+                            labelText: 'Клиент',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Column(
+                          children: <Widget>[
+                            Center(child: Text('Тип клиента')),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              width: 165,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                    color: Colors.black,
+                                    style: BorderStyle.solid,
+                                    width: 0.80),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 0.0, 0.0, 0.0),
+                                child: DropdownButton<ClientType>(
+                                  hint: Text("Тип клиента"),
+                                  value: selectedType,
+                                  onChanged: (ClientType value) {
+                                    setState(() {
+                                      selectedType = value;
+                                    });
+                                  },
+                                  items: type.map((ClientType clientType) {
+                                    return DropdownMenuItem<ClientType>(
+                                      value: clientType,
+                                      child: Row(
+                                        children: <Widget>[
+                                          clientType.icon,
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            clientType.type,
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          children: <Widget>[
+                            Center(child: Text('Условия оплаты')),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                    color: Colors.black,
+                                    style: BorderStyle.solid,
+                                    width: 0.80),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 0.0, 0.0, 0.0),
+                                child: DropdownButton<Payments>(
+                                  hint: Text("Условия оплаты"),
+                                  value: selectedPayment,
+                                  onChanged: (Payments shmalue) {
+                                    setState(() {
+                                      selectedPayment = shmalue;
+                                    });
+                                  },
+                                  items: payment.map((Payments payment) {
+                                    return DropdownMenuItem<Payments>(
+                                      value: payment,
+                                      child: Row(
+                                        children: <Widget>[
+                                          payment.icon,
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            payment.condition,
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                     SizedBox(
                       height: 10,
                     ),
-                    DropdownButton<Managers>(
-                      itemHeight: 75,
-                      hint: Text("Подписант"),
-                      value: selectedManager,
-                      onChanged: (Managers shmalue) {
-                        setState(() {
-                          selectedManager = shmalue;
-                        });
-                      },
-                      items: managers.map((Managers manager) {
-                        return DropdownMenuItem<Managers>(
-                          value: manager,
-                          child: Row(
-                            children: <Widget>[
-                              manager.icon,
-                              SizedBox(
-                                width: 10,
+                    Center(child: Text('Подписант')),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      width: 250,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(5.0, 0.0, 0.0, 0.0),
+                        child: DropdownButton<Managers>(
+                          hint: Text("Подписант"),
+                          value: selectedManager,
+                          onChanged: (Managers shmalue) {
+                            setState(() {
+                              selectedManager = shmalue;
+                            });
+                          },
+                          items: managers.map((Managers manager) {
+                            return DropdownMenuItem<Managers>(
+                              value: manager,
+                              child: Row(
+                                children: <Widget>[
+                                  manager.icon,
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    manager.name,
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                ],
                               ),
-                              Text(
-                                manager.name,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
+                            );
+                          }).toList(),
+                        ),
+                      ),
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),

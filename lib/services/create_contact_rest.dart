@@ -9,8 +9,8 @@ class NewContactRest {
     provider = Auth();
   }
 
-  sendNewRequest(
-      String upperName, String nationalIdentifier, String value) async {
+  sendNewRequest(String upperName, String nationalIdentifier, String value,
+      String placeOfBirth) async {
     Auth provider;
     provider = Auth();
     final client = await provider.client;
@@ -18,32 +18,32 @@ class NewContactRest {
     var body = """
   {
             "_entityName": "crm\$Party",
-            "upperName": " --- ",
+            "upperName": " ... ",
             "clientStatus": {
-                          "_entityName": "base\$DicClientStatus",
-                          "id": "eb5fc889-b79c-73da-5209-5aa1916d0d08",
+                 "_entityName": "base\$DicClientStatus",
+                 "id": "eb5fc889-b79c-73da-5209-5aa1916d0d08",
                           },
             "partyType": "CONTACT",
-            "contactInfo": [
+            "contactInfo":[
                 {
-                "_entityName": "base\$ContactInfo",
-                "active": true,
-                "type": {
-                    "_entityName": "base\$DicContactInfoType",
-                    "_instanceName": "Моб. телефон",
-                    "id": "c16301f7-4dcf-db47-8914-0c351185881c",
+                 "_entityName": "base\$ContactInfo",
+                 "active": true,
+                 "type": {
+                          "_entityName": "base\$DicContactInfoType",
+                          "_instanceName": "Моб. телефон",
+                          "id": "c16301f7-4dcf-db47-8914-0c351185881c",
                 },
                 "doNotDisturb": false,
-                "value": "$value"
+                "value": $value
             }],
-            "responsible": {
-                          "id": "33ab3f26-12ac-276d-5975-f1f104295927"
+            "responsible":{
+                "id": "33ab3f26-12ac-276d-5975-f1f104295927"
                            },
             "resident": true,
             "active": true,
             "name": "$upperName",
             "nationalIdentifier": "$nationalIdentifier"
-   }
+  }
         """;
     var response = await client
         .post(url, body: body, headers: {'Content-Type': 'application/json'});

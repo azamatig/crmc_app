@@ -16,6 +16,7 @@ class DetailsScreen extends StatefulWidget {
 class _DetailsScreenState extends State<DetailsScreen> {
   final String id;
   _DetailsScreenState(this.id);
+  Future<Contacts> _detailsFuture;
 
   Future<Contacts> _fetchContacts() async {
     Auth provider;
@@ -35,9 +36,16 @@ class _DetailsScreenState extends State<DetailsScreen> {
     }
   }
 
+  void initState() {
+    setState(() {
+      _detailsFuture = _fetchContacts();
+    });
+    super.initState();
+  }
+
   Widget build(BuildContext context) {
     return FutureBuilder<Contacts>(
-      future: _fetchContacts(),
+      future: _detailsFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           Contacts data = snapshot.data;
@@ -94,17 +102,12 @@ class _DetailsScreenState extends State<DetailsScreen> {
       child: Column(
         children: <Widget>[
           Expanded(
-            child: ListView(
+            child: Column(
               children: <Widget>[
                 SizedBox(height: 10),
                 Container(
                   padding: EdgeInsets.only(left: 20),
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    primary: false,
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
+                  child: Column(
                     children: <Widget>[
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

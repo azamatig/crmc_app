@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:crmc_app/models/apartments_total.dart';
+import 'package:crmc_app/models/apartments_model.dart';
+import 'package:crmc_app/screens/add_new_contract.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:search_page/search_page.dart';
 import '../services/auth.dart';
-import 'contact_details.dart';
 
 class ComplexList extends StatefulWidget {
   @override
@@ -62,14 +62,17 @@ class _ComplexListState extends State<ComplexList>
                       child: Text('Ничего не найдено 😐'),
                     ),
                     builder: (data) => ListTile(
-                        title: Text('Квартира: ' + data.code),
+                        title: Text('Квартира: ' +
+                            data.code +
+                            "/" +
+                            data.complexBlockSection.complexBlock.name),
                         subtitle: Text('Комплекс: ' +
                             data.complexBlockSection.complexBlock.complex.name),
                         trailing: IconButton(
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => DetailsScreen(data.id))),
+                                  builder: (_) => AddNewDeal(data.id))),
                           icon: Icon(Icons.arrow_forward_ios),
                           color: Colors.black45,
                         )),

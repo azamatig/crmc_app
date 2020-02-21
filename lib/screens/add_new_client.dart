@@ -20,6 +20,7 @@ class _AddNewContactState extends State<AddNewContact> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
   TextEditingController _iinController = TextEditingController();
+  TextEditingController _placeOfBirthController = TextEditingController();
 
   _AddNewContactState();
 
@@ -32,8 +33,9 @@ class _AddNewContactState extends State<AddNewContact> {
     String upperName = _nameController.text;
     String nationalIdentifier = _iinController.text;
     String value = _phoneController.text;
+    String placeOfBirth = _placeOfBirthController.text;
     var res = await NewContactRest()
-        .sendNewRequest(upperName, nationalIdentifier, value);
+        .sendNewRequest(upperName, nationalIdentifier, value, placeOfBirth);
     return res;
   }
 
@@ -60,174 +62,234 @@ class _AddNewContactState extends State<AddNewContact> {
                 key: _formKey,
                 child: Column(
                   children: <Widget>[
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _nameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.text_fields,
-                          size: 30.0,
-                        ),
-                        labelText: 'ФИО',
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
                       ),
-                      /*                  validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      inputFormatters: <TextInputFormatter>[
-                        WhitelistingTextInputFormatter.digitsOnly,
-                      ],
-                      controller: _iinController,
-                      style: TextStyle(fontSize: 18.0),
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.card_membership,
-                          size: 30.0,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
+                        child: TextFormField(
+                          cursorColor: Colors.deepPurple,
+                          controller: _nameController,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.text_fields,
+                              size: 30.0,
+                            ),
+                            labelText: 'ФИО',
+                          ),
                         ),
-                        labelText: 'ИИН(только цифры)',
                       ),
-                      /*              validator: (input) {
-                        if (input.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      // controller: _lastNameController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.place,
-                          size: 30.0,
-                        ),
-                        labelText: 'Место Рождения',
-                      ),
-                      /*             validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
-                    ),
-                    TextFormField(
-                      cursorColor: Colors.deepPurple,
-                      controller: _phoneController,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
-                        icon: Icon(
-                          Icons.phone_android,
-                          size: 30.0,
-                        ),
-                        labelText: 'Мобильный телефон',
-                      ),
-                      /*          validator: (value) {
-                        if (value.isEmpty) {
-                          return 'Обязательно для заполнения';
-                        }
-                        return null;
-                      },*/
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 5,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: BasicDateField(),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
+                        child: TextFormField(
+                          cursorColor: Colors.deepPurple,
+                          inputFormatters: <TextInputFormatter>[
+                            WhitelistingTextInputFormatter.digitsOnly,
+                          ],
+                          controller: _iinController,
+                          style: TextStyle(fontSize: 18.0),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.card_membership,
+                              size: 30.0,
+                            ),
+                            labelText: 'ИИН',
+                          ),
+                        ),
+                      ),
                     ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
+                        child: TextFormField(
+                          cursorColor: Colors.deepPurple,
+                          controller: _placeOfBirthController,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.place,
+                              size: 30.0,
+                            ),
+                            labelText: 'Место Рождения',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
+                        child: TextFormField(
+                          cursorColor: Colors.deepPurple,
+                          controller: _phoneController,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.phone_android,
+                              size: 30.0,
+                            ),
+                            labelText: 'Мобильный телефон',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15.0),
+                          border: Border.all(
+                              color: Colors.black,
+                              style: BorderStyle.solid,
+                              width: 0.80),
+                        ),
+                        child: Padding(
+                          padding:
+                              const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
+                          child: BasicDateField(),
+                        )),
                     SizedBox(
                       height: 10,
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(
-                          Icons.person_pin,
-                          size: 30,
-                        ),
-                        SizedBox(
-                          width: 18,
-                        ),
-                        Text(
-                          'Пол',
-                          style: TextStyle(fontSize: 18.0),
-                        ),
-                        SizedBox(
-                          width: 45,
-                        ),
-                        DropdownButton<Sex>(
-                          itemHeight: 60,
-                          hint: Text("Пол"),
-                          value: selectedUser,
-                          onChanged: (Sex value) {
-                            setState(() {
-                              selectedUser = value;
-                            });
-                          },
-                          items: sex.map((Sex user) {
-                            return DropdownMenuItem<Sex>(
-                              value: user,
-                              child: Row(
-                                children: <Widget>[
-                                  user.icon,
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    user.name,
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                ],
+                        Column(
+                          children: <Widget>[
+                            Text('Пол'),
+                            SizedBox(
+                              height: 2,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15.0),
+                                border: Border.all(
+                                    color: Colors.black,
+                                    style: BorderStyle.solid,
+                                    width: 0.80),
                               ),
-                            );
-                          }).toList(),
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(
+                                    5.0, 0.0, 0.0, 0.0),
+                                child: (DropdownButton<Sex>(
+                                  hint: Text("Пол"),
+                                  value: selectedUser,
+                                  onChanged: (Sex value) {
+                                    setState(() {
+                                      selectedUser = value;
+                                    });
+                                  },
+                                  items: sex.map((Sex user) {
+                                    return DropdownMenuItem<Sex>(
+                                      value: user,
+                                      child: Row(
+                                        children: <Widget>[
+                                          user.icon,
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            user.name,
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                )),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Text('Менеджер'),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(
+                                  8.0, 0.0, 15.0, 0.0),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  border: Border.all(
+                                      color: Colors.black,
+                                      style: BorderStyle.solid,
+                                      width: 0.80),
+                                ),
+                                child: DropdownButton<Managers>(
+                                  hint: Text("Менеджер"),
+                                  value: selectedManager,
+                                  onChanged: (Managers shmalue) {
+                                    setState(() {
+                                      selectedManager = shmalue;
+                                    });
+                                  },
+                                  items: managers.map((Managers manager) {
+                                    return DropdownMenuItem<Managers>(
+                                      value: manager,
+                                      child: Row(
+                                        children: <Widget>[
+                                          manager.icon,
+                                          SizedBox(
+                                            width: 10,
+                                          ),
+                                          Text(
+                                            manager.name,
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
-                      child: Text(
-                        'Менеджер (Ответственный)',
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                    DropdownButton<Managers>(
-                      itemHeight: 75,
-                      hint: Text("Менеджер"),
-                      value: selectedManager,
-                      onChanged: (Managers shmalue) {
-                        setState(() {
-                          selectedManager = shmalue;
-                        });
-                      },
-                      items: managers.map((Managers manager) {
-                        return DropdownMenuItem<Managers>(
-                          value: manager,
-                          child: Row(
-                            children: <Widget>[
-                              manager.icon,
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                manager.name,
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ],
-                          ),
-                        );
-                      }).toList(),
                     ),
                     Container(
                       margin: EdgeInsets.all(40.0),
@@ -273,12 +335,16 @@ class BasicDateField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: <Widget>[
-      Text(
-        'Дата Рождения (${format.pattern})',
-        style: TextStyle(color: Colors.black45),
-      ),
       DateTimeField(
         initialValue: DateTime.now(),
+        style: TextStyle(fontSize: 18.0),
+        decoration: InputDecoration(
+          icon: Icon(
+            Icons.phone_android,
+            size: 30.0,
+          ),
+          labelText: 'Дата Рождения',
+        ),
         format: format,
         onShowPicker: (context, currentValue) {
           return showDatePicker(

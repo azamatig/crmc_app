@@ -51,7 +51,7 @@ Scaffold _contractListView(data, context) {
             color: Colors.white,
           ),
           onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddNewDeal())),
+              context, MaterialPageRoute(builder: (_) => AddNewDeal(null))),
         ),
         IconButton(
           onPressed: () => showSearch(
@@ -122,12 +122,12 @@ class _ShowContractDataState extends State<ShowContractData>
   //Keeps alive list of contracts, until user jumps into another tab
   bool get wantKeepAlive => true;
 
-  Future<List<Contracts>> _future;
+  Future<List<Contracts>> _contractFuture;
 
   @override
   void initState() {
     //cache Future
-    _future = _fetchContracts();
+    _contractFuture = _fetchContracts();
     super.initState();
   }
 
@@ -135,7 +135,7 @@ class _ShowContractDataState extends State<ShowContractData>
   // ignore: must_call_super
   Widget build(BuildContext context) {
     return FutureBuilder<List<Contracts>>(
-      future: _future,
+      future: _contractFuture,
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           List<Contracts> data = snapshot.data;

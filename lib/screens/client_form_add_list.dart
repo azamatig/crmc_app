@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:crmc_app/models/party_model.dart';
+import 'package:crmc_app/screens/add_new_contract.dart';
 import 'package:crmc_app/screens/contact_details.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
@@ -204,8 +205,8 @@ Card _tile(String name, String nationalIdentifier, String id, IconData icon,
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => DetailsScreen(id))),
+                onPressed: () => Navigator.push(
+                    context, MaterialPageRoute(builder: (_) => AddNewDeal(id))),
                 icon: Icon(FontAwesomeIcons.angleRight),
                 color: Colors.black45,
               )
