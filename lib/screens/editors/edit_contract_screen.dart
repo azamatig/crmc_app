@@ -20,6 +20,7 @@ class _EditContractScreenState extends State<EditContractScreen> {
   final _formKey = GlobalKey<FormState>();
   TextEditingController _lastNameController = TextEditingController();
   TextEditingController _middleNameController = TextEditingController();
+  TextEditingController _placeholder1Controller = TextEditingController();
 
   @override
   void initState() {
@@ -138,7 +139,7 @@ class _EditContractScreenState extends State<EditContractScreen> {
                     ),
                     TextFormField(
                       cursorColor: Colors.deepPurple,
-                      controller: _lastNameController,
+                      controller: _placeholder1Controller,
                       style: TextStyle(fontSize: 18.0),
                       decoration: InputDecoration(
                         icon: Icon(
@@ -179,7 +180,7 @@ class _EditContractScreenState extends State<EditContractScreen> {
                       width: 250.0,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.deepPurple,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0))),
                         child: FlatButton(

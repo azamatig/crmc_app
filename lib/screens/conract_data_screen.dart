@@ -50,8 +50,8 @@ Scaffold _contractListView(data, context) {
             Icons.person_add,
             color: Colors.white,
           ),
-          onPressed: () => Navigator.push(
-              context, MaterialPageRoute(builder: (_) => AddNewDeal(null))),
+          onPressed: () => Navigator.push(context,
+              MaterialPageRoute(builder: (_) => AddNewDeal(null, null))),
         ),
         IconButton(
           onPressed: () => showSearch(

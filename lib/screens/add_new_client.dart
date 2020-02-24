@@ -57,6 +57,10 @@ class _AddNewContactState extends State<AddNewContact> {
         child: ListView(
           children: <Widget>[
             Padding(
+              padding: const EdgeInsets.fromLTRB(0.0, 15.0, 0.0, 0.0),
+              child: Center(child: Text('Пожалуйста, заполните все поля')),
+            ),
+            Padding(
               padding: EdgeInsets.all(15.0),
               child: Form(
                 key: _formKey,
@@ -88,7 +92,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -120,7 +124,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -148,7 +152,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -162,6 +166,7 @@ class _AddNewContactState extends State<AddNewContact> {
                         padding:
                             const EdgeInsets.fromLTRB(12.0, 0.0, 17.0, 0.0),
                         child: TextFormField(
+                          keyboardType: TextInputType.phone,
                           cursorColor: Colors.deepPurple,
                           controller: _phoneController,
                           style: TextStyle(fontSize: 18.0),
@@ -176,7 +181,7 @@ class _AddNewContactState extends State<AddNewContact> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                         decoration: BoxDecoration(
@@ -192,7 +197,7 @@ class _AddNewContactState extends State<AddNewContact> {
                           child: BasicDateField(),
                         )),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Row(
                       children: <Widget>[
@@ -249,7 +254,7 @@ class _AddNewContactState extends State<AddNewContact> {
                             Text('Менеджер'),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(
-                                  8.0, 0.0, 15.0, 0.0),
+                                  10.0, 0.0, 0.0, 0.0),
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(15.0),
@@ -258,32 +263,36 @@ class _AddNewContactState extends State<AddNewContact> {
                                       style: BorderStyle.solid,
                                       width: 0.80),
                                 ),
-                                child: DropdownButton<Managers>(
-                                  hint: Text("Менеджер"),
-                                  value: selectedManager,
-                                  onChanged: (Managers shmalue) {
-                                    setState(() {
-                                      selectedManager = shmalue;
-                                    });
-                                  },
-                                  items: managers.map((Managers manager) {
-                                    return DropdownMenuItem<Managers>(
-                                      value: manager,
-                                      child: Row(
-                                        children: <Widget>[
-                                          manager.icon,
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            manager.name,
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  }).toList(),
+                                child: Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                      12.0, 0.0, 0.0, 0.0),
+                                  child: DropdownButton<Managers>(
+                                    hint: Text("Менеджер"),
+                                    value: selectedManager,
+                                    onChanged: (Managers shmalue) {
+                                      setState(() {
+                                        selectedManager = shmalue;
+                                      });
+                                    },
+                                    items: managers.map((Managers manager) {
+                                      return DropdownMenuItem<Managers>(
+                                        value: manager,
+                                        child: Row(
+                                          children: <Widget>[
+                                            manager.icon,
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            Text(
+                                              manager.name,
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
                                 ),
                               ),
                             ),
@@ -340,7 +349,7 @@ class BasicDateField extends StatelessWidget {
         style: TextStyle(fontSize: 18.0),
         decoration: InputDecoration(
           icon: Icon(
-            Icons.phone_android,
+            Icons.date_range,
             size: 30.0,
           ),
           labelText: 'Дата Рождения',

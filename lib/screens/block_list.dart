@@ -72,7 +72,7 @@ class _ComplexListState extends State<ComplexList>
                           onPressed: () => Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (_) => AddNewDeal(data.id))),
+                                  builder: (_) => AddNewDeal(data.id, null))),
                           icon: Icon(Icons.arrow_forward_ios),
                           color: Colors.black45,
                         )),
@@ -93,6 +93,7 @@ class _ComplexListState extends State<ComplexList>
                   data[index].code,
                   data[index].complexBlockSection.complexBlock.complex.name,
                   data[index].complexBlockSection.complexBlock.name,
+                  data[index].id,
                   Icons.work,
                   context),
             );
@@ -129,8 +130,8 @@ class _ComplexListState extends State<ComplexList>
 }
 
 //ListTile after successful fetching data
-Card _tile(String code, String complexName, String skidMark, IconData icon,
-        context) =>
+Card _tile(String code, String complexName, String skidMark, String data,
+        IconData icon, context) =>
     Card(
       elevation: 5,
       child: Column(
@@ -217,8 +218,8 @@ Card _tile(String code, String complexName, String skidMark, IconData icon,
               ),
               IconButton(
                 onPressed: () {},
-                icon: Icon(FontAwesomeIcons.plus),
-                color: Colors.orangeAccent,
+                icon: Icon(Icons.add_circle_outline),
+                color: Colors.green,
               )
             ],
           ),

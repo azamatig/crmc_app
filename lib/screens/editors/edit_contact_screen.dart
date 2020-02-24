@@ -204,7 +204,7 @@ class _EditContactScreenState extends State<EditContactScreen> {
                       width: 250.0,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.deepPurple,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0))),
                         child: FlatButton(

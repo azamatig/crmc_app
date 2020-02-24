@@ -7,15 +7,17 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
 class AddNewDeal extends StatefulWidget {
-  AddNewDeal(this.id);
+  AddNewDeal(this.id, this.clientId);
   final String id;
+  final String clientId;
 
   @override
-  _AddNewDealState createState() => _AddNewDealState(this.id);
+  _AddNewDealState createState() => _AddNewDealState(this.id, this.clientId);
 }
 
 class _AddNewDealState extends State<AddNewDeal> {
   final String id;
+  final String clientId;
   final _formKey = GlobalKey<FormState>();
   TextEditingController _numberController = TextEditingController();
   TextEditingController _amountController = TextEditingController();
@@ -25,7 +27,7 @@ class _AddNewDealState extends State<AddNewDeal> {
 
   String myId;
 
-  _AddNewDealState(this.id);
+  _AddNewDealState(this.id, this.clientId);
 
   @override
   void initState() {
@@ -64,7 +66,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                   children: <Widget>[
                     Center(child: Text('Пожалуйста, заполните все поля')),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -94,7 +96,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -121,7 +123,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -148,7 +150,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Container(
                       decoration: BoxDecoration(
@@ -161,7 +163,10 @@ class _AddNewDealState extends State<AddNewDeal> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
                         child: TextFormField(
-                          controller: _dateController,
+                          initialValue: '${widget.clientId}' != null
+                              ? '${widget.clientId}'
+                              : 'Выбрать клиента',
+                          //    controller: _dateController,
                           style: TextStyle(fontSize: 18.0),
                           onTap: () => Navigator.push(
                               context,
@@ -178,7 +183,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ),
                     ),
                     SizedBox(
-                      height: 5,
+                      height: 15,
                     ),
                     Row(
                       children: <Widget>[
@@ -283,7 +288,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       ],
                     ),
                     SizedBox(
-                      height: 10,
+                      height: 15,
                     ),
                     Center(child: Text('Подписант')),
                     SizedBox(
@@ -334,7 +339,7 @@ class _AddNewDealState extends State<AddNewDeal> {
                       width: 250.0,
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Colors.green,
+                            color: Colors.deepPurple,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0))),
                         child: FlatButton(

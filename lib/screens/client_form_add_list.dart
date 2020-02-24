@@ -119,8 +119,8 @@ class _ClientFormDataState extends State<ClientFormData>
 }
 
 //ListTile after successful fetching data
-Card _tile(String name, String nationalIdentifier, String id, IconData icon,
-        context) =>
+Card _tile(String name, String nationalIdentifier, String clientId,
+        IconData icon, context) =>
     Card(
       elevation: 5,
       child: Column(
@@ -206,7 +206,9 @@ Card _tile(String name, String nationalIdentifier, String id, IconData icon,
               ),
               IconButton(
                 onPressed: () => Navigator.push(
-                    context, MaterialPageRoute(builder: (_) => AddNewDeal(id))),
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => AddNewDeal(null, clientId))),
                 icon: Icon(FontAwesomeIcons.angleRight),
                 color: Colors.black45,
               )
