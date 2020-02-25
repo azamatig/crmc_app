@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:crmc_app/models/contracts_model.dart';
-import 'package:crmc_app/screens/add_new_contract.dart';
-import 'package:crmc_app/screens/contract_details.dart';
+import 'package:crmc_app/screens/contractData/add_new_contract.dart';
+import 'package:crmc_app/screens/contractData/contract_details.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:search_page/search_page.dart';
-import '../services/auth.dart';
+import '../../services/auth.dart';
 
 class ShowContractData extends StatefulWidget {
   @override

@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:crmc_app/models/party_model.dart';
-import 'package:crmc_app/screens/add_new_client.dart';
-import 'package:crmc_app/screens/contact_details.dart';
+import 'package:crmc_app/screens/contractData/add_new_contract.dart';
+import 'package:crmc_app/screens/clientData/contact_details.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:search_page/search_page.dart';
-import '../services/auth.dart';
+import '../../services/auth.dart';
 
-class ShowClientData extends StatefulWidget {
+class ClientFormData extends StatefulWidget {
   @override
-  _ShowClientDataState createState() => _ShowClientDataState();
+  _ClientFormDataState createState() => _ClientFormDataState();
 }
 
-class _ShowClientDataState extends State<ShowClientData>
-    with AutomaticKeepAliveClientMixin<ShowClientData> {
+class _ClientFormDataState extends State<ClientFormData>
+    with AutomaticKeepAliveClientMixin<ClientFormData> {
   Future<List<PartyEntity>> _future;
 //Keeps list in alive instead of rebuilding it every time
   @override
@@ -47,18 +47,10 @@ class _ShowClientDataState extends State<ShowClientData>
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: Padding(
-          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 237.0, 0.0),
-          child: Center(child: Text('CRMC')),
+          padding: const EdgeInsets.fromLTRB(0.0, 0.0, 150.0, 0.0),
+          child: Center(child: Text('Добавить клиента')),
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(
-              Icons.person_add,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.push(
-                context, MaterialPageRoute(builder: (_) => AddNewContact())),
-          ),
           IconButton(
             onPressed: () => showSearch(
                 context: context,
@@ -92,18 +84,10 @@ class _ShowClientDataState extends State<ShowClientData>
         ],
       ),
       body: ListView.builder(
-          itemExtent: 234.0,
           itemCount: data.length,
           itemBuilder: (context, index) {
-            return _tile(
-                data[index].name,
-                data[index].resident,
-                data[index].nationalIdentifier,
-                data[index].responsible.shortName,
-                data[index].clientStatus.languageValue,
-                data[index].id,
-                Icons.work,
-                context);
+            return _tile(data[index].name, data[index].nationalIdentifier,
+                data[index].id, Icons.work, context);
           }),
     );
   }
@@ -135,26 +119,29 @@ class _ShowClientDataState extends State<ShowClientData>
 }
 
 //ListTile after successful fetching data
-Card _tile(
-        String name,
-        bool resident,
-        String nationalIdentifier,
-        String shortName,
-        String languageValue,
-        String id,
-        IconData icon,
-        context) =>
+Card _tile(String name, String nationalIdentifier, String clientId,
+        IconData icon, context) =>
     Card(
       elevation: 5,
       child: Column(
         children: <Widget>[
           Row(
             children: <Widget>[
-              Container(width: 10.0, height: 225.0, color: Colors.deepPurple),
+              Container(
+                width: 50.0,
+                height: 100.0,
+                color: Colors.deepPurple,
+                child: Center(
+                  child: Icon(
+                    FontAwesomeIcons.male,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                      vertical: 10.0, horizontal: 10.0),
+                      vertical: 5.0, horizontal: 5.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -192,23 +179,6 @@ Card _tile(
                         ),
                       ),
                       Text(
-                        'Статус клиента:',
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        languageValue != null ? languageValue : '-',
-                        style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
                         'ИИН:',
                         style: TextStyle(
                             color: Colors.grey.shade500,
@@ -230,44 +200,15 @@ Card _tile(
                       SizedBox(
                         height: 6,
                       ),
-                      Text(
-                        'Резидентство',
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        resident != false ? 'Резидент' : '-',
-                        style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      SizedBox(
-                        height: 6,
-                      ),
-                      Text(
-                        'Менеджер',
-                        style: TextStyle(
-                            color: Colors.grey.shade500,
-                            fontSize: 12.0,
-                            fontWeight: FontWeight.bold),
-                      ),
-                      Text(
-                        shortName != null ? shortName : '-',
-                        style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontSize: 14.0,
-                            fontWeight: FontWeight.bold),
-                      ),
                     ],
                   ),
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (_) => DetailsScreen(id))),
+                onPressed: () => Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (_) => AddNewDeal(null, clientId))),
                 icon: Icon(FontAwesomeIcons.angleRight),
                 color: Colors.black45,
               )

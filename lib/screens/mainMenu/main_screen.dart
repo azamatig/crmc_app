@@ -1,8 +1,8 @@
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
-import 'package:crmc_app/screens/client_data_screen.dart';
-import 'package:crmc_app/screens/conract_data_screen.dart';
+import 'package:crmc_app/screens/clientData/client_data_screen.dart';
+import 'package:crmc_app/screens/contractData/contract_data_screen.dart';
 import 'package:crmc_app/screens/fourthDemoScreen.dart';
-import 'package:crmc_app/screens/hidden_menu_page.dart';
+import 'package:crmc_app/screens/mainMenu/hidden_menu_page.dart';
 import 'package:crmc_app/screens/thirdDemoScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

@@ -1,12 +1,12 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:crmc_app/models/apartments_model.dart';
-import 'package:crmc_app/screens/add_new_contract.dart';
+import 'package:crmc_app/screens/contractData/add_new_contract.dart';
 import 'package:crmc_app/utilities/vars.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:search_page/search_page.dart';
-import '../services/auth.dart';
+import '../../services/auth.dart';
 
 class ComplexList extends StatefulWidget {
   @override
@@ -69,7 +69,7 @@ class _ComplexListState extends State<ComplexList>
                         subtitle: Text('Комплекс: ' +
                             data.complexBlockSection.complexBlock.complex.name),
                         trailing: IconButton(
-                          onPressed: () => Navigator.push(
+                          onPressed: () => Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
                                   builder: (_) => AddNewDeal(data.id, null))),
@@ -104,6 +104,7 @@ class _ComplexListState extends State<ComplexList>
   @override
   void initState() {
     setState(() {
+      //cache future data
       _future1 = _fetchContacts();
     });
     super.initState();
@@ -130,7 +131,7 @@ class _ComplexListState extends State<ComplexList>
 }
 
 //ListTile after successful fetching data
-Card _tile(String code, String complexName, String skidMark, String data,
+Card _tile(String code, String complexName, String skidMark, String id,
         IconData icon, context) =>
     Card(
       elevation: 5,
@@ -217,7 +218,8 @@ Card _tile(String code, String complexName, String skidMark, String data,
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (_) => AddNewDeal(id, null))),
                 icon: Icon(Icons.add_circle_outline),
                 color: Colors.green,
               )

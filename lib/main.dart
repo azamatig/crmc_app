@@ -1,5 +1,5 @@
-import 'package:crmc_app/screens/login_screen.dart';
-import 'package:crmc_app/screens/main_screen.dart';
+import 'package:crmc_app/screens/mainMenu/login_screen.dart';
+import 'package:crmc_app/screens/mainMenu/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,7 +15,7 @@ Future<bool> sharePreferences() async {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  // This widget is the root of your application, man.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -1,5 +1,5 @@
-import 'package:crmc_app/screens/block_list.dart';
-import 'package:crmc_app/screens/client_form_add_list.dart';
+import 'package:crmc_app/screens/contractData/block_list.dart';
+import 'package:crmc_app/screens/clientData/client_form_add_list.dart';
 import 'package:crmc_app/services/create_contract_rest.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,8 +37,11 @@ class _AddNewDealState extends State<AddNewDeal> {
   //Creates new Contract, sort of...
   createContract() async {
     String number = _numberController.text;
-    double amount = _amountController as double;
-    var res = await NewContractRest().createNewContract(number, amount);
+    double amount = double.parse(_amountController.text);
+    String id = widget.id;
+    String clientId = widget.clientId;
+    var res = await NewContractRest()
+        .createNewContract(number, amount, id, clientId, formatter.format(now));
     return res;
   }
 
@@ -91,6 +94,33 @@ class _AddNewDealState extends State<AddNewDeal> {
                               size: 30.0,
                             ),
                             labelText: '№ Недвижиости',
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15.0),
+                        border: Border.all(
+                            color: Colors.black,
+                            style: BorderStyle.solid,
+                            width: 0.80),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(8.0, 0.0, 15.0, 0.0),
+                        child: TextFormField(
+                          controller: _numberController,
+                          keyboardType: TextInputType.number,
+                          style: TextStyle(fontSize: 18.0),
+                          decoration: InputDecoration(
+                            icon: Icon(
+                              Icons.text_fields,
+                              size: 30.0,
+                            ),
+                            labelText: 'Номер договора',
                           ),
                         ),
                       ),
